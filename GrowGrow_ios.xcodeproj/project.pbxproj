@@ -11,14 +11,44 @@
 		5421AC9527213E2600F12168 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421AC9427213E2600F12168 /* ContentView.swift */; };
 		5421AC9727213E2600F12168 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5421AC9627213E2600F12168 /* Assets.xcassets */; };
 		5421AC9A27213E2600F12168 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5421AC9927213E2600F12168 /* Preview Assets.xcassets */; };
+		5421ACA12721451100F12168 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5421ACA02721451100F12168 /* GoogleService-Info.plist */; };
+		5421ACBE2721636700F12168 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACBD2721636700F12168 /* SignInView.swift */; };
+		5421ACC02721674400F12168 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACBF2721674400F12168 /* FormField.swift */; };
+		5421ACC22721704500F12168 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACC12721704500F12168 /* ButtonView.swift */; };
+		5421ACC42721720900F12168 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACC32721720900F12168 /* SignUpView.swift */; };
+		5421ACC72721A67300F12168 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACC62721A67300F12168 /* UserModel.swift */; };
+		5421ACC92721A7E400F12168 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACC82721A7E400F12168 /* Extensions.swift */; };
+		5421ACCB2721AB9A00F12168 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5421ACCA2721AB9A00F12168 /* AuthService.swift */; };
+		54A2EF892722774400051DCB /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF882722774400051DCB /* SessionStore.swift */; };
+		54A2EF8B272280D600051DCB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF8A272280D600051DCB /* HomeView.swift */; };
+		54A2EF8D272284EA00051DCB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF8C272284EA00051DCB /* SearchView.swift */; };
+		54A2EF8F272284F600051DCB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF8E272284F600051DCB /* ProfileView.swift */; };
+		54A2EF9527228E0800051DCB /* MainTabContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF9427228E0800051DCB /* MainTabContainer.swift */; };
+		A8E3EFF6D98709849C5E816B /* Pods_GrowGrow_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54A5A4AD6E4E52626F6304E8 /* Pods_GrowGrow_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09A33584E06560A678E6543E /* Pods-GrowGrow_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowGrow_ios.debug.xcconfig"; path = "Target Support Files/Pods-GrowGrow_ios/Pods-GrowGrow_ios.debug.xcconfig"; sourceTree = "<group>"; };
 		5421AC8F27213E2600F12168 /* GrowGrow_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrowGrow_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5421AC9227213E2600F12168 /* GrowGrow_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowGrow_iosApp.swift; sourceTree = "<group>"; };
 		5421AC9427213E2600F12168 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5421AC9627213E2600F12168 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5421AC9927213E2600F12168 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5421ACA02721451100F12168 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5421ACBD2721636700F12168 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		5421ACBF2721674400F12168 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
+		5421ACC12721704500F12168 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		5421ACC32721720900F12168 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		5421ACC62721A67300F12168 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		5421ACC82721A7E400F12168 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5421ACCA2721AB9A00F12168 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		54A2EF882722774400051DCB /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		54A2EF8A272280D600051DCB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		54A2EF8C272284EA00051DCB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		54A2EF8E272284F600051DCB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		54A2EF9427228E0800051DCB /* MainTabContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabContainer.swift; sourceTree = "<group>"; };
+		54A5A4AD6E4E52626F6304E8 /* Pods_GrowGrow_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrowGrow_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD2F68CC4FEB23B7A1C093A2 /* Pods-GrowGrow_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowGrow_ios.release.xcconfig"; path = "Target Support Files/Pods-GrowGrow_ios/Pods-GrowGrow_ios.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,17 +56,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8E3EFF6D98709849C5E816B /* Pods_GrowGrow_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4009FEF2D282E32472F8047D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				09A33584E06560A678E6543E /* Pods-GrowGrow_ios.debug.xcconfig */,
+				CD2F68CC4FEB23B7A1C093A2 /* Pods-GrowGrow_ios.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		5421AC8627213E2600F12168 = {
 			isa = PBXGroup;
 			children = (
 				5421AC9127213E2600F12168 /* GrowGrow_ios */,
 				5421AC9027213E2600F12168 /* Products */,
+				4009FEF2D282E32472F8047D /* Pods */,
+				9D1072F77B0971443103C1FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,6 +93,10 @@
 		5421AC9127213E2600F12168 /* GrowGrow_ios */ = {
 			isa = PBXGroup;
 			children = (
+				54A2EF902722850600051DCB /* Services */,
+				5421ACC52721A66100F12168 /* Models */,
+				5421ACBC2721633F00F12168 /* Views */,
+				5421ACA02721451100F12168 /* GoogleService-Info.plist */,
 				5421AC9227213E2600F12168 /* GrowGrow_iosApp.swift */,
 				5421AC9427213E2600F12168 /* ContentView.swift */,
 				5421AC9627213E2600F12168 /* Assets.xcassets */,
@@ -67,6 +113,71 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		5421ACBC2721633F00F12168 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				54A2EF932722855100051DCB /* AuthView */,
+				54A2EF922722854200051DCB /* MainView */,
+				54A2EF912722851600051DCB /* Layouts */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5421ACC52721A66100F12168 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5421ACC62721A67300F12168 /* UserModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		54A2EF902722850600051DCB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				54A2EF882722774400051DCB /* SessionStore.swift */,
+				5421ACCA2721AB9A00F12168 /* AuthService.swift */,
+				5421ACC82721A7E400F12168 /* Extensions.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		54A2EF912722851600051DCB /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				5421ACBF2721674400F12168 /* FormField.swift */,
+				5421ACC12721704500F12168 /* ButtonView.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
+		54A2EF922722854200051DCB /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				54A2EF8E272284F600051DCB /* ProfileView.swift */,
+				54A2EF8C272284EA00051DCB /* SearchView.swift */,
+				54A2EF8A272280D600051DCB /* HomeView.swift */,
+				54A2EF9427228E0800051DCB /* MainTabContainer.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		54A2EF932722855100051DCB /* AuthView */ = {
+			isa = PBXGroup;
+			children = (
+				5421ACC32721720900F12168 /* SignUpView.swift */,
+				5421ACBD2721636700F12168 /* SignInView.swift */,
+			);
+			path = AuthView;
+			sourceTree = "<group>";
+		};
+		9D1072F77B0971443103C1FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				54A5A4AD6E4E52626F6304E8 /* Pods_GrowGrow_ios.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +185,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5421AC9D27213E2600F12168 /* Build configuration list for PBXNativeTarget "GrowGrow_ios" */;
 			buildPhases = (
+				A7D71597C7EBC46D9A773074 /* [CP] Check Pods Manifest.lock */,
 				5421AC8B27213E2600F12168 /* Sources */,
 				5421AC8C27213E2600F12168 /* Frameworks */,
 				5421AC8D27213E2600F12168 /* Resources */,
+				19069D9997E983BCF82C1522 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,17 +240,72 @@
 			files = (
 				5421AC9A27213E2600F12168 /* Preview Assets.xcassets in Resources */,
 				5421AC9727213E2600F12168 /* Assets.xcassets in Resources */,
+				5421ACA12721451100F12168 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19069D9997E983BCF82C1522 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GrowGrow_ios/Pods-GrowGrow_ios-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GrowGrow_ios/Pods-GrowGrow_ios-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GrowGrow_ios/Pods-GrowGrow_ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7D71597C7EBC46D9A773074 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GrowGrow_ios-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5421AC8B27213E2600F12168 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5421ACBE2721636700F12168 /* SignInView.swift in Sources */,
+				54A2EF8F272284F600051DCB /* ProfileView.swift in Sources */,
+				5421ACC72721A67300F12168 /* UserModel.swift in Sources */,
 				5421AC9527213E2600F12168 /* ContentView.swift in Sources */,
+				5421ACCB2721AB9A00F12168 /* AuthService.swift in Sources */,
+				54A2EF8D272284EA00051DCB /* SearchView.swift in Sources */,
+				54A2EF9527228E0800051DCB /* MainTabContainer.swift in Sources */,
+				5421ACC92721A7E400F12168 /* Extensions.swift in Sources */,
+				54A2EF8B272280D600051DCB /* HomeView.swift in Sources */,
+				5421ACC22721704500F12168 /* ButtonView.swift in Sources */,
+				54A2EF892722774400051DCB /* SessionStore.swift in Sources */,
+				5421ACC02721674400F12168 /* FormField.swift in Sources */,
+				5421ACC42721720900F12168 /* SignUpView.swift in Sources */,
 				5421AC9327213E2600F12168 /* GrowGrow_iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +431,7 @@
 		};
 		5421AC9E27213E2600F12168 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09A33584E06560A678E6543E /* Pods-GrowGrow_ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -292,6 +461,7 @@
 		};
 		5421AC9F27213E2600F12168 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD2F68CC4FEB23B7A1C093A2 /* Pods-GrowGrow_ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
