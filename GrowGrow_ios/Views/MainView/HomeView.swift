@@ -8,8 +8,94 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var session: SessionStore
+    @ObservedObject private var viewModel = SessionStore()
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        Text("Home")
+        
+    VStack(alignment:.leading){
+                
+        HomeCardView(fullname: self.session.session!.fullname       , username: self.session.session!.username)
+            
+        
+        Divider()
+                
+                Spacer()
+        
+        ScrollView {
+            VStack {
+                Group{
+                    Divider().frame(width: 100)
+                        .background(Color.red)
+                    Text("다른 사람들은 지금을 어떻게 보내고 있을까?")
+                    
+                }
+            }
+            
+            
+            LazyVGrid(columns: columns) {
+                ForEach(viewModel.users){ user in
+                    VStack(alignment:.leading){
+                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                        
+                       /* Text(user.fullname)
+                        Text(user.username)
+                        Text(user.depart)
+                        Text(user.major)
+                        Text(user.summary)
+                        */
+                        
+                        
+                    }
+                    
+                    
+                }
+                }.onAppear(){
+                    self.viewModel.getUsers()
+                
+                
+                
+            }
+            
+            
+        }
+        
+       /* ScrollView() {
+                    VStack {
+                       Group{
+                            
+                            Divider()
+                            Text("Test")
+                            
+                            
+                       }
+                        
+                        List(viewModel.users) {user in
+                            VStack(alignment: .leading) {
+                                Text(user.fullname)
+                                Text(user.username)
+                                Text(user.depart)
+                                Text(user.major)
+                                Text(user.summary)
+                                
+                            }
+                        }
+                        .onAppear(){
+                            self.viewModel.getUsers()
+                   }
+                    } //VStack
+                    
+                    //중앙에서만 탭(스크롤)이 가능했던것을 프레임으로 전체로 늘려줌
+                    .frame(maxWidth: .infinity)
+            
+        } */
+            }
+            
     }
 }
 

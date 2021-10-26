@@ -8,25 +8,31 @@
 import SwiftUI
 
 struct MainTabContainer: View {
+    
     var body: some View {
-        TabView {
+    TabView {
             
                 
                 HomeView()
                     .tabItem{
                         Image(systemName: "house")
+                    
                     }
                 
             
-            
-            
-            
+        NavigationView {
             
             SearchView()
-                .tabItem{
-                    Image(systemName: "magnifyingglass")
-                }
+            
+                .navigationTitle("검색")
                 
+            
+            
+        }.tabItem{
+            Image(systemName: "magnifyingglass")
+        }
+            
+            
             
             ProfileView()
                 .tabItem{
@@ -35,7 +41,8 @@ struct MainTabContainer: View {
             
             
             
-        }
+        }.accentColor(.red)
+            .edgesIgnoringSafeArea(.top)
     }
 }
 

@@ -9,8 +9,13 @@ import Foundation
 import Combine
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 class SessionStore: ObservableObject {
+    
+    @Published var users = [AllUsers]()
+    
+    private var db = Firestore.firestore()
     
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var session: User? {didSet{self.didChange.send(self)}}
@@ -40,6 +45,31 @@ class SessionStore: ObservableObject {
         })
     }
     
+   
+    
+    func getUsers(){
+        db.collection("Users").addSnapshotListener{ (querySnapshot, error ) in
+            guard let documents = querySnapshot?.documents else {return}
+            
+            self.users = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                let data = queryDocumentSnapshot.data()
+                let fullname = data["fullname"] as? String ?? ""
+                let username = data["username"] as? String ?? ""
+                let depart = data["depart"] as? String ?? ""
+                let major = data["major"] as? String ?? ""
+                let summary = data["summary"] as? String ?? ""
+            
+                
+                
+                return AllUsers(fullname: fullname, username: username, summary: summary, depart: depart, major: major)
+                
+            }
+            
+        }
+        
+        
+    }
+    
     
     func logout(){
         
@@ -59,6 +89,8 @@ class SessionStore: ObservableObject {
     deinit {
         unbind()
     }
+    
+    
     
         
     
