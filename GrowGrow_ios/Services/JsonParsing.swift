@@ -6,49 +6,69 @@
 //
 
 import Foundation
+import SwiftUI
 
-class JsonParsing {
-    
-
-struct ComplexJson: Codable {
-    let dataSearch: MajorContent
-    
-}
-
-struct MajorContent: Codable {
-    let content: [MajorData]
+struct DataSearch: Codable {
+    let dataSearch: Contents
     
     
 }
 
-struct MajorData: Codable {
-    let mclass: String
+struct Contents: Codable {
+    let content: [MajorInfo]
+}
+
+struct MajorInfo: Hashable,Codable {
+    let lClass: String
+    let facilName: String
+    let majorSeq: String
+    let mClass: String
+    let totalCount: String
     
     
 }
 
-func getJson(){
+class ViewModel: ObservableObject {
+    @Published var contents: [MajorInfo] = []
+    @Published var majors: [String] = []
     
-    if let url = URL(string: "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100391"){
-        var request = URLRequest.init(url: url)
+    func getJson(urlString: String){
+        guard let url = URL(string: urlString) else {return}
         
-        request.httpMethod = "GET"
-        
-        URLSession.shared.dataTask(with: request){ (data, response, error) in
-            guard let data = data else {return}
+        let task = URLSession.shared.dataTask(with: url) { [weak self]data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            //Convert to JSON
             
-            let decoder = JSONDecoder()
-            if let json = try?decoder.decode(ComplexJson.self, from:  data){
-                print(json.dataSearch)
+            do {
+                let datas = try
+                JSONDecoder().decode(DataSearch.self, from: data)
                 
+                DispatchQueue.main.async {
+                    self?.contents = datas.dataSearch.content
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+            } catch{
+                print(error)
             }
             
+            
         }
+         
+         task.resume()
         
+      
+
         
     }
     
     
-    
 }
-}
+

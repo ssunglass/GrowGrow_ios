@@ -15,9 +15,14 @@ struct SearchView: View {
     var body: some View {
         
       
-        
+        VStack{
         Text("Search")
-    
+        
+       
+        
+
+        }
+        
        
     
        

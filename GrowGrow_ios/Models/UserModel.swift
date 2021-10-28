@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct User: Encodable, Decodable{
 
@@ -28,5 +29,13 @@ struct AllUsers: Identifiable{
     var depart:String
     var major:String
    // var region:String
+}
+
+struct Bio: Codable {
+    var date : String
+    var description: String
+    
+    
+    
 }
 

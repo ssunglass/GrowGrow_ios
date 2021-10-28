@@ -31,15 +31,28 @@ extension String {
     func splitString() -> [String] {
         
         var stringArray: [String] = []
-        let trimmed = String(self.filter { !" \n\t\r".contains($0)})
+        let trimmed = String(self.filter { !"\n\t\r".contains($0)})
+        
+      
         
         for (index, _) in trimmed.enumerated(){
             let prefixIndex = index+1
             let substringPrefix =
             String(trimmed.prefix(prefixIndex)).lowercased()
-            stringArray.append(substringPrefix)
+            stringArray.append(substringPrefix.trimmingCharacters(in: .whitespacesAndNewlines))
+                               
             
         }
         return stringArray
+    }
+}
+
+extension String {
+    func stringFromDate() -> String {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = self
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.string(from: now)
     }
 }

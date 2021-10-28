@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct EditProfileView: View {
     @EnvironmentObject var session: SessionStore
@@ -75,6 +76,32 @@ struct EditProfileView: View {
         
     }
     
+    func updateUser(){
+        let db = Firestore.firestore()
+        
+        db.collection("Users").document(self.session.session!.uid).updateData([
+            "fullname" : fullname,
+            "username" : username,
+            "summary" : summary,
+            "region" : regions[selectedRegion],
+            "depart" : departs[selectedDepart],
+            "major" : viewModel.contents[selectedMajor].mClass
+        
+        
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                  } else {
+                      print("Document successfully updated")
+                  }
+        }
+        
+        
+        
+        
+        
+    }
+    
     
 
     
@@ -109,8 +136,8 @@ struct EditProfileView: View {
                 }
                
                                //퍼센트 섹션
-                                Section {
-                                    Picker("현재 나의 지역", selection: $selectedRegion) {
+                Section(header: Text("현재 나의 지역 \(self.session.session!.region)")) {
+                                    Picker("지역 선택", selection: $selectedRegion) {
                                         //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
                                         ForEach(0 ..< regions.count) {
                                             Text("\(self.regions[$0])")
@@ -118,8 +145,8 @@ struct EditProfileView: View {
                                     }
                                 }
                 
-                Section {
-                    Picker("현재 나의 계열", selection: $selectedDepart) {
+                Section(header: Text("현재 나의 계열 \(self.session.session!.depart)")) {
+                    Picker("계열 선택", selection: $selectedDepart) {
                         //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
                         ForEach(0 ..< departs.count) {
                             Text("\(self.departs[$0])")
@@ -127,8 +154,8 @@ struct EditProfileView: View {
                     }
                 }
                 
-                Section {
-                    Picker("현재 나의 전공", selection: $selectedMajor) {
+                Section(header: Text("현재 나의 전공 \(self.session.session!.major)")) {
+                    Picker("전공 선택", selection: $selectedMajor) {
                      ForEach(0 ..< viewModel.contents.count, id: \.self) {
                              Text(self.viewModel.contents[$0].mClass)
                             
@@ -164,6 +191,9 @@ struct EditProfileView: View {
                 }, trailing:
                     HStack {
                         Button(action: {
+                            
+                            updateUser()
+                            presentationMode.wrappedValue.dismiss()
                         
                         }) {
                             Image(systemName: "checkmark")
@@ -182,10 +212,5 @@ struct EditProfileView_Previews: PreviewProvider {
     }
 }
 
-struct DetailView: View {
-    
-    var body: some View{
-        Text("Detail")
-    }
-    
-}
+
+
