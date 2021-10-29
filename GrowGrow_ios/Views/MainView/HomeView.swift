@@ -20,7 +20,8 @@ struct HomeView: View {
         
     VStack(alignment:.leading){
                 
-        HomeCardView(fullname: self.session.session!.fullname       , username: self.session.session!.username)
+        HomeCardView(fullname: self.session.session!.fullname,
+                     username: self.session.session!.username)
             
         
         Divider()

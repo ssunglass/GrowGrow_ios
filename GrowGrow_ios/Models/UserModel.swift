@@ -39,3 +39,9 @@ struct Bio: Codable {
     
 }
 
+/*struct Keyword: Identifiable {
+    var id = UUID().uuidString
+    var keywordText : String
+    var isExceeded = false
+} */
+

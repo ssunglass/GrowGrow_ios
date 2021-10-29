@@ -10,10 +10,12 @@ import Combine
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUI
 
 class SessionStore: ObservableObject {
     
     @Published var users = [AllUsers]()
+    @Published var keywords = [String]()
     
     private var db = Firestore.firestore()
     
@@ -69,6 +71,30 @@ class SessionStore: ObservableObject {
         
         
     }
+    
+    func getKeywords(){
+        
+        db.collection("Users").document(Auth.auth().currentUser!.uid)
+            .addSnapshotListener{ documentSnapshot, error in
+                  guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                  }
+                  guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                  }
+                 
+                let keywords = data["keywords"] as? [String] ?? [""]
+                
+                self.keywords = keywords
+    
+            
+        }
+        
+    }
+    
+  
     
     
     func logout(){
