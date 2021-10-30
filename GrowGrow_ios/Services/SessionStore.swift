@@ -15,9 +15,20 @@ import SwiftUI
 class SessionStore: ObservableObject {
     
     @Published var users = [AllUsers]()
-    @Published var keywords = [String]()
+    @Published var bios = [AllBios]()
+  //  @Published var keywords = [String]()
+    @Published var keywordsForChips = [[String]]()
     
-    private var db = Firestore.firestore()
+    @Published var fullname: String = ""
+    @Published var username: String = ""
+    @Published var depart: String = ""
+    @Published var major: String = ""
+    @Published var summary: String = ""
+    @Published var region: String = ""
+    
+    
+    private let db = Firestore.firestore()
+    // private let currentUser = Auth.auth().currentUser!.uid
     
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var session: User? {didSet{self.didChange.send(self)}}
@@ -72,9 +83,34 @@ class SessionStore: ObservableObject {
         
     }
     
-    func getKeywords(){
+    func getCurrentUser(){
         
         db.collection("Users").document(Auth.auth().currentUser!.uid)
+            .addSnapshotListener{ (documentSnapshot, error) in
+                
+                guard let document = documentSnapshot else {
+                  print("Error fetching document: \(error!)")
+                  return
+                }
+                guard let data = document.data() else {
+                  print("Document data was empty.")
+                  return
+                }
+                
+                self.fullname = data["fullname"] as? String ?? ""
+                self.username = data["username"] as? String ?? ""
+                self.depart = data["depart"] as? String ?? ""
+                self.major = data["major"] as? String ?? ""
+                self.summary = data["summary"] as? String ?? ""
+                self.region = data["region"] as? String ?? ""
+            
+        }
+        
+    }
+    
+    func getKeywords(uid:String){
+        
+        db.collection("Users").document(uid)
             .addSnapshotListener{ documentSnapshot, error in
                   guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
@@ -87,10 +123,66 @@ class SessionStore: ObservableObject {
                  
                 let keywords = data["keywords"] as? [String] ?? [""]
                 
-                self.keywords = keywords
+                var tempItems: [String] = [String]()
+                var width: CGFloat = 0
+                var groupedItems: [[String]] = [[String]]()
+                
+               // self.keywords = keywords
+              //  self.keywordsForChips = [keywords]
+                
+                for keyword in keywords {
+                    let label = UILabel()
+                    label.text = keyword
+                    label.sizeToFit()
+                    
+                    let labelWidth = label.frame.size.width + 32
+                    
+                    if (width + labelWidth + 55 ) < UIScreen.main.bounds.width {
+                        width += labelWidth
+                        tempItems.append(keyword)
+                        
+                        
+                    } else {
+                        width = labelWidth
+                        groupedItems.append(tempItems)
+                        tempItems.removeAll()
+                        tempItems.append(keyword)
+                        
+                    }
+                }
+                
+                groupedItems.append(tempItems)
+                self.keywordsForChips = groupedItems
     
             
         }
+        
+    }
+    
+    func getBios(uid:String){
+        
+        db.collection("Users").document(uid).collection("Bios").order(by: "date")
+            .addSnapshotListener { (querySnapshot, error ) in
+                
+            guard let documents = querySnapshot?.documents else {return}
+            
+            self.bios = documents.map { (queryDocumentSnapshot) -> AllBios in
+                let data = queryDocumentSnapshot.data()
+                let date = data["date"] as? String ?? ""
+                let description = data["description"] as? String ?? ""
+              
+            
+                
+                
+                return AllBios(date: date, description: description)
+                
+            }
+            
+        }
+        
+        
+        
+        
         
     }
     

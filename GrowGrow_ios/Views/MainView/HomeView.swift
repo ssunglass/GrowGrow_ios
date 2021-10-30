@@ -20,8 +20,8 @@ struct HomeView: View {
         
     VStack(alignment:.leading){
                 
-        HomeCardView(fullname: self.session.session!.fullname,
-                     username: self.session.session!.username)
+        HomeCardView(fullname: viewModel.fullname,
+                     username: "@\(viewModel.username)")
             
         
         Divider()
@@ -40,7 +40,7 @@ struct HomeView: View {
             
             
             LazyVGrid(columns: columns) {
-                ForEach(viewModel.users){ user in
+                ForEach(viewModel.users.shuffled()){ user in
                     VStack(alignment:.leading){
                         UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
                         
@@ -95,7 +95,11 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity)
             
         } */
-            }
+    }.onAppear(){
+        self.viewModel.getCurrentUser()
+        
+        
+    }
             
     }
 }

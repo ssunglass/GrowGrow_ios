@@ -39,6 +39,14 @@ struct Bio: Codable {
     
 }
 
+struct AllBios: Identifiable {
+    var id: String = UUID().uuidString
+    
+    var date: String
+    var description: String
+    
+}
+
 /*struct Keyword: Identifiable {
     var id = UUID().uuidString
     var keywordText : String

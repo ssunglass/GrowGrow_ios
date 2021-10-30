@@ -23,7 +23,6 @@ struct HomeCardView: View {
                             .font(.title)
                             .fontWeight(.black)
                             .foregroundColor(.primary)
-                            .lineLimit(3)
                         
                         Text("내 커리어 바로가기")
                             .font(.caption)

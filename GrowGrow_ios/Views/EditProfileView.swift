@@ -10,11 +10,14 @@ import FirebaseFirestore
 
 struct EditProfileView: View {
     @EnvironmentObject var session: SessionStore
+    
+    @ObservedObject private var sessionViewModel = SessionStore()
     @Environment(\.presentationMode) var presentationMode
     @State private var fullname: String = ""
     @State private var username: String = ""
     @State private var summary: String = ""
     @StateObject var viewModel = ViewModel()
+    @State private var agreedToChange : Bool = false
     
     
     @State private var selectedRegion = 0
@@ -79,22 +82,48 @@ struct EditProfileView: View {
     func updateUser(){
         let db = Firestore.firestore()
         
-        db.collection("Users").document(self.session.session!.uid).updateData([
-            "fullname" : fullname,
-            "username" : username,
-            "summary" : summary,
-            "region" : regions[selectedRegion],
-            "depart" : departs[selectedDepart],
-            "major" : viewModel.contents[selectedMajor].mClass
+        if agreedToChange == true {
+            
+            db.collection("Users").document(self.session.session!.uid).updateData([
+                "fullname" : fullname,
+                "username" : username,
+                "summary" : summary,
+                "region" : regions[selectedRegion],
+                "depart" : departs[selectedDepart],
+                "major" : viewModel.contents[selectedMajor].mClass
+            
+            
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                      } else {
+                          print("Document successfully updated")
+                      }
+            }
+            
+            
+            
+        } else {
+            
+            db.collection("Users").document(self.session.session!.uid).updateData([
+                "fullname" : fullname,
+                "username" : username,
+                "summary" : summary,
         
-        
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-                  } else {
-                      print("Document successfully updated")
-                  }
+            
+            
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                      } else {
+                          print("Document successfully updated")
+                      }
+            }
+            
+            
         }
+        
+       
         
         
         
@@ -129,38 +158,53 @@ struct EditProfileView: View {
             VStack{
                 FormField(value: $fullname, icon: "person.fill", placeholder: "fullname")
                 FormField(value: $username, icon: "person.fill", placeholder: "username")
-                FormField(value: $summary, icon: "person.fill", placeholder: "한줄요약")
+                TextEditor(text: $summary)
+                    .frame(height: 50, alignment: .center)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+                    .overlay(
+                             RoundedRectangle(cornerRadius: 25)
+                               .stroke(Color.black, lineWidth: 2)
+                             )
                 
             }
                     
                 }
-               
-                               //퍼센트 섹션
-                Section(header: Text("현재 나의 지역 \(self.session.session!.region)")) {
-                                    Picker("지역 선택", selection: $selectedRegion) {
+                
+                Section{
+                    Toggle("Agree to change",isOn: $agreedToChange)
+                   
+                }
+                
+                               
+                Section(header: Text("현재 나의 지역 \(sessionViewModel.region)")) {
+                                    Picker("선택된 지역", selection: $selectedRegion) {
                                         //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
                                         ForEach(0 ..< regions.count) {
                                             Text("\(self.regions[$0])")
                                         }
-                                    }
+                                    }.disabled(agreedToChange == false)
                                 }
                 
-                Section(header: Text("현재 나의 계열 \(self.session.session!.depart)")) {
-                    Picker("계열 선택", selection: $selectedDepart) {
+                Section(header: Text("현재 나의 계열 \(sessionViewModel.depart)")) {
+                    Picker("선택된 계열", selection: $selectedDepart) {
                         //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
                         ForEach(0 ..< departs.count) {
                             Text("\(self.departs[$0])")
+                            
                         }
-                    }
+                    }.disabled(agreedToChange == false)
                 }
                 
-                Section(header: Text("현재 나의 전공 \(self.session.session!.major)")) {
-                    Picker("전공 선택", selection: $selectedMajor) {
+                Section(header: Text("현재 나의 전공 \(sessionViewModel.major)")) {
+                    Picker("선택된 전공", selection: $selectedMajor) {
                      ForEach(0 ..< viewModel.contents.count, id: \.self) {
                              Text(self.viewModel.contents[$0].mClass)
                             
                         }
-                    }.onAppear{
+                    }
+                    .disabled(agreedToChange == false)
+                    .onAppear{
                         urlControl()
                         viewModel.getJson(urlString: urlString)
                             
@@ -173,6 +217,8 @@ struct EditProfileView: View {
                 
                 
             
+            }.onAppear(){
+                self.sessionViewModel.getCurrentUser()
             }
             
             

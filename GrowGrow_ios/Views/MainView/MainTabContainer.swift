@@ -19,6 +19,7 @@ struct MainTabContainer: View {
                     
                     }
                 
+       
             
         NavigationView {
             
@@ -31,6 +32,7 @@ struct MainTabContainer: View {
         }.tabItem{
             Image(systemName: "magnifyingglass")
         }
+        
             
             
             

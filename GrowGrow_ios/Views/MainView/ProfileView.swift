@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
 import Firebase
-import grpc
+// import grpc
 
 
 struct ProfileView: View {
@@ -18,8 +18,9 @@ struct ProfileView: View {
     @ObservedObject private var viewModel = SessionStore()
     
     
-    @State private var showEditView = false
+    @State private var showEditProfileView = false
     @State private var showAddView = false
+    @State private var showEditBioView = false
     @State var nativeAlert = false
     @State var keyword = ""
     // @State var keywords: [[Keyword]] = []
@@ -107,8 +108,9 @@ struct ProfileView: View {
     
     
     var body: some View {
-        
-        VStack {
+       
+       VStack{
+      
             
             Group {
                 
@@ -116,14 +118,14 @@ struct ProfileView: View {
                     
                     VStack{
                         
-                        Text(self.session.session!.fullname)
-                        Text(self.session.session!.username)
+                        Text(viewModel.fullname)
+                        Text("@\(viewModel.username)")
                     }
                     
-                    Button(action: {showEditView.toggle()}){
+                    Button(action: {showEditProfileView.toggle()}){
                         Image(systemName: "house")
                         
-                    }.sheet(isPresented: $showEditView, content: {EditProfileView(initfullname: self.session.session!.fullname, initusername: self.session.session!.username, initsummary: self.session.session!.summary)})
+                    }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
                     
                     
                 }
@@ -131,44 +133,25 @@ struct ProfileView: View {
                 
                 
             }
+            
+      
+           ScrollView{
             Divider()
 
             HStack{
-                
-            
-                
-                Text(self.session.session!.depart)
-                Text(self.session.session!.major)
+                Text(viewModel.depart)
+                Text(viewModel.major)
                 
                 
             }
             Divider()
                 
-                Text(self.session.session!.summary)
+            Text(viewModel.summary)
             
             Divider()
             
-            VStack{
-                ForEach(viewModel.keywords, id:\.self){ keyword in
-                    Text(keyword)
-                    
-
-                    
-                }
-                
-                
-            }.onAppear(){
-                
-                self.viewModel.getKeywords()
-                
-            }
-            
-            
-            
-            
-            
-            
-          
+        
+           
             HStack{
                 
               
@@ -185,7 +168,7 @@ struct ProfileView: View {
                     
                 }
                 
-                Button(action:{
+               /* Button(action:{
                     
                     viewModel.getKeywords()
                     
@@ -194,18 +177,252 @@ struct ProfileView: View {
                     Image(systemName: "mic")
                     
                 }
+                */
+                
+            }
+           
+            
+            VStack(alignment: .leading) {
+                
+                ForEach(viewModel.keywordsForChips, id: \.self){ subItems in
+                    HStack{
+                        ForEach(subItems, id:\.self){ word in
+                            HStack(alignment: .center){
+                            
+                            Text(word)
+                                //.padding()
+                                .fixedSize()
+                                .background(Color.gray)
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+                                
+                                Image(systemName: "trash")
+                                        .onTapGesture {
+                                            print(word)
+                                        }
+                            }.background(Color.blue)
+                        }
+                        
+                    }
+                    
+                }
+                
+            }.onAppear(){
+                self.viewModel.getKeywords(uid: Auth.auth().currentUser!.uid)
+            }
+            
+           Group{
+                Divider()
+                    .background(Color.black)
+                    .frame(height: 30)
+                    
+               HStack{
+                   
+                   Text("Footprint").font(.largeTitle)
+                   Button(action: {showEditBioView.toggle()}){
+                       
+                       Image(systemName: "pencil.circle")
+                       
+                   }.sheet(isPresented: $showEditBioView, content: {EditBioView()})
+                       
+                   
+                   
+               }
+                
+                    
+                
+       }
+            
+
+            
+            
+                
+                LazyVStack(alignment: .center){
+                     
+                     ForEach(viewModel.bios){bio in
+                         VStack{
+                             
+                             BioView(date: bio.date, description: bio.description)
+                         }
+                         
+                         
+                     }
+                 }.onAppear(){
+                     self.viewModel.getBios(uid: Auth.auth().currentUser!.uid)
+                 }
+                
                 
                 
             }
             
-           
-                
-          
-                
-            
-            
+         
             
         }
+        .onAppear(){
+            self.viewModel.getCurrentUser()
+            
+        }
+        
+        /* VStack(alignment:.leading){
+            
+            HStack{
+                
+                VStack{
+                    
+                    Text(viewModel.fullname)
+                    Text("@\(viewModel.username)")
+                }
+                
+                Button(action: {showEditView.toggle()}){
+                    Image(systemName: "house")
+                    
+                }.sheet(isPresented: $showEditView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                
+                
+            }
+    
+            List{
+                
+                Divider()
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: -20 , leading: 0, bottom: -20, trailing: 0))
+                    
+                
+                HStack{
+                    Text(viewModel.depart)
+                    Text(viewModel.major)
+                    Spacer()
+                        
+                    
+                    
+                }.listRowSeparator(.hidden)
+                
+                
+                
+                Divider()
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: -20 , leading: 0, bottom: -20, trailing: 0))
+                    
+                Text(viewModel.summary)
+                    .listRowSeparator(.hidden)
+                   
+                    
+                
+                Divider()
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: -20 , leading: 0, bottom: -20, trailing: 0))
+                
+                HStack{
+                    
+                  
+                    
+                    Button(action: {showAddView.toggle()}){
+                        Image(systemName: "folder.badge.plus")
+                        
+                    }.sheet(isPresented: $showAddView, content: {AddProfileView()})
+                    
+                    Button(action:{
+                        alertView()
+                    }){
+                        Image(systemName: "plus.rectangle.on.rectangle")
+                        
+                    }
+                    
+                   /* Button(action:{
+                        
+                        viewModel.getKeywords()
+                        
+                        
+                    }){
+                        Image(systemName: "mic")
+                        
+                    }
+                    */
+                    
+                }
+                .listRowSeparator(.hidden)
+                
+                VStack(alignment: .leading) {
+                    
+                    ForEach(viewModel.keywordsForChips, id: \.self){ subItems in
+                        HStack{
+                            ForEach(subItems, id:\.self){ word in
+                                HStack(alignment: .center){
+                                
+                                Text(word)
+                                    //.padding()
+                                    .fixedSize()
+                                    .background(Color.gray)
+                                    .lineLimit(1)
+                                    .foregroundColor(Color.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+                                    
+                                    Image(systemName: "trash")
+                                            .onTapGesture {
+                                                print(word)
+                                            }
+                                }.background(Color.blue)
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }.onAppear(){
+                    self.viewModel.getKeywords(uid: Auth.auth().currentUser!.uid)
+                }
+                
+                Divider()
+                    .background(Color.black)
+                    .frame(height: 30)
+                    .listRowSeparator(.hidden)
+               
+                Text("Footprint").font(.largeTitle)
+                    .listRowSeparator(.hidden)
+                    .modifier(CenterModifier())
+                
+                
+                ForEach(viewModel.bios){bio in
+                    
+                        
+    
+                    
+                        BioView(date: bio.date, description: bio.description)
+                        .listRowSeparator(.hidden)
+                        .swipeActions{
+                            
+                            Button(role: .destructive, action: {}, label: {Label("삭제",systemImage: "trash.circle.fill")})
+                            
+                            
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: false){
+                            Button(action: {}, label: {Label("수정",systemImage: "pencil.circle.fill")})
+                                .tint(.blue)
+                            
+                            
+                        }
+                        
+                        
+                    
+                    
+                        
+                }
+                
+                
+            }
+            .listStyle(PlainListStyle())
+            .onAppear(){
+                self.viewModel.getBios(uid: Auth.auth().currentUser!.uid)
+                self.viewModel.getCurrentUser()
+            }
+     Spacer()
+        } */
+        // .frame(maxWidth:.infinity,maxHeight: .infinity)
+        
+        
+      
+    
         
     
        
@@ -256,4 +473,5 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView()
     }
 }
+
 
