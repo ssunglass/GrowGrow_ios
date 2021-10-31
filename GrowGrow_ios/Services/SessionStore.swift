@@ -25,6 +25,7 @@ class SessionStore: ObservableObject {
     @Published var major: String = ""
     @Published var summary: String = ""
     @Published var region: String = ""
+    @Published var uid: String = ""
     
     
     private let db = Firestore.firestore()
@@ -71,10 +72,11 @@ class SessionStore: ObservableObject {
                 let depart = data["depart"] as? String ?? ""
                 let major = data["major"] as? String ?? ""
                 let summary = data["summary"] as? String ?? ""
+                let uid = data["uid"] as? String ?? ""
             
                 
                 
-                return AllUsers(fullname: fullname, username: username, summary: summary, depart: depart, major: major)
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major)
                 
             }
             

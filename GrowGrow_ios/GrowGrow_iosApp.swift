@@ -17,6 +17,7 @@ struct GrowGrow_iosApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(SessionStore())
+            
         }
     }
 }

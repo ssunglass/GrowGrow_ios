@@ -79,6 +79,8 @@ struct EditProfileView: View {
         
     }
     
+    
+    
     func updateUser(){
         let db = Firestore.firestore()
         

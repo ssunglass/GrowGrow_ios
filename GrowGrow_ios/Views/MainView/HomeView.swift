@@ -18,6 +18,9 @@ struct HomeView: View {
     
     var body: some View {
         
+        NavigationView{
+      
+        
     VStack(alignment:.leading){
                 
         HomeCardView(fullname: viewModel.fullname,
@@ -39,11 +42,23 @@ struct HomeView: View {
             }
             
             
+          
+               
+                
+            
+            
             LazyVGrid(columns: columns) {
                 ForEach(viewModel.users.shuffled()){ user in
-                    VStack(alignment:.leading){
-                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                    
+                    NavigationLink(destination: UserDetailView(uid: user.uid)){
                         
+                    VStack(alignment:.leading){
+                        
+                        
+
+                        
+                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                        }
                        /* Text(user.fullname)
                         Text(user.username)
                         Text(user.depart)
@@ -58,10 +73,11 @@ struct HomeView: View {
                 }
                 }.onAppear(){
                     self.viewModel.getUsers()
+                   
                 
+                }
                 
-                
-            }
+            
             
             
         }
@@ -100,6 +116,12 @@ struct HomeView: View {
         
         
     }
+    .navigationBarHidden(true)
+            
+            
+            
+        }
+        
             
     }
 }

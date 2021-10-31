@@ -53,6 +53,7 @@ struct UserCardView: View {
         var depart: String
         var major: String
         var summary: String
+    
         var body: some View{
            
             VStack(alignment: .leading){
@@ -94,6 +95,7 @@ struct UserCardView: View {
             )
            
             .padding([.top, .horizontal])
+            
            
             
         }

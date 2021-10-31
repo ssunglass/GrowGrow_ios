@@ -63,6 +63,75 @@ struct ProfileView: View {
         
     }
     
+    func deleteKeyword(keyword: String){
+        
+        let keywordRef = db.collection("Users").document(self.session.session!.uid)
+        
+        keywordRef.updateData([
+            "keywords" : FieldValue.arrayRemove([keyword])
+        ])
+        
+        keywordRef.updateData([
+            "keywords_search" : FieldValue.delete()
+        ]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                
+                keywordRef.addSnapshotListener{
+                    
+                    documentSnapshot, error in
+                          guard let document = documentSnapshot else {
+                            print("Error fetching document: \(error!)")
+                            return
+                          }
+                          guard let data = document.data() else {
+                            print("Document data was empty.")
+                            return
+                          }
+                    
+                    let keywords = data["keywords"] as? [String] ?? [""]
+                    
+                    for keyword in keywords {
+                        var inputString = keyword
+                        let words = inputString.components(separatedBy: " ")
+                        
+                        for word in words {
+                            
+                            
+                            for separated in inputString.splitString() {
+                                
+                                keywordRef.updateData([
+                                    "keywords_search" : FieldValue.arrayUnion([separated])
+                                ])
+                                
+                                
+                            }
+                            
+                           
+                            
+                            inputString = inputString.replacingOccurrences(of: "\(word) ", with: "")
+                            
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
    /* func getKeywords() {
         
         let userId = Auth.auth().currentUser!.uid
@@ -148,7 +217,7 @@ struct ProfileView: View {
                 
             Text(viewModel.summary)
             
-            Divider()
+               Divider()
             
         
            
@@ -160,6 +229,7 @@ struct ProfileView: View {
                     Image(systemName: "folder.badge.plus")
                     
                 }.sheet(isPresented: $showAddView, content: {AddProfileView()})
+                    
                 
                 Button(action:{
                     alertView()
@@ -199,7 +269,7 @@ struct ProfileView: View {
                                 
                                 Image(systemName: "trash")
                                         .onTapGesture {
-                                            print(word)
+                                           deleteKeyword(keyword: word)
                                         }
                             }.background(Color.blue)
                         }

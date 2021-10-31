@@ -24,7 +24,7 @@ struct AllUsers: Identifiable{
 
     var fullname:String
     var username:String
-   // var uid:String
+    var uid:String
     var summary:String
     var depart:String
     var major:String
