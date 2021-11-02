@@ -27,6 +27,7 @@
 		5494992D272D6A770085819F /* EditBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494992C272D6A770085819F /* EditBioView.swift */; };
 		5494992F272E32B60085819F /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494992E272E32B60085819F /* UserDetailView.swift */; };
 		54949931272E72DD0085819F /* EditBioTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54949930272E72DD0085819F /* EditBioTextView.swift */; };
+		54949933273126BE0085819F /* SearchedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54949932273126BE0085819F /* SearchedView.swift */; };
 		54994623272A68BE001C83E4 /* BioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54994622272A68BE001C83E4 /* BioService.swift */; };
 		54A1EF872729810A008DE4FB /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1EF862729810A008DE4FB /* AddProfileView.swift */; };
 		54A2EF892722774400051DCB /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF882722774400051DCB /* SessionStore.swift */; };
@@ -60,6 +61,7 @@
 		5494992C272D6A770085819F /* EditBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBioView.swift; sourceTree = "<group>"; };
 		5494992E272E32B60085819F /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 		54949930272E72DD0085819F /* EditBioTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBioTextView.swift; sourceTree = "<group>"; };
+		54949932273126BE0085819F /* SearchedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedView.swift; sourceTree = "<group>"; };
 		54994622272A68BE001C83E4 /* BioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioService.swift; sourceTree = "<group>"; };
 		54A1EF862729810A008DE4FB /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
 		54A2EF882722774400051DCB /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				5494992C272D6A770085819F /* EditBioView.swift */,
 				5494992E272E32B60085819F /* UserDetailView.swift */,
 				54949930272E72DD0085819F /* EditBioTextView.swift */,
+				54949932273126BE0085819F /* SearchedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				54A2EF8D272284EA00051DCB /* SearchView.swift in Sources */,
 				54A2EF9527228E0800051DCB /* MainTabContainer.swift in Sources */,
 				548841252726DF0A0072BAF7 /* Modal.swift in Sources */,
+				54949933273126BE0085819F /* SearchedView.swift in Sources */,
 				5494992B272C257C0085819F /* BioView.swift in Sources */,
 				5421ACC92721A7E400F12168 /* Extensions.swift in Sources */,
 				54A2EF8B272280D600051DCB /* HomeView.swift in Sources */,

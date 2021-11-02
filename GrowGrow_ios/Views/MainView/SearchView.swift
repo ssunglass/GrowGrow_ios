@@ -20,6 +20,7 @@ struct SearchView: View {
     @State var showSheet: Bool = false
     @State var isSelectedRegion : Bool = false
     @State var isSelectedDepart : Bool = false
+    @State var searchIsActive : Bool = false
     
     
     @State var selectionsDepart: [String] = []
@@ -40,7 +41,8 @@ struct SearchView: View {
         
         
         
-       
+        NavigationView{
+            
         VStack{
             Text("키워드 검색")
             
@@ -60,6 +62,9 @@ struct SearchView: View {
                             print(selectionsDepart)
                         } else {
                             print("not select \(depart)")
+                           selectionsDepart = selectionsDepart.filter{ $0 != depart}
+                            print(selectionsDepart)
+                           
                         }
                         
                         
@@ -115,6 +120,10 @@ struct SearchView: View {
                                     
                                 } else {
                                     print("notSelected \(region)")
+                                    selectionsRegion = selectionsRegion.filter{ $0 != region}
+                                    print(selectionsRegion)
+                                    
+                                    
                                 }
                 }
                             
@@ -140,6 +149,8 @@ struct SearchView: View {
                        
             
             Button(action:{
+                
+                searchIsActive.toggle()
                
               
             }){
@@ -157,19 +168,26 @@ struct SearchView: View {
                 
                 )
             }.padding()
-           
+            
+            
+            NavigationLink(destination: SearchedView(), isActive: $searchIsActive){
+                
+                
+                
+            }.hidden()
+            
+                .navigationTitle("검색")
                 
             
-            
+                
             
             
             
             
         }
             
-            
     
-        
+        }
         
             
 

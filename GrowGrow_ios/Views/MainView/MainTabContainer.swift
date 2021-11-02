@@ -20,8 +20,13 @@ struct MainTabContainer: View {
                     }
                 
        
+        SearchView()
+            .tabItem{
+                Image(systemName: "magnifyingglass")
+            }
+        
             
-        NavigationView {
+       /* NavigationView {
             
             SearchView()
             
@@ -31,7 +36,7 @@ struct MainTabContainer: View {
             
         }.tabItem{
             Image(systemName: "magnifyingglass")
-        }
+        } */
         
             
             
