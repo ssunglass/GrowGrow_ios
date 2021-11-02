@@ -8,15 +8,25 @@
 import SwiftUI
 
 struct SearchedView: View {
+    
+    var inputKeyword: String
+    var inputDeparts: [String]
+    var inputRegions: String?
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-          
+        VStack{
+        Text(inputKeyword)
+        Text(inputRegions ?? "")
+            
+            ForEach(inputDeparts, id: \.self){input in
+                Text(input)
+            }
+            
+            
+        }
             .navigationTitle("검색된 유저")
     }
 }
 
-struct SearchedView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchedView()
-    }
-}
+

@@ -13,7 +13,7 @@ struct SearchView: View {
     
     @ObservedObject private var viewModel = SessionStore()
     @State var keyword: String = ""
-    @State var selectedRegion: String = "대학권역"
+   // @State var selectedRegion: String = "대학권역"
     let departs = ["인문","사회","공학","자연","교육","의약","예체능"]
     let regions = ["서울/경기","강원","충청","대구/경북","전북/전남","제주"]
     
@@ -22,9 +22,13 @@ struct SearchView: View {
     @State var isSelectedDepart : Bool = false
     @State var searchIsActive : Bool = false
     
+    @State private var showingAlert = false
+    
+    @State var selectedRegion: String?
+    
     
     @State var selectionsDepart: [String] = []
-    @State var selectionsRegion: [String] = []
+   
     
     
     let columns = [
@@ -79,7 +83,23 @@ struct SearchView: View {
         
             Text("지역")
             
-            Text(selectedRegion)
+            LazyVGrid(columns: columns, spacing: 15){
+                ForEach(regions, id: \.self){region in
+                    HStack{
+                        Text(region)
+                            .foregroundColor(self.selectedRegion == region ? .green : .blue)
+                        
+                        
+                    }.onTapGesture {
+                        self.selectedRegion = region
+                    }
+                    
+                    
+                    
+                }
+            }
+            
+           /* Text(selectedRegion)
                 .foregroundColor(.white)
                 .background(Color.black)
                        .cornerRadius(40)
@@ -143,15 +163,23 @@ struct SearchView: View {
                             
                         }
                     }
-                })
+                }) */
             
             
                        
             
             Button(action:{
-                
+                if keyword == "" {
+                    
+                    showingAlert.toggle()
+                    print("no")
+                    
+                    
+                } else {
+                    
                 searchIsActive.toggle()
-               
+                    
+                }
               
             }){
                 
@@ -168,9 +196,15 @@ struct SearchView: View {
                 
                 )
             }.padding()
+                .alert(isPresented: $showingAlert){
+                    Alert(title: Text("커커"), message: Text("검색어를 입력해주세요"), dismissButton: .default(Text("확인")) {
+
+                        
+                    })
+                }
             
             
-            NavigationLink(destination: SearchedView(), isActive: $searchIsActive){
+            NavigationLink(destination: SearchedView(inputKeyword: keyword, inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
                 
                 
                 
