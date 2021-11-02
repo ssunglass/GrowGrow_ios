@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseAuth
 
 struct AddProfileView: View {
     @State private var bioText = ""
    // @State private var keywordText = ""
     @Environment(\.presentationMode) var presentationMode
+    @StateObject private var viewModel = SessionStore()
+    
    
     
     @State private var selectedYearIndex: Int = 0
@@ -50,6 +54,8 @@ struct AddProfileView: View {
        }
         
     }
+    
+  
 
   
     
@@ -120,6 +126,8 @@ struct AddProfileView: View {
                     
                     
                 }
+                
+               
             }
             
             
@@ -127,6 +135,7 @@ struct AddProfileView: View {
             
             
         }
+        
     }
 }
 

@@ -15,7 +15,7 @@ import Firebase
 struct ProfileView: View {
     
     @EnvironmentObject var session: SessionStore
-    @ObservedObject private var viewModel = SessionStore()
+    @StateObject private var viewModel = SessionStore()
     
     
     @State private var showEditProfileView = false
@@ -37,7 +37,21 @@ struct ProfileView: View {
                 "keywords" : FieldValue.arrayUnion([keyword])
             ])
             
-            var inputString = keyword
+            var inputString = keyword.lowercased()
+            
+            
+            let trimmed = String(inputString.filter {!" \n\t\r".contains($0)})
+            
+            for word in trimmed.splitString() {
+                
+                keywordRef.updateData([
+                    "keywords_search" : FieldValue.arrayUnion([word])
+                ])
+                
+                
+            }
+            
+            
             let words = inputString.components(separatedBy: " ")
             
             for word in words {
@@ -94,7 +108,20 @@ struct ProfileView: View {
                     let keywords = data["keywords"] as? [String] ?? [""]
                     
                     for keyword in keywords {
-                        var inputString = keyword
+                        var inputString = keyword.lowercased()
+                        
+                        let trimmed = String(inputString.filter {!" \n\t\r".contains($0)})
+                        
+                        for word in trimmed.splitString() {
+                            
+                            keywordRef.updateData([
+                                "keywords_search" : FieldValue.arrayUnion([word])
+                            ])
+                            
+                            
+                        }
+                        
+                        
                         let words = inputString.components(separatedBy: " ")
                         
                         for word in words {

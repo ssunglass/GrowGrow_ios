@@ -47,6 +47,7 @@ extension String {
     }
 }
 
+
 extension String {
     func stringFromDate() -> String {
         let now = Date()
@@ -56,3 +57,5 @@ extension String {
         return dateFormatter.string(from: now)
     }
 }
+
+

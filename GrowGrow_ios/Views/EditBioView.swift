@@ -6,36 +6,83 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseAuth
 
 
 struct EditBioView: View {
     
-    @ObservedObject private var viewModel = SessionStore()
+    @StateObject private var viewModel = SessionStore()
     @EnvironmentObject var session: SessionStore
+    @State var editIsActive = false
+    @State var onEditDate: String = ""
+    @State var onEditText: String = ""
+    let db = Firestore.firestore()
    
+    
+    func deleteBio(date: String){
+        
+    
+        db.collection("Users").document(self.session.session!.uid)
+            .collection("Bios")
+            .document(date)
+            .delete(){error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    
+                    
+                } else {
+                    
+                    
+                   // self.viewModel.getBios(uid: self.session.session!.uid)
+                    
+                }
+                
+                
+            }
+        
+        
+        
+        
+        
+        
+    }
     
     
     var body: some View {
         
      
-        
-    List{
+        NavigationView{
+       List{
         
         ForEach(viewModel.bios){bio in
             
             
-    
+           
+        
+                
+            
             
             BioView(date: bio.date, description: bio.description)
+                
+                
                 .modifier(CenterModifier())
                 .swipeActions{
                     
-                    Button(role: .destructive, action: {}, label: {Label("삭제",systemImage: "trash.circle.fill")})
+                    Button(role: .destructive, action: {
+                        deleteBio(date: bio.date)
+                  
+                    }, label: {Label("삭제",systemImage: "trash.circle.fill")})
                     
                     
                 }
+                
                 .swipeActions(edge: .leading, allowsFullSwipe: false){
-                     Button(action: {}, label: {Label("수정",systemImage: "pencil.circle.fill")})
+                     Button(action: {
+                         editIsActive.toggle()
+                         onEditDate = bio.date
+                         onEditText = bio.description
+                     }, label: {Label("수정",systemImage: "pencil.circle.fill")})
                         .tint(.blue)
                     
                    
@@ -43,13 +90,23 @@ struct EditBioView: View {
                     
                 }
             
-            
+        
             
         }
+           
+           NavigationLink(destination: EditBioTextView(editBioText: onEditText, date: onEditDate), isActive: $editIsActive){
+              Image(systemName: "pencil.circle.fill")
+              
+              
+          }
+           .hidden()
         
         
     }.onAppear(){
             self.viewModel.getBios(uid: self.session.session!.uid)
+             
+        }
+   
         }
         
     }

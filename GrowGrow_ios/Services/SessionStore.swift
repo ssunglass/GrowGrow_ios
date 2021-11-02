@@ -168,6 +168,7 @@ class SessionStore: ObservableObject {
                 
             guard let documents = querySnapshot?.documents else {return}
             
+                
             self.bios = documents.map { (queryDocumentSnapshot) -> AllBios in
                 let data = queryDocumentSnapshot.data()
                 let date = data["date"] as? String ?? ""
@@ -179,6 +180,7 @@ class SessionStore: ObservableObject {
                 return AllBios(date: date, description: description)
                 
             }
+                
             
         }
         
