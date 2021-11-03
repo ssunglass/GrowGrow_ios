@@ -9,19 +9,39 @@ import SwiftUI
 
 struct SearchedView: View {
     
+    @StateObject private var viewModel = SessionStore()
+    
     var inputKeyword: String
-    var inputDeparts: [String]
+    var inputDeparts: [String]?
     var inputRegions: String?
     
     
+    
+    func getSearchedUsers(){
+        
+        
+        
+        
+        
+        
+    }
+    
     var body: some View {
-        VStack{
-        Text(inputKeyword)
-        Text(inputRegions ?? "")
-            
-            ForEach(inputDeparts, id: \.self){input in
-                Text(input)
+        List{
+            ForEach(viewModel.searchedUsers){ user in
+                
+                Text(user.fullname)
+                
+                
+                
+                
             }
+            
+            
+            
+        }.onAppear(){
+            self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts ?? [""], region: inputRegions ?? "")
+            
             
             
         }

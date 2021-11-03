@@ -28,7 +28,7 @@ struct AllUsers: Identifiable{
     var summary:String
     var depart:String
     var major:String
-   // var region:String
+    var region:String
 }
 
 struct Bio: Codable {

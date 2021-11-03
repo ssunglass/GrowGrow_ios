@@ -22,6 +22,7 @@ struct SearchView: View {
     @State var isSelectedDepart : Bool = false
     @State var searchIsActive : Bool = false
     
+    
     @State private var showingAlert = false
     
     @State var selectedRegion: String?
@@ -54,6 +55,7 @@ struct SearchView: View {
                 .textFieldStyle(.roundedBorder)
             
             Text("필터 검색")
+            Toggle("ON",isOn: $agreedToFilter)
             
            
             
@@ -78,6 +80,7 @@ struct SearchView: View {
                     
                 }
             }.padding(.horizontal)
+             
             
             
         
@@ -93,6 +96,7 @@ struct SearchView: View {
                     }.onTapGesture {
                         self.selectedRegion = region
                     }
+                    
                     
                     
                     

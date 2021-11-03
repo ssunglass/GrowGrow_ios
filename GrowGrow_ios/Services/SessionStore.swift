@@ -18,6 +18,7 @@ class SessionStore: ObservableObject {
     @Published var bios = [AllBios]()
   //  @Published var keywords = [String]()
     @Published var keywordsForChips = [[String]]()
+    @Published var searchedUsers = [AllUsers]()
     
     @Published var fullname: String = ""
     @Published var username: String = ""
@@ -73,14 +74,74 @@ class SessionStore: ObservableObject {
                 let major = data["major"] as? String ?? ""
                 let summary = data["summary"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
+                let region = data["region"] as? String ?? ""
             
                 
                 
-                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major)
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
                 
             }
             
         }
+        
+        
+    }
+    
+    func getSearchedUser(keyword:String, depart:[String], region:String){
+        
+        var query: Query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
+        
+        /* if depart.isEmpty && region.isEmpty {
+            
+          query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
+            
+        } else */ if !depart.isEmpty && region.isEmpty {
+            
+            query = /* db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword) */
+                query.whereField("depart", in: depart)
+            
+        } else if depart.isEmpty && !region.isEmpty {
+            
+            query = /* db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword) */
+                query.whereField("region", isEqualTo: region)
+            
+        } else {
+            query = /* db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword) */
+                query.whereField("depart", in: depart)
+                     .whereField("region", isEqualTo: region)
+    
+        }
+        
+        query.addSnapshotListener{ (querySnapshot, error ) in
+            guard let documents = querySnapshot?.documents else {return}
+            
+            self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                let data = queryDocumentSnapshot.data()
+                let fullname = data["fullname"] as? String ?? ""
+                let username = data["username"] as? String ?? ""
+                let depart = data["depart"] as? String ?? ""
+                let major = data["major"] as? String ?? ""
+                let summary = data["summary"] as? String ?? ""
+                let uid = data["uid"] as? String ?? ""
+                let region = data["region"] as? String ?? ""
+            
+                
+                
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
+                
+            }
+            
+            
+            
+            
+        }
+        
+        
+        
+        
         
         
     }
