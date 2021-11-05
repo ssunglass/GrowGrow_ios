@@ -220,7 +220,7 @@ struct EditProfileView: View {
                 
             
             }.onAppear(){
-                self.sessionViewModel.getCurrentUser()
+                self.sessionViewModel.getUserDoc(uid: self.session.session!.uid)
             }
             
             

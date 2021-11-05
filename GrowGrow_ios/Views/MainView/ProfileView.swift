@@ -357,7 +357,7 @@ struct ProfileView: View {
             
         }
         .onAppear(){
-            self.viewModel.getCurrentUser()
+            self.viewModel.getUserDoc(uid: self.session.session!.uid)
             
         }
         

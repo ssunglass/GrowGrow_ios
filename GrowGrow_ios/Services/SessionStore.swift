@@ -146,9 +146,70 @@ class SessionStore: ObservableObject {
         
     }
     
-    func getCurrentUser(){
+    func saveUser(saveUid:String){
         
-        db.collection("Users").document(Auth.auth().currentUser!.uid)
+        
+        db.collection("Users").document(saveUid)
+            .addSnapshotListener{ (documentSnapshot, error) in
+                
+                guard let document = documentSnapshot else {
+                  print("Error fetching document: \(error!)")
+                  return
+                }
+                guard let data = document.data() else {
+                  print("Document data was empty.")
+                  return
+                }
+                
+                let savedFullname = data["fullname"] as? String ?? ""
+                let savedUsername = data["username"] as? String ?? ""
+                let savedDepart = data["depart"] as? String ?? ""
+                let savedMajor = data["major"] as? String ?? ""
+                let savedSummary = data["summary"] as? String ?? ""
+                let savedRegion = data["region"] as? String ?? ""
+                
+                let savedUser = User.init(fullname: savedFullname, username: savedUsername, uid: saveUid, summary: savedSummary, depart: savedDepart, major: savedMajor, region: savedRegion)
+                
+                
+                guard let dict = try?savedUser.asDictionary() else {return}
+                
+                
+                self.db.collection("Users")
+                    .document(Auth.auth().currentUser!.uid)
+                    .collection("SavedUsers")
+                    .document(saveUid)
+                    .setData(dict)
+            
+            }
+        
+        
+        
+        
+      
+        
+        
+        
+        
+    }
+    
+    func unSaveUser(saveUid:String){
+        
+        db.collection("Users")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("SavedUsers")
+            .document(saveUid)
+            .delete()
+        
+        
+        
+        
+        
+        
+    }
+    
+    func getUserDoc(uid:String){
+        
+        db.collection("Users").document(uid)
             .addSnapshotListener{ (documentSnapshot, error) in
                 
                 guard let document = documentSnapshot else {
