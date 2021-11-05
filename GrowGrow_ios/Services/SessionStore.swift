@@ -89,27 +89,27 @@ class SessionStore: ObservableObject {
     
     func getSearchedUser(keyword:String, depart:[String], region:String){
         
-        var query: Query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
+        var query: Query
         
-        /* if depart.isEmpty && region.isEmpty {
+        if depart.isEmpty && region == "" {
             
           query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
             
-        } else */ if !depart.isEmpty && region.isEmpty {
+        } else  if !depart.isEmpty && region == "" {
             
-            query = /* db.collection("Users")
-                .whereField("keywords_search", arrayContains: keyword) */
+            query =  db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword)
                 query.whereField("depart", in: depart)
             
-        } else if depart.isEmpty && !region.isEmpty {
+        } else if depart.isEmpty && region != "" {
             
-            query = /* db.collection("Users")
-                .whereField("keywords_search", arrayContains: keyword) */
+            query =  db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword)
                 query.whereField("region", isEqualTo: region)
             
         } else {
-            query = /* db.collection("Users")
-                .whereField("keywords_search", arrayContains: keyword) */
+            query =  db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword)
                 query.whereField("depart", in: depart)
                      .whereField("region", isEqualTo: region)
     

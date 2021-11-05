@@ -55,8 +55,7 @@ struct SearchView: View {
                 .textFieldStyle(.roundedBorder)
             
             Text("필터 검색")
-            Toggle("ON",isOn: $agreedToFilter)
-            
+           
            
             
             LazyVGrid(columns: columns, spacing: 15){
@@ -94,7 +93,16 @@ struct SearchView: View {
                         
                         
                     }.onTapGesture {
-                        self.selectedRegion = region
+                        if self.selectedRegion == region {
+                            self.selectedRegion = ""
+                            
+                            
+                        } else {
+                            self.selectedRegion = region
+                            
+                            
+                        }
+                        
                     }
                     
                     

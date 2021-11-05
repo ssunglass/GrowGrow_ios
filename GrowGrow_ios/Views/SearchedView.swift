@@ -12,7 +12,7 @@ struct SearchedView: View {
     @StateObject private var viewModel = SessionStore()
     
     var inputKeyword: String
-    var inputDeparts: [String]?
+    var inputDeparts: [String]
     var inputRegions: String?
     
     
@@ -40,7 +40,7 @@ struct SearchedView: View {
             
             
         }.onAppear(){
-            self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts ?? [""], region: inputRegions ?? "")
+            self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts, region: inputRegions ?? "")
             
             
             
