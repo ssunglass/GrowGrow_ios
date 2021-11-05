@@ -205,6 +205,8 @@ struct ProfileView: View {
     
     var body: some View {
        
+        NavigationView{
+        
        VStack{
       
             
@@ -222,6 +224,15 @@ struct ProfileView: View {
                         Image(systemName: "house")
                         
                     }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    
+                    
+                    NavigationLink(destination: SavedUserListView()){
+                        Image(systemName: "bookmark.square.fill")
+                        
+                        
+                    }
+                    
+                  
                     
                     
                 }
@@ -359,6 +370,8 @@ struct ProfileView: View {
         .onAppear(){
             self.viewModel.getUserDoc(uid: self.session.session!.uid)
             
+        }
+        .navigationBarHidden(true)
         }
         
         /* VStack(alignment:.leading){

@@ -19,6 +19,7 @@ class SessionStore: ObservableObject {
   //  @Published var keywords = [String]()
     @Published var keywordsForChips = [[String]]()
     @Published var searchedUsers = [AllUsers]()
+    @Published var savedUsers = [AllUsers]()
     
     @Published var fullname: String = ""
     @Published var username: String = ""
@@ -86,6 +87,38 @@ class SessionStore: ObservableObject {
         
         
     }
+    
+    func getSavedUsers(){
+        db.collection("Users")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("SavedUsers")
+            .addSnapshotListener{ (querySnapshot, error ) in
+                
+            guard let documents = querySnapshot?.documents else {return}
+            
+            self.savedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                let data = queryDocumentSnapshot.data()
+                let fullname = data["fullname"] as? String ?? ""
+                let username = data["username"] as? String ?? ""
+                let depart = data["depart"] as? String ?? ""
+                let major = data["major"] as? String ?? ""
+                let summary = data["summary"] as? String ?? ""
+                let uid = data["uid"] as? String ?? ""
+                let region = data["region"] as? String ?? ""
+            
+                
+                
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    
     
     func getSearchedUser(keyword:String, depart:[String], region:String){
         

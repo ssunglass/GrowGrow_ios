@@ -17,14 +17,7 @@ struct SearchedView: View {
     
     
     
-    func getSearchedUsers(){
-        
-        
-        
-        
-        
-        
-    }
+
     
     var body: some View {
         List{
