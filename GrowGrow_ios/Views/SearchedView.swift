@@ -35,7 +35,7 @@ struct SearchedView: View {
         }.onAppear(){
             self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts, region: inputRegions ?? "")
             
-            
+         
             
         }
             .navigationTitle("검색된 유저")

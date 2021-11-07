@@ -18,6 +18,11 @@ struct ProfileView: View {
     @StateObject private var viewModel = SessionStore()
     
     
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicLight: String = "Apple SD Gothic Neo Light"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
+    let appleGothicMed : String = "Apple SD Gothic Neo Medium"
+    
     @State private var showEditProfileView = false
     @State private var showAddView = false
     @State private var showEditBioView = false
@@ -25,6 +30,13 @@ struct ProfileView: View {
     @State var keyword = ""
     // @State var keywords: [[Keyword]] = []
     let db = Firestore.firestore()
+    
+    @State var randomTextBase: Color = Color.black
+    @State var random: Color = Color(hex: "#E5E5E5")
+    
+    let colors = [Color(hex: "#E5E5E5"),
+                  Color(hex: "#C5C5C5"),
+                  Color(hex: "#646464")]
    
     
     
@@ -207,23 +219,37 @@ struct ProfileView: View {
        
         NavigationView{
         
-       VStack{
+            VStack(alignment: .leading){
       
             
             Group {
                 
                 HStack{
                     
-                    VStack{
+                    VStack(alignment: .leading){
                         
                         Text(viewModel.fullname)
+                            .font(.custom(appleGothicBold, size: 36))
+                            .foregroundColor(Color.black)
+                        
                         Text("@\(viewModel.username)")
+                            .font(.custom(appleGothicLight, size: 14))
+                            .foregroundColor(Color.black)
+                        
+                        
                     }
                     
                     Button(action: {showEditProfileView.toggle()}){
                         Image(systemName: "house")
                         
                     }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    
+                    Button(action:{
+                        alertView()
+                    }){
+                        Image(systemName: "plus.rectangle.on.rectangle")
+                        
+                    }
                     
                     
                     NavigationLink(destination: SavedUserListView()){
@@ -239,77 +265,106 @@ struct ProfileView: View {
                 
                 
                 
-            }
+            }.padding([.bottom])
             
       
-           ScrollView{
-            Divider()
+                ScrollView(.vertical){
+           
+                   
 
+               LazyVStack(alignment: .leading){
+                
+                
+                 Divider()
+                    .frame(width: 210)
+                    .background(Color(hex: "#CBCBCB"))
+                
+                
             HStack{
-                Text(viewModel.depart)
-                Text(viewModel.major)
-                
-                
-            }
-            Divider()
-                
-            Text(viewModel.summary)
+            Text(viewModel.depart)
+                    .font(.custom(appleGothicBold, size: 18))
+                    .foregroundColor(Color(hex: "#A7A7A7"))
+            Text(viewModel.major)
+                    .font(.custom(appleGothicBold, size: 18))
+                    .foregroundColor(Color(hex: "#A7A7A7"))
             
-               Divider()
+            
+            }.padding([.bottom])
+                
+                
+            
+                    
+            Divider()
+                    .frame(width: 210)
+                    .background(Color(hex: "#CBCBCB"))
+             
+                
+        Text(viewModel.summary)
+                       .font(.custom(appleGothicMed, size: 18))
+                       .foregroundColor(Color.black)
+                       .tracking(-1.5)
+                
             
         
+                
+                
+               }.padding([.bottom])
            
-            HStack{
-                
-              
-                
-                Button(action: {showAddView.toggle()}){
-                    Image(systemName: "folder.badge.plus")
-                    
-                }.sheet(isPresented: $showAddView, content: {AddProfileView()})
-                    
-                
-                Button(action:{
-                    alertView()
-                }){
-                    Image(systemName: "plus.rectangle.on.rectangle")
-                    
-                }
-                
-               /* Button(action:{
-                    
-                    viewModel.getKeywords()
-                    
-                    
-                }){
-                    Image(systemName: "mic")
-                    
-                }
-                */
-                
-            }
-           
+    
             
-            VStack(alignment: .leading) {
+                    LazyVStack(alignment: .leading) {
+                        
+                        Divider()
+                           .frame(width: 210)
+                           .background(Color(hex: "#CBCBCB"))
+                
+                
                 
                 ForEach(viewModel.keywordsForChips, id: \.self){ subItems in
-                    HStack{
+                    HStack(spacing: 10){
                         ForEach(subItems, id:\.self){ word in
-                            HStack(alignment: .center){
+                            
+                            ChipView(chipText: word)
+    
+                            
+                           /* HStack(alignment: .center, spacing: 2){
                             
                             Text(word)
-                                //.padding()
-                                .fixedSize()
-                                .background(Color.gray)
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
                                 
-                                Image(systemName: "trash")
+                                .fixedSize()
+                                .font(.custom(appleGothicMed, size: 16))
+                                //.background(Color.gray)
+                                .lineLimit(1)
+                                .foregroundColor(randomTextBase)
+                                //.clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+                                
+                                Image(systemName: "minus.circle")
                                         .onTapGesture {
                                            deleteKeyword(keyword: word)
                                         }
-                            }.background(Color.blue)
+                            }
+                            
+                            
+                            .onAppear(){
+                           
+                                
+                                if colors.randomElement()! == Color(hex: "#646464") {
+                                    
+                                    randomTextBase = Color.white
+                                    
+                                    
+                                } else {
+                                    randomTextBase = Color.black
+                                }
+                            }
+                            .padding(.leading, 15)
+                            .padding(.trailing, 15)
+                            .padding(.top, 2)
+                            .padding(.bottom,1.5 )
+                            .background(colors.randomElement()!)
+                             .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous)) */
+                            
+                                
                         }
                         
                     }
@@ -318,16 +373,31 @@ struct ProfileView: View {
                 
             }.onAppear(){
                 self.viewModel.getKeywords(uid: Auth.auth().currentUser!.uid)
+                
+              
             }
             
-           Group{
+                    LazyVStack(spacing: 13){
+               
                 Divider()
-                    .background(Color.black)
-                    .frame(height: 30)
+                   .frame(width: 35,height: 6)
+                   .background(Color.black)
                     
                HStack{
+            
+                   Button(action: {showAddView.toggle()}){
+                       Image(systemName: "folder.badge.plus")
+                       
+                   }.sheet(isPresented: $showAddView, content: {AddProfileView()})
                    
-                   Text("Footprint").font(.largeTitle)
+                   Text("Footprint")
+                       .font(.custom(appleGothicBold, size: 36))
+                       .foregroundColor(Color.black)
+                       .tracking(-1.5)
+                   
+                 
+                   
+                   
                    Button(action: {showEditBioView.toggle()}){
                        
                        Image(systemName: "pencil.circle")
@@ -341,12 +411,13 @@ struct ProfileView: View {
                     
                 
        }
+           .padding(.top,60)
             
 
             
             
                 
-                LazyVStack(alignment: .center){
+                LazyVStack(){
                      
                      ForEach(viewModel.bios){bio in
                          VStack{
@@ -362,7 +433,7 @@ struct ProfileView: View {
                 
                 
                 
-            }
+           }
             
          
             
@@ -371,6 +442,8 @@ struct ProfileView: View {
             self.viewModel.getUserDoc(uid: self.session.session!.uid)
             
         }
+        .padding(.leading,20)
+        .padding([.trailing,.top,.bottom])
         .navigationBarHidden(true)
         }
         
@@ -583,5 +656,153 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView()
     }
 }
+
+struct ChipView: View {
+    var chipText: String
+    
+    @EnvironmentObject var session: SessionStore
+    @State var randomTextBase: Color = Color.black
+    @State var random: Color = Color(hex: "#E5E5E5")
+    let appleGothicMed : String = "Apple SD Gothic Neo Medium"
+    
+    let colors = [Color(hex: "#E5E5E5"),
+                  Color(hex: "#C5C5C5"),
+                  Color(hex: "#646464")]
+    
+    let db = Firestore.firestore()
+    
+    func deleteKeyword(keyword: String){
+        
+        let keywordRef = db.collection("Users").document(self.session.session!.uid)
+        
+        keywordRef.updateData([
+            "keywords" : FieldValue.arrayRemove([keyword])
+        ])
+        
+        keywordRef.updateData([
+            "keywords_search" : FieldValue.delete()
+        ]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                
+                keywordRef.addSnapshotListener{
+                    
+                    documentSnapshot, error in
+                          guard let document = documentSnapshot else {
+                            print("Error fetching document: \(error!)")
+                            return
+                          }
+                          guard let data = document.data() else {
+                            print("Document data was empty.")
+                            return
+                          }
+                    
+                    let keywords = data["keywords"] as? [String] ?? [""]
+                    
+                    for keyword in keywords {
+                        var inputString = keyword.lowercased()
+                        
+                        let trimmed = String(inputString.filter {!" \n\t\r".contains($0)})
+                        
+                        for word in trimmed.splitString() {
+                            
+                            keywordRef.updateData([
+                                "keywords_search" : FieldValue.arrayUnion([word])
+                            ])
+                            
+                            
+                        }
+                        
+                        
+                        let words = inputString.components(separatedBy: " ")
+                        
+                        for word in words {
+                            
+                            
+                            for separated in inputString.splitString() {
+                                
+                                keywordRef.updateData([
+                                    "keywords_search" : FieldValue.arrayUnion([separated])
+                                ])
+                                
+                                
+                            }
+                            
+                           
+                            
+                            inputString = inputString.replacingOccurrences(of: "\(word) ", with: "")
+                            
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    var body: some View{
+        
+        
+        HStack(alignment: .center, spacing: 5){
+        
+        Text(chipText)
+            
+            .fixedSize()
+            .font(.custom(appleGothicMed, size: 16))
+            //.background(Color.gray)
+            .lineLimit(1)
+            .foregroundColor(randomTextBase)
+            //.clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+            
+            Image(systemName: "minus.circle")
+                    .onTapGesture {
+                        self.deleteKeyword(keyword: chipText)
+                       //deleteKeyword(keyword: word)
+                    }
+        }
+        .padding(.leading, 15)
+        .padding(.trailing, 15)
+        .padding(.top, 2)
+        .padding(.bottom,1.5 )
+        .background(random)
+         .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
+         .onAppear(){
+        
+             random = colors.randomElement()!
+             
+             if random == Color(hex: "#646464") {
+                 
+                 randomTextBase = Color.white
+                 
+                 
+             } else {
+                 randomTextBase = Color.black
+             }
+         }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
 
 

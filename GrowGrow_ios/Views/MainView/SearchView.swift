@@ -22,6 +22,7 @@ struct SearchView: View {
     @State var isSelectedDepart : Bool = false
     @State var searchIsActive : Bool = false
     
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     
     @State private var showingAlert = false
     
@@ -48,13 +49,21 @@ struct SearchView: View {
         
         NavigationView{
             
-        VStack{
+            VStack(alignment: .leading){
+                
             Text("키워드 검색")
+                    .foregroundColor(Color.black)
+                    .font(.custom(appleGothicBold, size: 18))
             
             TextField("삼성전기 샘이랑을 검색해보세요",text: $keyword)
                 .textFieldStyle(.roundedBorder)
+                
+                Divider()
+                    .background(Color(hex: "#CBCBCB"))
             
             Text("필터 검색")
+                    .foregroundColor(Color.black)
+                    .font(.custom(appleGothicBold, size: 18))
            
            
             
@@ -78,18 +87,36 @@ struct SearchView: View {
                     
                     
                 }
+                
+                
             }.padding(.horizontal)
-             
+                
+                
+               
             
-            
+                Group{
+                    Divider()
+                    
+                    Text("지역")
+                    
+                    
+                }
         
-            Text("지역")
+            
             
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(regions, id: \.self){region in
                     HStack{
                         Text(region)
-                            .foregroundColor(self.selectedRegion == region ? .green : .blue)
+                            .foregroundColor(self.selectedRegion == region ? .white : Color(hex: "#646464"))
+                            .cornerRadius(5)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                     .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
+                            
+                            )
+                            .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedRegion == region ? Color.black : Color(hex: "#F3F3F3")))
+                            .font(.custom(appleGothicBold, size: 15))
                         
                         
                     }.onTapGesture {
@@ -110,6 +137,7 @@ struct SearchView: View {
                     
                 }
             }
+            .padding([.bottom])
             
            /* Text(selectedRegion)
                 .foregroundColor(.white)
@@ -198,12 +226,15 @@ struct SearchView: View {
                 HStack{
                     Text("검색")
                         .foregroundColor(.white)
-                    Image(systemName: "magnifyingglass.circle.fill")
+                        .font(.custom(appleGothicBold, size: 24))
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(Color.white)
                     
                 }
-                .background(Color.black)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(RoundedRectangle(cornerRadius: 15).fill(Color.black))
                 .overlay(
-                        RoundedRectangle(cornerRadius: 40)
+                        RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.black, lineWidth: 1.5)
                 
                 )
@@ -214,6 +245,9 @@ struct SearchView: View {
                         
                     })
                 }
+                
+                
+                Spacer()
             
             
             NavigationLink(destination: SearchedView(inputKeyword: keyword, inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
@@ -231,6 +265,7 @@ struct SearchView: View {
             
             
         }
+            .padding()
             
     
         }
@@ -266,19 +301,24 @@ struct SearchView: View {
     let titleKey: String
     @State var isSelected: Bool
      var action: Action?
+    
      
     var body: some View {
         
-          Text(titleKey).font(.title3).lineLimit(1)
+          Text(titleKey)
+            .lineLimit(1)
+            .padding()
         
-        .foregroundColor(isSelected ? .white : .blue)
-        .background(isSelected ? Color.blue : Color.white)
-        .cornerRadius(40)
+        .foregroundColor(isSelected ? .white : Color(hex: "#646464"))
+        //.background(isSelected ? Color.blue : Color.white)
+        .cornerRadius(5)
         .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.blue, lineWidth: 1.5)
+                RoundedRectangle(cornerRadius: 5)
+                 .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
         
-        ).onTapGesture {
+        )
+        .background(RoundedRectangle(cornerRadius: 5).fill(isSelected ? Color.black : Color(hex: "#F3F3F3")))
+        .onTapGesture {
             isSelected.toggle()
             
             if let action = action {
@@ -297,19 +337,25 @@ struct Chips: View {
    let titleKey: String
    @State var isSelected: Bool
     var action: Action?
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     
    var body: some View {
        
-         Text(titleKey).font(.title3).lineLimit(1)
+         Text(titleKey)
+           .font(.custom(appleGothicBold, size: 15))
+           .lineLimit(1)
+           .padding()
        
-       .foregroundColor(isSelected ? .white : .blue)
-       .background(isSelected ? Color.blue : Color.white)
-       .cornerRadius(40)
+       .foregroundColor(isSelected ? .white : Color(hex: "#646464"))
+       //.background(isSelected ? Color.blue : Color.white)
+       .cornerRadius(5)
        .overlay(
-               RoundedRectangle(cornerRadius: 40)
-                   .stroke(Color.blue, lineWidth: 1.5)
+               RoundedRectangle(cornerRadius: 5)
+                .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
        
-       ).onTapGesture {
+       )
+       .background(RoundedRectangle(cornerRadius: 5).fill(isSelected ? Color.black : Color(hex: "#F3F3F3")))
+       .onTapGesture {
            isSelected.toggle()
            
            if let action = action {

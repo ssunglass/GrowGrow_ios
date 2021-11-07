@@ -10,38 +10,59 @@ import SwiftUI
 struct HomeCardView: View {
         var fullname: String
         var username: String
+       
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicLight: String = "Apple SD Gothic Neo Light"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
+    let appleGothicMed : String = "Apple SD Gothic Neo Medium"
+    
         var body: some View{
            
             VStack(alignment: .leading){
                 HStack{
                     VStack(alignment: .leading){
                         Text(fullname)
-                            .font(.headline)
-                            .foregroundColor(.secondary)
+                            .font(.custom(appleGothicBold, size: 36))
+                            .foregroundColor(Color.black)
                         
                         Text(username)
-                            .font(.title)
-                            .fontWeight(.black)
-                            .foregroundColor(.primary)
+                            .font(.custom(appleGothicLight, size: 14))
+                            .foregroundColor(Color.black)
+                            
+                        Spacer()
                         
-                        Text("내 커리어 바로가기")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                       
+                            
+                            
                         }
                     .layoutPriority(100)
                     Spacer()
+                    VStack{
+                        Spacer()
+                        
+                        
+                    Text("내 커리어 바로가기")
+                        .font(.custom(appleGothicSemiBold, size: 18))
+                        .foregroundColor(Color(hex: "#818181"))
+                        //.padding(.top,10)
+                       
+                      
+                    }
+                    
                                   
                     }
             .padding()
+
               
             }
-            .cornerRadius(10)
+            .frame(height:125)
+            .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(.sRGB,red: 150/255, green: 150/255, blue: 150/255, opacity: 0.5), lineWidth: 1)
+                    .stroke(Color(hex: "#F3F3F3"), lineWidth: 1)
             )
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.pink))
-            .padding([.top, .horizontal])
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color(hex: "#F3F3F3")))
+            //.padding([.top, .horizontal])
             
         }
     
@@ -54,47 +75,92 @@ struct UserCardView: View {
         var major: String
         var summary: String
     
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicLight: String = "Apple SD Gothic Neo Light"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
+    let appleGothicMed : String = "Apple SD Gothic Neo Medium"
+    
+    let colors = [Color(hex: "#F3F3F3"),
+                  Color(hex: "#ADADAD"),
+                  Color(hex: "#AF3D3D"),
+                  Color(hex: "#2A3646")]
+    
+    
+   @State var random: Color = Color(hex: "#F3F3F3")
+    @State var randomTextBase: Color = Color.black
+    @State var randomTextSub: Color = Color(hex: "#A7A7A7")
+    
+    
+    
         var body: some View{
            
             VStack(alignment: .leading){
                 HStack{
                     VStack(alignment: .leading){
                         Text(fullname)
-                            .font(.headline)
-                            .foregroundColor(.secondary)
+                            .font(.custom(appleGothicBold, size: 21))
+                            .foregroundColor(randomTextBase)
                         
-                        Text(username)
-                            .font(.title)
-                            .fontWeight(.black)
-                            .foregroundColor(.primary)
-                            .lineLimit(3)
+                        Text("@\(username)")
+                            .font(.custom(appleGothicLight, size: 10))
+                            .foregroundColor(randomTextBase)
+                        
+                        Divider()
+                            .padding(.trailing,20)
+                            
+                        HStack(spacing: 3){
+                            
                         
                         Text(depart)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.custom(appleGothicBold, size: 13))
+                            .foregroundColor(randomTextSub)
                         Text(major)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.custom(appleGothicBold, size: 13))
+                            .foregroundColor(randomTextSub)
+                            
+                        }
+                        
+                        Divider()
+                            .padding(.trailing,20)
+                        
                         Text(summary)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.custom(appleGothicMed, size: 13))
+                            .foregroundColor(randomTextBase)
+                            .multilineTextAlignment(.leading)
+                        
                         }
                     .layoutPriority(100)
-                    Spacer()
+                
                                   
                     }
             .padding()
               
             }
-            .cornerRadius(10)
+            .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color(.sRGB,red: 150/255, green: 150/255, blue: 150/255, opacity: 0.5), lineWidth: 1)
                     
                     
             )
+            .background(RoundedRectangle(cornerRadius: 10).fill(random))
+            .onAppear(){
+                
+                random = colors.randomElement()!
+                
+                
+                if random == Color(hex: "#ADADAD") {
+                    
+                    randomTextBase = Color.green
+                    
+                }
+                
+                
+            }
+          
+            
            
-            .padding([.top, .horizontal])
+            
             
            
             

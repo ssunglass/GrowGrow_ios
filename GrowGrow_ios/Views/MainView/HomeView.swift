@@ -12,9 +12,11 @@ struct HomeView: View {
     @ObservedObject private var viewModel = SessionStore()
     
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(),spacing: 10, alignment: .center),
+        GridItem(.flexible(), spacing: 10, alignment: .center)
     ]
+    
+
     
     var body: some View {
         
@@ -25,62 +27,126 @@ struct HomeView: View {
                 
         HomeCardView(fullname: viewModel.fullname,
                      username: "@\(viewModel.username)")
+            .padding(.bottom)
+            
             
         
         Divider()
-                
-                Spacer()
+            //.padding([.leading,.trailing,.bottom])
+            .background(Color(hex: "#CBCBCB"))
+            
         
         ScrollView {
-            VStack {
+            VStack(alignment: .center, spacing: 25) {
                 Group{
-                    Divider().frame(width: 100)
-                        .background(Color.red)
-                    Text("다른 사람들은 지금을 어떻게 보내고 있을까?")
+                    Divider()
+                        .frame(width: 35,height: 6)
+                        .background(Color.black)
+                    Text("다른 사람들은 지금을 \n어떻게 보내고 있을까?")
+                        .foregroundColor(Color.black)
+                        .font(.custom("Apple SD Gothic Neo Bold", size: 18))
+                        .tracking(-0.5)
                     
                 }
             }
+            .padding(.bottom,15)
+            .padding(.top,15)
+           
             
-            
-          
-               
-                
-            
-            
-            LazyVGrid(columns: columns) {
-                ForEach(viewModel.users.shuffled()){ user in
+           /* HStack(spacing: 10){
+                LazyVStack{
                     
-                    NavigationLink(destination: UserDetailView(uid: user.uid)){
+                    ForEach(viewModel.users){ user in
                         
-                    VStack(alignment:.leading){
-                        
-                        
+                        NavigationLink(destination: UserDetailView(uid: user.uid)){
+                            
+                     
+                            
+                            
 
-                        
-                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                            
+                            UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                                
+                                
+                           
+                       
+                            
+                            
                         }
-                       /* Text(user.fullname)
-                        Text(user.username)
-                        Text(user.depart)
-                        Text(user.major)
-                        Text(user.summary)
-                        */
                         
                         
                     }
                     
                     
                 }
-                }.onAppear(){
+                LazyVStack{
+                    ForEach(viewModel.users.shuffled()){ user in
+                        
+                        NavigationLink(destination: UserDetailView(uid: user.uid)){
+                            
+                     
+                            
+                            
+
+                            
+                            UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                                
+                                
+                           
+                       
+                            
+                            
+                        }
+                        
+                        
+                    }
+                }
+                
+            }.onAppear(){
+                self.viewModel.getUsers()
+               
+            
+            } */
+          
+               
+                
+            
+            
+            LazyVGrid(columns: columns, alignment: .leading,spacing: 10) {
+                ForEach(viewModel.users.shuffled()){ user in
+                    
+                    NavigationLink(destination: UserDetailView(uid: user.uid)){
+                        
+                 
+                        
+                        
+
+                        
+                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                            
+                            
+                       
+                   
+                        
+                        
+                    }
+                    
+                    
+                }
+              
+                }
+                 .onAppear(){
                     self.viewModel.getUsers()
                    
                 
-                }
-                
+                } 
+                 
             
             
             
         }
+        //.padding([.leading,.trailing])
+        
         
        /* ScrollView() {
                     VStack {
@@ -116,6 +182,7 @@ struct HomeView: View {
         
         
     }
+    .padding()
     .navigationBarHidden(true)
             
             

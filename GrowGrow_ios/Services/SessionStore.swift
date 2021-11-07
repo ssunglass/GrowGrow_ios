@@ -76,6 +76,10 @@ class SessionStore: ObservableObject {
                 let summary = data["summary"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
                 let region = data["region"] as? String ?? ""
+                
+                
+                
+                
             
                 
                 
@@ -122,31 +126,34 @@ class SessionStore: ObservableObject {
     
     func getSearchedUser(keyword:String, depart:[String], region:String){
         
-        var query: Query
+        @State var query: Query
         
         if depart.isEmpty && region == "" {
             
           query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
             
-        } else  if !depart.isEmpty && region == "" {
+        } else if !depart.isEmpty && region == "" {
             
             query =  db.collection("Users")
                 .whereField("keywords_search", arrayContains: keyword)
-                query.whereField("depart", in: depart)
+                .whereField("depart", in: depart)
             
         } else if depart.isEmpty && region != "" {
             
             query =  db.collection("Users")
                 .whereField("keywords_search", arrayContains: keyword)
-                query.whereField("region", isEqualTo: region)
+                .whereField("region", isEqualTo: region)
             
         } else {
+            
             query =  db.collection("Users")
                 .whereField("keywords_search", arrayContains: keyword)
-                query.whereField("depart", in: depart)
-                     .whereField("region", isEqualTo: region)
+                .whereField("depart", in: depart)
+                .whereField("region", isEqualTo: region)
     
         }
+        
+        print(query)
         
         query.addSnapshotListener{ (querySnapshot, error ) in
             guard let documents = querySnapshot?.documents else {return}
@@ -292,7 +299,7 @@ class SessionStore: ObservableObject {
                     label.text = keyword
                     label.sizeToFit()
                     
-                    let labelWidth = label.frame.size.width + 32
+                    let labelWidth = label.frame.size.width + 42
                     
                     if (width + labelWidth + 55 ) < UIScreen.main.bounds.width {
                         width += labelWidth
