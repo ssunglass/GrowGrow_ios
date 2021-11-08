@@ -61,7 +61,9 @@ struct HomeCardView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color(hex: "#F3F3F3"), lineWidth: 1)
             )
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color(hex: "#F3F3F3")))
+            .background(RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(hex: "#F3F3F3"))
+                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.05), radius: 1, x: 0, y: 4))
             //.padding([.top, .horizontal])
             
         }
@@ -143,7 +145,9 @@ struct UserCardView: View {
                     
                     
             )
-            .background(RoundedRectangle(cornerRadius: 10).fill(random))
+            .background(RoundedRectangle(cornerRadius: 10)
+                            .fill(random)
+                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.05), radius: 1, x: 0, y: 4))
             .onAppear(){
                 
                 random = colors.randomElement()!

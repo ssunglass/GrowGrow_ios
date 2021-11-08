@@ -30,7 +30,7 @@
 		54949933273126BE0085819F /* SearchedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54949932273126BE0085819F /* SearchedView.swift */; };
 		54949935273561E40085819F /* SavedUserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54949934273561E40085819F /* SavedUserListView.swift */; };
 		54994623272A68BE001C83E4 /* BioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54994622272A68BE001C83E4 /* BioService.swift */; };
-		54A1EF872729810A008DE4FB /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1EF862729810A008DE4FB /* AddProfileView.swift */; };
+		54A1EF872729810A008DE4FB /* AddBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1EF862729810A008DE4FB /* AddBioView.swift */; };
 		54A2EF892722774400051DCB /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF882722774400051DCB /* SessionStore.swift */; };
 		54A2EF8B272280D600051DCB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF8A272280D600051DCB /* HomeView.swift */; };
 		54A2EF8D272284EA00051DCB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A2EF8C272284EA00051DCB /* SearchView.swift */; };
@@ -65,7 +65,7 @@
 		54949932273126BE0085819F /* SearchedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedView.swift; sourceTree = "<group>"; };
 		54949934273561E40085819F /* SavedUserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUserListView.swift; sourceTree = "<group>"; };
 		54994622272A68BE001C83E4 /* BioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioService.swift; sourceTree = "<group>"; };
-		54A1EF862729810A008DE4FB /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		54A1EF862729810A008DE4FB /* AddBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBioView.swift; sourceTree = "<group>"; };
 		54A2EF882722774400051DCB /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		54A2EF8A272280D600051DCB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		54A2EF8C272284EA00051DCB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 				54A2EF922722854200051DCB /* MainView */,
 				54A2EF912722851600051DCB /* Layouts */,
 				5482C8A3272696AD00540DB7 /* EditProfileView.swift */,
-				54A1EF862729810A008DE4FB /* AddProfileView.swift */,
+				54A1EF862729810A008DE4FB /* AddBioView.swift */,
 				5494992C272D6A770085819F /* EditBioView.swift */,
 				5494992E272E32B60085819F /* UserDetailView.swift */,
 				54949930272E72DD0085819F /* EditBioTextView.swift */,
@@ -338,7 +338,7 @@
 				54802E012722F9ED0008D2FF /* CardView.swift in Sources */,
 				540CCC7F2727BB4A008509E4 /* JsonParsing.swift in Sources */,
 				5421ACCB2721AB9A00F12168 /* AuthService.swift in Sources */,
-				54A1EF872729810A008DE4FB /* AddProfileView.swift in Sources */,
+				54A1EF872729810A008DE4FB /* AddBioView.swift in Sources */,
 				54A2EF8D272284EA00051DCB /* SearchView.swift in Sources */,
 				54A2EF9527228E0800051DCB /* MainTabContainer.swift in Sources */,
 				548841252726DF0A0072BAF7 /* Modal.swift in Sources */,

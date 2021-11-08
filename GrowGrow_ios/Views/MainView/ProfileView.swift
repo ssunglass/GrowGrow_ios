@@ -240,7 +240,9 @@ struct ProfileView: View {
                     }
                     
                     Button(action: {showEditProfileView.toggle()}){
-                        Image(systemName: "house")
+                        Image(systemName: "person.crop.circle.badge.questionmark.fill")
+                            .resizable()
+                            .frame(width:23, height: 20)
                         
                     }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
                     
@@ -248,13 +250,16 @@ struct ProfileView: View {
                         alertView()
                     }){
                         Image(systemName: "plus.rectangle.on.rectangle")
+                            .resizable()
+                            .frame(width:23, height: 20)
                         
                     }
                     
                     
                     NavigationLink(destination: SavedUserListView()){
                         Image(systemName: "bookmark.square.fill")
-                        
+                            .resizable()
+                            .frame(width:23, height: 20)
                         
                     }
                     
@@ -388,7 +393,7 @@ struct ProfileView: View {
                    Button(action: {showAddView.toggle()}){
                        Image(systemName: "folder.badge.plus")
                        
-                   }.sheet(isPresented: $showAddView, content: {AddProfileView()})
+                   }.sheet(isPresented: $showAddView, content: {AddBioView()})
                    
                    Text("Footprint")
                        .font(.custom(appleGothicBold, size: 36))
