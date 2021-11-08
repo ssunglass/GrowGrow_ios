@@ -23,6 +23,7 @@ struct SearchView: View {
     @State var searchIsActive : Bool = false
     
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     
     @State private var showingAlert = false
     
@@ -33,11 +34,18 @@ struct SearchView: View {
    
     
     
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+    let departColumns = [
+        GridItem(.flexible(), alignment: .center),
+        GridItem(.flexible(), alignment: .center),
+        GridItem(.flexible(), alignment: .center),
+        GridItem(.flexible(), alignment: .center)
+    ]
+    
+    let regionColumns = [
+        GridItem(.flexible(),  spacing: -5,alignment: .center),
+        GridItem(.flexible(), spacing: -20, alignment: .center),
+        GridItem(.flexible(), spacing: -5,alignment: .center),
+        GridItem(.flexible(),  spacing: -5,alignment: .center)
     ]
     
     
@@ -55,19 +63,34 @@ struct SearchView: View {
                     .foregroundColor(Color.black)
                     .font(.custom(appleGothicBold, size: 18))
             
-            TextField("삼성전기 샘이랑을 검색해보세요",text: $keyword)
-                .textFieldStyle(.roundedBorder)
+                HStack{
+                    
+                   TextField("삼성전기 샘이랑을 검색해보세요",text: $keyword)
+                        .padding(.leading, 20)
+                        .font(.custom(appleGothicSemiBold, size: 20))
+                        .foregroundColor(Color(hex: "#818181"))
+                    
+                    
+                    Image(systemName: "magnifyingglass")
+                        .padding(.trailing, 20)
+                }.frame(height: 38)
+                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color(hex: "#F3F3F3"),lineWidth: 1))
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "F3F3F3")))
                 
                 Divider()
                     .background(Color(hex: "#CBCBCB"))
-            
+                Group{
             Text("필터 검색")
                     .foregroundColor(Color.black)
                     .font(.custom(appleGothicBold, size: 18))
+                    .padding([.top])
+                    .padding(.bottom,10)
            
-           
+                Text("계열")
+                    .foregroundColor(Color(hex:"#646464"))
+                    .font(.custom(appleGothicBold, size: 18))
             
-            LazyVGrid(columns: columns, spacing: 15){
+            LazyVGrid(columns: departColumns, spacing: 15){
                 ForEach(departs, id:\.self){depart in
                     Chips(titleKey: depart, isSelected: isSelectedDepart){ isSelect in
                         if isSelect{
@@ -86,28 +109,40 @@ struct SearchView: View {
                     }
                     
                     
+                    
                 }
                 
                 
             }.padding(.horizontal)
+                    
+                }
                 
                 
                
             
                 Group{
                     Divider()
+                        .background(Color(hex: "#CBCBCB"))
+                        .padding([.top,.bottom])
                     
                     Text("지역")
+                        .foregroundColor(Color(hex:"#646464"))
+                        .font(.custom(appleGothicBold, size: 18))
                     
                     
-                }
+                
         
             
             
-            LazyVGrid(columns: columns, spacing: 15){
+            LazyVGrid(columns: regionColumns, spacing: 15){
                 ForEach(regions, id: \.self){region in
                     HStack{
                         Text(region)
+                            .lineLimit(1)
+                            .padding(.leading,10)
+                            .padding(.trailing,10)
+                            .padding(.top,5)
+                            .padding(.bottom,5)
                             .foregroundColor(self.selectedRegion == region ? .white : Color(hex: "#646464"))
                             .cornerRadius(5)
                             .overlay(
@@ -115,8 +150,11 @@ struct SearchView: View {
                                      .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
                             
                             )
-                            .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedRegion == region ? Color.black : Color(hex: "#F3F3F3")))
+                            .background(RoundedRectangle(cornerRadius: 5)
+                                            .fill(self.selectedRegion == region ? Color.black : Color(hex: "#F3F3F3"))
+                                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 4, x: 0, y: 4))
                             .font(.custom(appleGothicBold, size: 15))
+                            
                         
                         
                     }.onTapGesture {
@@ -139,6 +177,7 @@ struct SearchView: View {
             }
             .padding([.bottom])
             
+                }
            /* Text(selectedRegion)
                 .foregroundColor(.white)
                 .background(Color.black)
@@ -344,17 +383,22 @@ struct Chips: View {
          Text(titleKey)
            .font(.custom(appleGothicBold, size: 15))
            .lineLimit(1)
-           .padding()
+           .padding(.leading,10)
+           .padding(.trailing,10)
+           .padding(.top,5)
+           .padding(.bottom,5)
+          
        
        .foregroundColor(isSelected ? .white : Color(hex: "#646464"))
-       //.background(isSelected ? Color.blue : Color.white)
        .cornerRadius(5)
        .overlay(
                RoundedRectangle(cornerRadius: 5)
                 .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
        
        )
-       .background(RoundedRectangle(cornerRadius: 5).fill(isSelected ? Color.black : Color(hex: "#F3F3F3")))
+       .background(RoundedRectangle(cornerRadius: 5)
+                    .fill(isSelected ? Color.black : Color(hex: "#F3F3F3"))
+                    .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 4, x: 0, y: 4))
        .onTapGesture {
            isSelected.toggle()
            
