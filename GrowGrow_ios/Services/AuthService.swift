@@ -46,7 +46,7 @@ class AuthService {
     static func saveUserInfo(userId:String,fullname:String,username:String,email:String, onSuccess: @escaping (_ user: User) -> Void, onError: @escaping(_ errorMessage: String) -> Void ){
         
         let currentUserId = AuthService.getUserId(userId: userId)
-        let user = User.init(fullname: fullname, username: username, uid: userId, summary: "한줄요약", depart: "계열", major: "전공", region: "지역")
+        let user = User.init(fullname: fullname, username: username, uid: userId, summary: "한줄요약", depart: "", major: "전공", region: "지역")
         
         guard let dict = try?user.asDictionary() else {return}
         

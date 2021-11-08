@@ -76,6 +76,7 @@ struct SearchView: View {
                 }.frame(height: 38)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color(hex: "#F3F3F3"),lineWidth: 1))
                     .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "F3F3F3")))
+                    .padding(.bottom,10)
                 
                 Divider()
                     .background(Color(hex: "#CBCBCB"))

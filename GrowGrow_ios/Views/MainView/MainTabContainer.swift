@@ -48,7 +48,7 @@ struct MainTabContainer: View {
             
             
             
-        }.accentColor(.red)
+        }.accentColor(.black)
             .edgesIgnoringSafeArea(.top)
     }
 }
