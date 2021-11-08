@@ -450,6 +450,7 @@ struct ProfileView: View {
         .padding(.leading,20)
         .padding([.trailing,.top,.bottom])
         .navigationBarHidden(true)
+        .navigationTitle("프로필")
         }
         
         
@@ -464,7 +465,7 @@ struct ProfileView: View {
     
     func alertView(){
         
-        let alert = UIAlertController(title: "키워드 추가", message: "키워드", preferredStyle: .alert)
+        let alert = UIAlertController(title: "키워드 추가", message: "자신만의 키워드를 추가해보세요!", preferredStyle: .alert)
         
         alert.addTextField{ (pass) in
             
@@ -483,7 +484,9 @@ struct ProfileView: View {
             
         }
         
-        let cancel = UIAlertAction(title: "취소", style: .destructive) { (_) in
+       
+        
+        let cancel = UIAlertAction(title: "닫기", style: .destructive) { (_) in
             
             
         }

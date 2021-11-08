@@ -105,7 +105,9 @@ struct EditBioView: View {
     }.onAppear(){
             self.viewModel.getBios(uid: self.session.session!.uid)
              
-        }
+    }.listStyle(PlainListStyle())
+            
+    .navigationTitle("이력 리스트")
    
         }
         
