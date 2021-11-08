@@ -19,6 +19,8 @@ struct EditProfileView: View {
     @StateObject var viewModel = ViewModel()
     @State private var agreedToChange : Bool = false
     
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     
     @State private var selectedRegion = 0
     @State private var selectedDepart = 0
@@ -39,6 +41,8 @@ struct EditProfileView: View {
         self._username = State(initialValue: initusername)
         self._summary = State(initialValue: initsummary)
         self._urlString = State(initialValue: "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100391&perPage=50")
+        
+        UINavigationBar.appearance().tintColor = .black
         
     }
     
@@ -142,34 +146,28 @@ struct EditProfileView: View {
         
         NavigationView {
             
-            Form{
+          /*  Form{
                 
+                
+                Section(header: Text("한줄요약")){
+                    
+                    
                 
             
-            
-                
-                
-                
-                    
-                    
-                
-                Section{
-                    
-                    
-                
-            VStack{
-                FormField(value: $fullname, icon: "person.fill", placeholder: "fullname")
-                FormField(value: $username, icon: "person.fill", placeholder: "username")
+              //  FormField(value: $fullname, icon: "person.fill", placeholder: "fullname")
+              //  FormField(value: $username, icon: "person.fill", placeholder: "username")
                 TextEditor(text: $summary)
-                    .frame(height: 50, alignment: .center)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
-                    .overlay(
-                             RoundedRectangle(cornerRadius: 25)
-                               .stroke(Color.black, lineWidth: 2)
-                             )
+                      .frame(maxHeight: 150, alignment: .center)
+                      .font(.custom(appleGothicSemiBold, size: 15))
+                      .foregroundColor(Color.black)
+                      .cornerRadius(15)
+                      .overlay(
+                               RoundedRectangle(cornerRadius: 15)
+                                   .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
+                               )
+                      
                 
-            }
+            
                     
                 }
                 
@@ -214,6 +212,7 @@ struct EditProfileView: View {
                     
                 }
                
+               
                 
                 
                 
@@ -221,12 +220,150 @@ struct EditProfileView: View {
             
             }.onAppear(){
                 self.sessionViewModel.getUserDoc(uid: self.session.session!.uid)
+            } */
+            
+            VStack(){
+                
+                VStack(alignment: .leading){
+                
+                Text("한줄요약")
+                    .foregroundColor(Color.black)
+                    .font(.custom(appleGothicBold, size: 18))
+                
+                TextEditor(text: $summary)
+                      .frame(maxHeight: 150, alignment: .center)
+                      .font(.custom(appleGothicSemiBold, size: 15))
+                      .foregroundColor(Color.black)
+                      .cornerRadius(15)
+                      .overlay(
+                               RoundedRectangle(cornerRadius: 15)
+                                   .stroke(Color(hex: "#ADADAD"), lineWidth: 1)
+                               )
+                      .background(RoundedRectangle(cornerRadius: 15)
+                                   .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))
+                    
+                }
+                
+                HStack(alignment:.center,spacing: 25){
+                    
+                    VStack{
+                        HStack(spacing: 2.5){
+                            
+                            Image(systemName: "globe.asia.australia")
+                            
+                        Text("나의 지역")
+                                .foregroundColor(Color(hex:"#646464"))
+                                .font(.custom(appleGothicBold, size: 18))
+                            
+                           
+                               
+                        }
+                        
+                        Text(sessionViewModel.region)
+                            .lineLimit(1)
+                            .padding(.leading,10)
+                            .padding(.trailing,10)
+                            .padding(.top,5)
+                            .padding(.bottom,5)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(5)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                     .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
+                            
+                            )
+                            .background(RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color(hex: "646464"))
+                                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 4, x: 0, y: 4))
+                            .font(.custom(appleGothicBold, size: 15))
+                        
+                        
+                    }
+                    
+                    VStack{
+                        HStack(spacing: 2.5){
+                            Image(systemName: "books.vertical")
+                        Text("나의 계열")
+                                .foregroundColor(Color(hex:"#646464"))
+                                .font(.custom(appleGothicBold, size: 18))
+                        }
+                        
+                        Text(sessionViewModel.depart)
+                            .lineLimit(1)
+                            .padding(.leading,10)
+                            .padding(.trailing,10)
+                            .padding(.top,5)
+                            .padding(.bottom,5)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(5)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                     .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
+                            
+                            )
+                            .background(RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color(hex: "646464"))
+                                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 4, x: 0, y: 4))
+                            .font(.custom(appleGothicBold, size: 15))
+                        
+                    }
+                    
+                    VStack{
+                        HStack(spacing: 2.5){
+                            Image(systemName: "book.closed")
+                        Text("나의 전공")
+                                .foregroundColor(Color(hex:"#646464"))
+                                .font(.custom(appleGothicBold, size: 18))
+                        
+                        }
+                        
+                        Text(sessionViewModel.major)
+                            .lineLimit(1)
+                            .padding(.leading,10)
+                            .padding(.trailing,10)
+                            .padding(.top,5)
+                            .padding(.bottom,5)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(5)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                     .stroke(Color(hex: "#F3F3F3"), lineWidth: 1.5)
+                            
+                            )
+                            .background(RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color(hex: "646464"))
+                                            .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 4, x: 0, y: 4))
+                            .font(.custom(appleGothicBold, size: 15))
+                    }
+                    
+                    
+                    
+                    
+                }
+                .padding(.top,20)
+                
+                Form{
+                  
+                    
+                }.background(Color.white)
+                    .onAppear(){
+                        UITableView.appearance().backgroundColor = .clear
+                    }
+                
+                
+                
+                
+                
             }
+            .onAppear(){
+                self.sessionViewModel.getUserDoc(uid: self.session.session!.uid)
+            }
+            .padding()
             
             
             
             
-            .navigationBarTitle(Text("프로필 편집"), displayMode: .inline)
+            .navigationBarTitle(Text("프로필 수정"), displayMode: .inline)
             .navigationBarItems(leading:
                 HStack {
                     Button(action: {
@@ -245,7 +382,7 @@ struct EditProfileView: View {
                         
                         }) {
                             Image(systemName: "checkmark")
-                        }
+                        }.padding()
                     }
             )
         }
