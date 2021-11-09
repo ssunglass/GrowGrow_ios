@@ -20,7 +20,26 @@ class AuthService {
     
     static func signUp(fullname:String, username:String, email:String, password:String, onSuccess: @escaping (_ user: User) -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
         
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        
+        Auth.auth().currentUser!.link(with: credential) { (user,error) in
+            
+            if error != nil {
+                onError(error!.localizedDescription)
+                return
+            }
+            
+            guard let userId = user?.user.uid else {
+                return
+            }
+            
+            AuthService.saveUserInfo(userId: userId, fullname: fullname, username: username, email: email, onSuccess: onSuccess, onError: onError)
+            
+        }
+           
+        
+        
+     /*  Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             
             if error != nil {
                 onError(error!.localizedDescription)
@@ -38,7 +57,7 @@ class AuthService {
             
             
             
-        }
+        } */
         
         
     }
@@ -57,13 +76,7 @@ class AuthService {
                 onError(error!.localizedDescription)
             } else {
                 
-                Auth.auth().currentUser?.sendEmailVerification{ error in
-                    
-                    if error != nil {
-                        onError(error!.localizedDescription)
-                    }
-                    
-                }
+              
                 
                 
             }

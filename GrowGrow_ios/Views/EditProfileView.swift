@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
+import FirebaseDynamicLinks
 
 struct EditProfileView: View {
     @EnvironmentObject var session: SessionStore
@@ -31,6 +33,8 @@ struct EditProfileView: View {
     let departs = ["인문","사회","공학","자연","교육","의약","예체능"]
     @State private var urlString: String
     @State private var departIcon: String
+    
+   @State private var NumberToMessage = ""
   
     
     
@@ -199,6 +203,47 @@ struct EditProfileView: View {
         
     }
     
+    func createDynamicLink(){
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let link = URL(string: "https://growgrow.com/?invitedby=\(uid)")
+        let referralLink = DynamicLinkComponents(link: link!, domainURIPrefix: "https://growgrow.page.link")
+
+        referralLink!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.stationLab.GrowGrow-ios")
+        referralLink!.iOSParameters?.minimumAppVersion = "1.0.0"
+        referralLink!.iOSParameters?.appStoreID = "123456789"
+
+        referralLink!.androidParameters = DynamicLinkAndroidParameters(packageName: "com.example.growgrow")
+        referralLink!.androidParameters?.minimumVersion = 125
+        
+        
+        referralLink!.shorten { (shortURL, warnings, error) in
+          if let error = error {
+            print(error.localizedDescription)
+            return
+          }
+            
+            
+          let invitationUrl = shortURL!
+            let sms: String = "sms:\(NumberToMessage)&body=커커에 당신을 초대합니다: \(invitationUrl.absoluteString) "
+            let strUrl: String = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            UIApplication.shared.open(URL.init(string: strUrl)!, options: [:], completionHandler: nil)
+       
+     
+            
+            
+            
+        }
+        
+      
+        
+        
+        
+    }
+    
+ 
+    
+  
     
 
     
@@ -207,6 +252,8 @@ struct EditProfileView: View {
       
         
         NavigationView {
+            
+           
             
           /*  Form{
                 
@@ -287,7 +334,33 @@ struct EditProfileView: View {
             VStack(){
                 
                 VStack(alignment: .leading){
-                
+                    
+                    HStack{
+                    
+                    TextField("전화번호로 친구 초대하기", text: $NumberToMessage)
+                            .padding()
+                    
+                    Button(action: {
+                        
+                       createDynamicLink()
+                        
+                    }) {
+                        Image(systemName: "plus.circle")
+                    }
+                    .padding()
+                    }.frame(maxHeight: 40, alignment: .center)
+                        .font(.custom(appleGothicSemiBold, size: 20))
+                        .foregroundColor(Color.black)
+                        .cornerRadius(15)
+                            .multilineTextAlignment(.leading)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.black, lineWidth: 1)
+                                )
+                            .padding(.vertical)
+                    
                 Text("한줄요약")
                     .foregroundColor(Color.black)
                     .font(.custom(appleGothicBold, size: 18))

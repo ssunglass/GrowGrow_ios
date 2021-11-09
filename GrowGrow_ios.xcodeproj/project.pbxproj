@@ -55,6 +55,7 @@
 		5421ACC62721A67300F12168 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5421ACC82721A7E400F12168 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5421ACCA2721AB9A00F12168 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		542E67D6273A9BC500F8C8F8 /* GrowGrow-ios-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GrowGrow-ios-Info.plist"; sourceTree = SOURCE_ROOT; };
 		54802E002722F9ED0008D2FF /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5482C8A3272696AD00540DB7 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		548841242726DF0A0072BAF7 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		5421AC9127213E2600F12168 /* GrowGrow_ios */ = {
 			isa = PBXGroup;
 			children = (
+				542E67D6273A9BC500F8C8F8 /* GrowGrow-ios-Info.plist */,
 				54A2EF902722850600051DCB /* Services */,
 				5421ACC52721A66100F12168 /* Models */,
 				5421ACBC2721633F00F12168 /* Views */,
@@ -486,8 +488,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GrowGrow_ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 33AG3GZ9ZS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GrowGrow-ios-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -516,8 +520,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GrowGrow_ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 33AG3GZ9ZS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GrowGrow-ios-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

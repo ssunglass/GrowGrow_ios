@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @EnvironmentObject var session: SessionStore
     
+    
     func listen(){
         session.listen()
     }
@@ -21,10 +22,7 @@ struct ContentView: View {
         Group{
             
             if(session.session != nil) {
-                
-              
-                    
-                   
+            
                     
                    MainTabContainer()
                     
