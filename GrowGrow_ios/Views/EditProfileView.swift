@@ -91,8 +91,8 @@ struct EditProfileView: View {
         if agreedToChange == true {
             
             db.collection("Users").document(self.session.session!.uid).updateData([
-                "fullname" : fullname,
-                "username" : username,
+                //"fullname" : fullname,
+                //"username" : username,
                 "summary" : summary,
                 "region" : regions[selectedRegion],
                 "depart" : departs[selectedDepart],
@@ -112,8 +112,8 @@ struct EditProfileView: View {
         } else {
             
             db.collection("Users").document(self.session.session!.uid).updateData([
-                "fullname" : fullname,
-                "username" : username,
+               // "fullname" : fullname,
+               // "username" : username,
                 "summary" : summary,
         
             
@@ -342,13 +342,62 @@ struct EditProfileView: View {
                 }
                 .padding(.top,20)
                 
+                
                 Form{
+                    
+                    Section{
+                        Toggle(isOn: $agreedToChange){
+                            Text("세부 정보 수정하기")
+                                .font(.custom(appleGothicBold, size: 18))
+                                .foregroundColor(Color.black)
+                            
+                        }
+                        
+                        if agreedToChange {
+                            
+                            Picker("선택된 지역", selection: $selectedRegion) {
+                                //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
+                                ForEach(0 ..< regions.count) {
+                                    Text("\(self.regions[$0])")
+                                  
+                                }
+                            }.disabled(agreedToChange == false)
+                            
+                            Picker("선택된 계열", selection: $selectedDepart) {
+                                //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
+                                ForEach(0 ..< departs.count) {
+                                    Text("\(self.departs[$0])")
+                                    
+                                }
+                            }.disabled(agreedToChange == false)
+                            
+                            Picker("선택된 전공", selection: $selectedMajor) {
+                             ForEach(0 ..< viewModel.contents.count, id: \.self) {
+                                     Text(self.viewModel.contents[$0].mClass)
+                                    
+                                }
+                            }
+                            .disabled(agreedToChange == false)
+                            .onAppear{
+                                urlControl()
+                                viewModel.getJson(urlString: urlString)
+                                    
+                            }
+                           
+                            
+                        }
+                        
+                    }
+                    .font(.custom(appleGothicBold, size: 15))
                   
                     
-                }.background(Color.white)
+                }
                     .onAppear(){
                         UITableView.appearance().backgroundColor = .clear
                     }
+                
+                
+                    
                 
                 
                 
