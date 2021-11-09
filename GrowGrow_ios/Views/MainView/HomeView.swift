@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WaterfallGrid
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
@@ -15,6 +16,8 @@ struct HomeView: View {
         GridItem(.flexible(),spacing: 10, alignment: .center),
         GridItem(.flexible(), spacing: 10, alignment: .center)
     ]
+    
+    
     
 
     
@@ -53,10 +56,10 @@ struct HomeView: View {
             .padding(.top,15)
            
             
-           /* HStack(spacing: 10){
+        /*    HStack(spacing: 10){
                 LazyVStack{
                     
-                    ForEach(viewModel.users){ user in
+                    ForEach(firstArrays){ user in
                         
                         NavigationLink(destination: UserDetailView(uid: user.uid)){
                             
@@ -104,6 +107,7 @@ struct HomeView: View {
                 
             }.onAppear(){
                 self.viewModel.getUsers()
+             
                
             
             } */
@@ -112,35 +116,61 @@ struct HomeView: View {
                 
             
             
-            LazyVGrid(columns: columns, alignment: .leading,spacing: 10) {
-                ForEach(viewModel.users.shuffled()){ user in
+    /*  LazyVGrid(columns: columns, alignment: .leading,spacing: 10) {
+            ForEach(viewModel.users.shuffled()){ user in
+                
+                NavigationLink(destination: UserDetailView(uid: user.uid)){
                     
-                    NavigationLink(destination: UserDetailView(uid: user.uid)){
-                        
-                 
-                        
-                        
+                
+                    
+                    
 
-                        
-                        UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
-                            
-                            
-                       
-                   
+                    
+                    UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
                         
                         
-                    }
+                    
+                
                     
                     
                 }
-              
-                }
+                
+                
+            }
+            
+            }
                  .onAppear(){
                     self.viewModel.getUsers()
                    
                 
-                } 
-                 
+                }  */
+            
+            WaterfallGrid(viewModel.users.shuffled()) {user in
+                
+                NavigationLink(destination: UserDetailView(uid: user.uid)){
+                    
+                
+                    
+
+
+                    
+                    UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                        
+                        
+                    
+                
+                    
+                    
+                }
+                
+            }
+            .gridStyle(columns: 2)
+            .onAppear(){
+                self.viewModel.getUsers()
+               
+            
+            }
+              
             
             
             
@@ -179,6 +209,8 @@ struct HomeView: View {
         } */
     }.onAppear(){
         self.viewModel.getUserDoc(uid: self.session.session!.uid)
+        
+      
         
         
     }

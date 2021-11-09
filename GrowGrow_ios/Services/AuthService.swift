@@ -69,7 +69,7 @@ class AuthService {
         
         guard let dict = try?user.asDictionary() else {return}
         
-        currentUserId.setData(dict){
+        currentUserId.updateData(dict){
             (error) in
             
             if error != nil {
