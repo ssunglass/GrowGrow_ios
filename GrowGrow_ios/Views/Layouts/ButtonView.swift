@@ -16,8 +16,9 @@ struct ButtonView: View {
     let foreground: Color
     let border: Color
     let handler: ActionHandler
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     
-    private let cornerRadius: CGFloat = 10
+    private let cornerRadius: CGFloat = 15
     
     internal init(title:String,
                   background: Color = .blue,
@@ -34,14 +35,15 @@ struct ButtonView: View {
     var body: some View {
         Button(action: handler, label: {
             Text(title)
-                .frame(maxWidth: .infinity, maxHeight: 50)
+                .frame(maxWidth: .infinity, maxHeight: 40)
         })
-            .background(background)
+            .background(RoundedRectangle(cornerRadius: 15).fill(background))
             .foregroundColor(foreground)
-            .font(.system(size:16, weight: .bold))
+            .font(.custom(appleGothicBold, size: 24))
             .cornerRadius(cornerRadius)
             .overlay(RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(border, lineWidth: 2))
+                        .stroke(border, lineWidth: 1.5))
+            .padding(.vertical,5)
     }
     
 }

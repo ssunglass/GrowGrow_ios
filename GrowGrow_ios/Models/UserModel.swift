@@ -17,6 +17,7 @@ struct User: Encodable, Decodable{
     var depart:String
     var major:String
     var region:String
+    var departIcon: String
 }
 
 struct AllUsers: Identifiable{
@@ -29,6 +30,7 @@ struct AllUsers: Identifiable{
     var depart:String
     var major:String
     var region:String
+    var departIcon: String
 }
 
 struct Bio: Codable {

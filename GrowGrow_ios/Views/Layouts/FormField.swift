@@ -11,27 +11,39 @@ import SwiftUI
 
 struct FormField: View {
     @Binding var value : String
-    var icon : String
+   // var icon : String
     var placeholder: String
     var isSecure = false
+    
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     
     var body: some View {
         Group{
             HStack{
-                Image(systemName: icon).padding()
+               // Image(systemName: icon).padding()
                 Group{
                     if isSecure {
                         SecureField(placeholder, text: $value)
+                            .textContentType(.oneTimeCode)
                     } else {
                         TextField(placeholder, text: $value)
+                            .textContentType(.oneTimeCode)
                     }
-                }.font(Font.system(size: 20, design: .monospaced))
-                    .foregroundColor(.black)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                .frame(maxHeight: 40, alignment: .center)
+                .font(.custom(appleGothicSemiBold, size: 20))
+                .foregroundColor(Color.black)
+                .cornerRadius(15)
                     .multilineTextAlignment(.leading)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-            }.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray,lineWidth: 4)).padding()
+                    .padding(.horizontal)
+            }.overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(Color.black, lineWidth: 1)
+                )
+                .padding(.top, 10)
+                .padding(.bottom, 10)
         }
     }
 }
@@ -41,6 +53,7 @@ struct SecureInputView: View {
     @Binding private var text: String
     @State private var isSecured: Bool = true
     private var title: String
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     
     init(_ title: String, text: Binding<String>) {
         self.title = title
@@ -52,17 +65,21 @@ struct SecureInputView: View {
             Group {
                 if isSecured {
                     SecureField(title, text: $text)
+                        .textContentType(.oneTimeCode)
                 } else {
                     TextField(title, text: $text)
+                        .textContentType(.oneTimeCode)
                 }
                 
                 
-            }.font(Font.system(size: 20, design: .monospaced))
-                .foregroundColor(.black)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .multilineTextAlignment(.leading)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+            } .frame(maxHeight: 40, alignment: .center)
+                .font(.custom(appleGothicSemiBold, size: 20))
+                .foregroundColor(Color.black)
+                .cornerRadius(15)
+                    .multilineTextAlignment(.leading)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                    .padding(.horizontal)
             
             Button(action: {
                 isSecured.toggle()
@@ -70,7 +87,13 @@ struct SecureInputView: View {
                 Image(systemName: self.isSecured ? "eye.slash" : "eye")
                     .accentColor(.gray)
             }
-        }.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray,lineWidth: 4)).padding()
+            .padding(.trailing, 10)
+        }.overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color.black, lineWidth: 1)
+            )
+            .padding(.top, 10)
+            .padding(.bottom, 10)
     }
 }
 

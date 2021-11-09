@@ -66,11 +66,14 @@ struct SignInView: View {
     
     
     var body: some View {
-        VStack{
-            FormField(value: $email, icon: "envelope.fill", placeholder: "이메일")
-            FormField(value: $password, icon: "lock.fill", placeholder: "비밀번호", isSecure: true)
+        VStack(alignment: .center, spacing: 5){
+            FormField(value: $email, placeholder: "이메일")
+            FormField(value: $password, placeholder: "비밀번호", isSecure: true)
            
-            ButtonView(title: "로그인"){
+            ButtonView(title: "로그인",
+                       background: Color(hex: "#646464"),
+                       foreground: .white,
+                       border: Color(hex: "#646464")){
                 
                 signIn()
                 
@@ -79,9 +82,9 @@ struct SignInView: View {
             }
             
             ButtonView(title:"회원가입",
-                       background: .clear,
-                       foreground: .blue,
-                       border: .blue){
+                       background: .black,
+                       foreground: .white,
+                       border: .black){
                 showRegisteration.toggle()
             }.fullScreenCover(isPresented: $showRegisteration, content: {SignUpView()} )
             

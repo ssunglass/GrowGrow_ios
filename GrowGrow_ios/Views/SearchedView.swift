@@ -15,7 +15,7 @@ struct SearchedView: View {
     var inputDeparts: [String]
     var inputRegions: String?
     
-    
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     
 
     
@@ -23,7 +23,26 @@ struct SearchedView: View {
         List{
             ForEach(viewModel.searchedUsers){ user in
                 
+                
+                NavigationLink(destination: UserDetailView(uid: user.uid)){
+                    
+                
+                    HStack{
+                        
+                        Image(systemName: user.departIcon)
+                      
+                
+                       
+                
                 Text(user.fullname)
+                            .font(.custom(appleGothicSemiBold, size: 18))
+                            .foregroundColor(Color.black)
+                        
+                    }
+                  
+                    
+                    
+                }
                 
                 
                 
@@ -32,7 +51,9 @@ struct SearchedView: View {
             
             
             
-        }.onAppear(){
+        }
+        .listStyle(PlainListStyle())
+        .onAppear(){
             self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts, region: inputRegions ?? "")
             
          

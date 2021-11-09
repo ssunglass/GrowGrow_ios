@@ -11,28 +11,60 @@ struct SavedUserListView: View {
     
     @StateObject private var viewModel = SessionStore()
     
-    
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
 
     
     
+    
+  
+    
+    
     var body: some View {
+        
+       
         List{
-            
+           
             ForEach(viewModel.savedUsers){savedUser in
                 
-                Text(savedUser.fullname)
+                NavigationLink(destination: UserDetailView(uid: savedUser.uid)){
+                    
                 
+                    HStack{
+                        
+                        Image(systemName: savedUser.departIcon)
+                      
+                
+                       
+                
+                Text(savedUser.fullname)
+                            .font(.custom(appleGothicSemiBold, size: 18))
+                            .foregroundColor(Color.black)
+                        
+                    }
+                  
+                    
+                    
+                }
+               
             }
             
             
             
-        }.onAppear(){
+        }
+        .listStyle(PlainListStyle())
+        .onAppear(){
             
             self.viewModel.getSavedUsers()
+            
+            
             
         }
         
         .navigationTitle("저장된 유저")
+        
+       
+            
+        
     }
 }
 

@@ -30,6 +30,7 @@ struct EditProfileView: View {
     let regions = ["서울/경기","강원","충청","대구/경북","전북/전남","제주"]
     let departs = ["인문","사회","공학","자연","교육","의약","예체능"]
     @State private var urlString: String
+    @State private var departIcon: String
   
     
     
@@ -41,6 +42,7 @@ struct EditProfileView: View {
         self._username = State(initialValue: initusername)
         self._summary = State(initialValue: initsummary)
         self._urlString = State(initialValue: "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100391&perPage=50")
+        self._departIcon = State(initialValue: "person.fill.questionmark")
         
         UINavigationBar.appearance().tintColor = .black
         
@@ -83,12 +85,71 @@ struct EditProfileView: View {
         
     }
     
-    
-    
+    /*(func HI(){
+        if savedUser.depart == "인문" {
+            
+            imageName = "brain.head.profile"
+            
+            
+            
+        } else if savedUser.depart == "사회"{
+            
+            imageName = "figure.stand.line.dotted.figure.stand"
+            
+        } else if savedUser.depart == "공학"{
+            
+            imageName = "link.icloud"
+        } else if savedUser.depart == "자연"{
+            
+            imageName = "tortoise"
+        } else if savedUser.depart == "교육"{
+            
+            imageName = "graduationcap"
+        } else if savedUser.depart == "의약"{
+            
+            imageName = "cross.case"
+        } else if savedUser.depart == "예체능"{
+            
+            imageName = "airpodsmax"
+            
+        }
+    }
+     */
     func updateUser(){
         let db = Firestore.firestore()
         
+        if departs[selectedDepart] == "인문" {
+            
+            departIcon = "brain.head.profile"
+            
+        } else if departs[selectedDepart] == "사회" {
+            
+            departIcon = "figure.stand.line.dotted.figure.stand"
+        } else if departs[selectedDepart] == "공학" {
+            
+            departIcon = "link.icloud"
+        } else if departs[selectedDepart] == "자연" {
+            
+            departIcon = "tortoise"
+        } else if departs[selectedDepart] == "교육" {
+            
+            departIcon = "graduationcap"
+        } else if departs[selectedDepart] == "의약" {
+            
+            departIcon =  "cross.case"
+        } else {
+            
+            departIcon = "airpodsmax"
+        }
+        
+        
+        
+        
+        
+        
         if agreedToChange == true {
+            
+            
             
             db.collection("Users").document(self.session.session!.uid).updateData([
                 //"fullname" : fullname,
@@ -96,7 +157,8 @@ struct EditProfileView: View {
                 "summary" : summary,
                 "region" : regions[selectedRegion],
                 "depart" : departs[selectedDepart],
-                "major" : viewModel.contents[selectedMajor].mClass
+                "major" : viewModel.contents[selectedMajor].mClass,
+                "departIcon" : departIcon
             
             
             ]) { err in

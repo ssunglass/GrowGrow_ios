@@ -16,6 +16,7 @@ struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showingAlert = false
     @State private var error:String = ""
+    @State private var sendEmail = false
     
     
     func signUp(){
@@ -28,8 +29,8 @@ struct SignUpView: View {
         AuthService.signUp(fullname: fullname, username: username, email: email, password: password, onSuccess: {
             (user) in
             
-            self.error = "이메일을 인증을 확인해주세요"
-            self.showingAlert = true
+           
+            //presentationMode.wrappedValue.dismiss()
             
             
             
@@ -73,35 +74,44 @@ struct SignUpView: View {
                     Image(systemName: "xmark")
                         .font(.title)
                         .foregroundColor(.black)
-                        .padding(20)
+                        .padding()
                 }
                 
             }
             
-            Spacer()
+           // Spacer()
             
-            FormField(value: $fullname, icon: "person.fill", placeholder: "fullname")
-            FormField(value: $username, icon: "person.fill", placeholder: "username")
-            FormField(value: $email, icon: "envelope.fill", placeholder: "이메일")
-            FormField(value: $password, icon: "lock.fill", placeholder: "비밀번호", isSecure: true)
+            FormField(value: $fullname, placeholder: "fullname")
+            FormField(value: $username,  placeholder: "username")
+            FormField(value: $email, placeholder: "이메일")
+            FormField(value: $password,  placeholder: "비밀번호", isSecure: true)
             SecureInputView("비밀번호 재확인", text: $confirmpassword)
-            ButtonView(title:"이메일 인증"){
+            ButtonView(title:"이메일 인증",background: Color.black, foreground: .white, border: .black){
                 
                 signUp()
                 
                 
             }.alert(isPresented: $showingAlert){
-                Alert(title: Text("커커"), message: Text(error), dismissButton: .default(Text("OK")) {
+                Alert(title: Text("커커"),
+                      message: Text(error),
+                      dismissButton: .default(Text("확인"),
+                                      action: {
                     
-                    if error == "이메일을 인증을 확인해주세요" {
+                  /* if sendEmail {
                         
                         presentationMode.wrappedValue.dismiss()
                         
-                        
                     }
+                    */
                     
                 })
+                
+                  
+                    
+                )
             }
+            
+            Spacer()
             
             
            
@@ -109,7 +119,8 @@ struct SignUpView: View {
             
             
             
-        }.padding(.bottom, 150)
+        }
+        .padding()
             
         
     }

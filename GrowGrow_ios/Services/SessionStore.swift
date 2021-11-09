@@ -21,6 +21,7 @@ class SessionStore: ObservableObject {
     @Published var searchedUsers = [AllUsers]()
     @Published var savedUsers = [AllUsers]()
     
+    
     @Published var fullname: String = ""
     @Published var username: String = ""
     @Published var depart: String = ""
@@ -76,6 +77,7 @@ class SessionStore: ObservableObject {
                 let summary = data["summary"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
                 let region = data["region"] as? String ?? ""
+                let departIcon = data["departIcon"] as? String ?? ""
                 
                 
                 
@@ -83,7 +85,7 @@ class SessionStore: ObservableObject {
             
                 
                 
-                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
                 
             }
             
@@ -109,10 +111,13 @@ class SessionStore: ObservableObject {
                 let summary = data["summary"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
                 let region = data["region"] as? String ?? ""
+                let departIcon = data["departIcon"] as? String ?? ""
+                
+             
             
                 
                 
-                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
                 
             }
             
@@ -167,10 +172,11 @@ class SessionStore: ObservableObject {
                 let summary = data["summary"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
                 let region = data["region"] as? String ?? ""
+                let departIcon = data["departIcon"] as? String ?? ""
             
                 
                 
-                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region)
+                return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
                 
             }
             
@@ -207,8 +213,9 @@ class SessionStore: ObservableObject {
                 let savedMajor = data["major"] as? String ?? ""
                 let savedSummary = data["summary"] as? String ?? ""
                 let savedRegion = data["region"] as? String ?? ""
+                let departIcon = data["departIcon"] as? String ?? ""
                 
-                let savedUser = User.init(fullname: savedFullname, username: savedUsername, uid: saveUid, summary: savedSummary, depart: savedDepart, major: savedMajor, region: savedRegion)
+                let savedUser = User.init(fullname: savedFullname, username: savedUsername ,uid: saveUid, summary: savedSummary, depart: savedDepart, major: savedMajor, region: savedRegion, departIcon: departIcon)
                 
                 
                 guard let dict = try?savedUser.asDictionary() else {return}

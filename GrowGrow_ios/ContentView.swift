@@ -22,13 +22,13 @@ struct ContentView: View {
             
             if(session.session != nil) {
                 
-                if Auth.auth().currentUser!.isEmailVerified {
+              
                     
-                    MainTabContainer()
+                   
                     
+                   MainTabContainer()
                     
-                    
-                }
+              
                 
                 
             } else {
