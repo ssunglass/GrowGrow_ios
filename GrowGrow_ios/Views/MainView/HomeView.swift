@@ -11,6 +11,8 @@ import WaterfallGrid
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
     @ObservedObject private var viewModel = SessionStore()
+    @State private var isDetailViewActive = false
+    @State private var tapUserUid: String = ""
     
     let columns = [
         GridItem(.flexible(),spacing: 10, alignment: .center),
@@ -147,21 +149,26 @@ struct HomeView: View {
             
             WaterfallGrid(viewModel.users.shuffled()) {user in
                 
-                NavigationLink(destination: UserDetailView(uid: user.uid)){
-                    
-                
-                    
+               
 
 
                     
                     UserCardView(fullname: user.fullname, username: user.username, depart: user.depart, major: user.major, summary: user.summary)
+                        .onTapGesture {
+                            isDetailViewActive.toggle()
+                            
+                            tapUserUid = user.uid
+                                
+                            
+                        }
+                       
                         
                         
                     
                 
                     
                     
-                }
+                
                 
             }
             .gridStyle(columns: 2)
@@ -170,6 +177,10 @@ struct HomeView: View {
                
             
             }
+            
+            NavigationLink(destination: UserDetailView(uid: tapUserUid), isActive: $isDetailViewActive){
+                
+            }.hidden()
               
             
             

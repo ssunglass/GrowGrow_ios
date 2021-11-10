@@ -29,7 +29,7 @@ struct AddBioView: View {
         return nf
     }()
 
-   
+   @State private var isNextActive = false
 
     func yearString(at index: Int) -> String {
         let selectedYear = years[index]
@@ -40,8 +40,6 @@ struct AddBioView: View {
        
        if !bioText.isEmpty {
            
-           
-       
         
         BioService.saveBio(date: yearString(at: selectedYearIndex), description: bioText, onSuccess: {
             (bio) in
@@ -62,21 +60,19 @@ struct AddBioView: View {
   
     
     var body: some View {
-        VStack{
-            
+        
+        
+        NavigationView{
        
-            
-            Group{
+        VStack{
+        
                 Text("자신의 이력 추가")
                     .font(.custom(appleGothicBold, size: 20))
                     .foregroundColor(Color.black)
                     .padding(.top,20)
                     .padding(.bottom,20)
-                
-                
-                    
-                
-                
+        
+       
                   
                     Picker("Year", selection: $selectedYearIndex) {
                         ForEach(years.indices) { yearIndex in
@@ -90,10 +86,11 @@ struct AddBioView: View {
                                  .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
                              )
                     .padding(.horizontal)
+                    
                       
                 
-                           TextEditor(text: $bioText)
-                               .frame(maxHeight: 180, alignment: .center)
+                   /* TextEditor(text: $bioText)
+                               .frame(maxHeight: 100, alignment: .center)
                                .font(.custom(appleGothicSemiBold, size: 20))
                                .foregroundColor(Color.black)
                                .cornerRadius(15)
@@ -105,34 +102,50 @@ struct AddBioView: View {
                                             .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))
                                .padding(.horizontal,10)
                                
-                       
+                */
+            
+           
                 
                 Button(action: {
-                    addBio()
-                    presentationMode.wrappedValue.dismiss()
+                    
+                    isNextActive.toggle()
+                    
+                   // addBio()
+                  //  presentationMode.wrappedValue.dismiss()
                 }){
                   
-                    Text("추가")
+                    Text("다음")
                         .foregroundColor(Color.white)
                         .font(.custom(appleGothicBold, size: 24))
-                        .frame(maxWidth: 100, maxHeight: 35)
-                        .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "#646464")))
-                        .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(hex: "#646464"), lineWidth: 1)
-                        
-                        )
+                       
                     
                     
                     
                     
                 }
+                .frame(maxWidth: 100, maxHeight: 35)
+                .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "#646464")))
+                .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color(hex: "#646464"), lineWidth: 1)
+                
+                )
                 .padding(.top,15)
                 
                 Spacer()
                 
+            NavigationLink(destination: BioTextAddView(selectedYear: yearString(at: selectedYearIndex))
+                
                
-            }
+                
+                
+                
+                
+            , isActive: $isNextActive){
+                
+                
+            }.hidden()
+            
             
             
             
@@ -140,9 +153,94 @@ struct AddBioView: View {
             
         }
         .padding()
-        
+            
+          
+            
+        }
     }
 }
+
+struct BioTextAddView: View {
+    
+    
+    @Environment(\.presentationMode) var presentationMode
+    let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
+    @State private var bioText = ""
+    var selectedYear: String
+    
+    
+    func addBio(){
+        
+        if !bioText.isEmpty {
+            
+         
+         BioService.saveBio(date: selectedYear, description: bioText, onSuccess: {
+             (bio) in
+         }){
+             (errorMessage) in
+             print("Error \(errorMessage)")
+             return
+             
+             
+         }
+            
+        }
+         
+     }
+    
+    var body: some View {
+        VStack(alignment:.center){
+            
+           
+            
+            Text(selectedYear)
+                .font(.custom(appleGothicBold, size: 30))
+                .foregroundColor(Color.black)
+                .tracking(-1.5)
+                .padding(.bottom,5)
+            
+            TextEditor(text: $bioText)
+                       .frame(maxHeight: 180, alignment: .center)
+                       .font(.custom(appleGothicSemiBold, size: 20))
+                       .foregroundColor(Color.black)
+                       .cornerRadius(15)
+                       .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
+                                )
+                       .background(RoundedRectangle(cornerRadius: 15)
+                                    .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))
+                       .padding(.horizontal,10)
+            
+            Button(action:{
+                 addBio()
+                presentationMode.wrappedValue.dismiss()
+            }){
+                
+                Text("완료")
+                 .font(.custom(appleGothicBold, size: 24))
+                 .foregroundColor(Color.white)
+                
+                
+            }
+            .frame(maxWidth: 100, maxHeight: 35)
+            .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "#646464")))
+            .overlay(
+                   RoundedRectangle(cornerRadius: 20)
+                       .stroke(Color(hex: "#646464"), lineWidth: 1)
+           
+           )
+            .padding(.top,10)
+            
+            Spacer()
+                .navigationBarTitleDisplayMode(.inline)
+            
+            
+        }
+    }
+}
+
 
 
 

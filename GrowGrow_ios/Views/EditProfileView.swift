@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseDynamicLinks
+import Security
 
 struct EditProfileView: View {
     @EnvironmentObject var session: SessionStore
@@ -65,11 +66,11 @@ struct EditProfileView: View {
          }
          else if departs[selectedDepart] == "교육" {
              
-              urlString = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100394&perPage=50"
+              urlString = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100393&perPage=50"
          }
          else if departs[selectedDepart] == "공학" {
              
-              urlString = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100392&perPage=50"
+              urlString = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100394&perPage=50"
          }
          else if departs[selectedDepart] == "자연" {
              
@@ -202,48 +203,7 @@ struct EditProfileView: View {
         
         
     }
-    
-    func createDynamicLink(){
-        
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let link = URL(string: "https://growgrow.com/?invitedby=\(uid)")
-        let referralLink = DynamicLinkComponents(link: link!, domainURIPrefix: "https://growgrow.page.link")
 
-        referralLink!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.stationLab.GrowGrow-ios")
-        referralLink!.iOSParameters?.minimumAppVersion = "1.0.0"
-        referralLink!.iOSParameters?.appStoreID = "123456789"
-
-        referralLink!.androidParameters = DynamicLinkAndroidParameters(packageName: "com.example.growgrow")
-        referralLink!.androidParameters?.minimumVersion = 125
-        
-        
-        referralLink!.shorten { (shortURL, warnings, error) in
-          if let error = error {
-            print(error.localizedDescription)
-            return
-          }
-            
-            
-          let invitationUrl = shortURL!
-            let sms: String = "sms:\(NumberToMessage)&body=커커에 당신을 초대합니다: \(invitationUrl.absoluteString) "
-            let strUrl: String = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-            UIApplication.shared.open(URL.init(string: strUrl)!, options: [:], completionHandler: nil)
-       
-     
-            
-            
-            
-        }
-        
-      
-        
-        
-        
-    }
-    
- 
-    
-  
     
 
     
@@ -335,31 +295,7 @@ struct EditProfileView: View {
                 
                 VStack(alignment: .leading){
                     
-                    HStack{
-                    
-                    TextField("전화번호로 친구 초대하기", text: $NumberToMessage)
-                            .padding()
-                    
-                    Button(action: {
-                        
-                       createDynamicLink()
-                        
-                    }) {
-                        Image(systemName: "plus.circle")
-                    }
-                    .padding()
-                    }.frame(maxHeight: 40, alignment: .center)
-                        .font(.custom(appleGothicSemiBold, size: 20))
-                        .foregroundColor(Color.black)
-                        .cornerRadius(15)
-                            .multilineTextAlignment(.leading)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color.black, lineWidth: 1)
-                                )
-                            .padding(.vertical)
+                 
                     
                 Text("한줄요약")
                     .foregroundColor(Color.black)
@@ -550,23 +486,40 @@ struct EditProfileView: View {
             .navigationBarTitle(Text("프로필 수정"), displayMode: .inline)
             .navigationBarItems(leading:
                 HStack {
-                    Button(action: {
+                
+                Label("cancel", systemImage: "xmark")
+                    .onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    .labelStyle(IconOnlyLabelStyle())
+                    .padding()
+                
+                 /*   Button(action: {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "xmark")
-                    }.padding()
+                    }.padding() */
 
 
                 }, trailing:
                     HStack {
-                        Button(action: {
+                
+                Label("check", systemImage: "checkmark")
+                    .onTapGesture {
+                        updateUser()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    .labelStyle(IconOnlyLabelStyle())
+                    .padding()
+                
+                       /* Button(action: {
                             
                             updateUser()
                             presentationMode.wrappedValue.dismiss()
                         
                         }) {
                             Image(systemName: "checkmark")
-                        }.padding()
+                        }.padding() */
                     }
             )
         }

@@ -28,6 +28,7 @@ struct ProfileView: View {
     @State private var showEditBioView = false
     @State var nativeAlert = false
     @State var keyword = ""
+    @State private var isBookActive = false
     // @State var keywords: [[Keyword]] = []
     let db = Firestore.firestore()
     
@@ -239,29 +240,63 @@ struct ProfileView: View {
                         
                     }
                     
-                    Button(action: {showEditProfileView.toggle()}){
+                    Image(systemName: "person.crop.circle.badge.questionmark.fill")
+                        .resizable()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            showEditProfileView.toggle()
+                        }
+                        .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    
+                  /*  Button(action: {showEditProfileView.toggle()}){
                         Image(systemName: "person.crop.circle.badge.questionmark.fill")
                             .resizable()
                             .frame(width:23, height: 20)
+                           
                         
-                    }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    }
                     
-                    Button(action:{
+                    .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    */
+                  
+                    
+                    Image(systemName: "plus.rectangle.on.rectangle")
+                        .resizable()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            alertView()
+                        }
+                
+                    
+                    /*Button(action:{
                         alertView()
                     }){
                         Image(systemName: "plus.rectangle.on.rectangle")
                             .resizable()
                             .frame(width:23, height: 20)
+                            
                         
-                    }
+                    }*/
+                    
+                    Image(systemName: "bookmark.square.fill")
+                        .resizable()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            isBookActive.toggle()
+                        }
+                    
+               
                     
                     
-                    NavigationLink(destination: SavedUserListView()){
-                        Image(systemName: "bookmark.square.fill")
-                            .resizable()
-                            .frame(width:23, height: 20)
+                 
+                    
+                    
+                    
+                    NavigationLink(destination: SavedUserListView(),isActive: $isBookActive){
+                    
                         
-                    }
+                    }.hidden()
+                    
                     
                   
                     
@@ -389,27 +424,37 @@ struct ProfileView: View {
                    .background(Color.black)
                     
                HStack{
+                   
+                  Label("plus",systemImage: "folder.badge.plus")
+                       .labelStyle(IconOnlyLabelStyle())
+                       .onTapGesture {
+                           showAddView.toggle()
+                       }.sheet(isPresented: $showAddView, content: {AddBioView()})
             
-                   Button(action: {showAddView.toggle()}){
+                 /*  Button(action: {showAddView.toggle()}){
                        Image(systemName: "folder.badge.plus")
                        
-                   }.sheet(isPresented: $showAddView, content: {AddBioView()})
+                   }.sheet(isPresented: $showAddView, content: {AddBioView()}) */
                    
                    Text("Footprint")
                        .font(.custom(appleGothicBold, size: 36))
                        .foregroundColor(Color.black)
                        .tracking(-1.5)
                    
-                 
+                 Label("edit", systemImage: "pencil.circle")
+                       .labelStyle(IconOnlyLabelStyle())
+                       .onTapGesture {
+                           showEditBioView.toggle()
+                       }.sheet(isPresented: $showEditBioView, content: {EditBioView()})
                    
                    
-                   Button(action: {showEditBioView.toggle()}){
+                 /*  Button(action: {showEditBioView.toggle()}){
                        
                        Image(systemName: "pencil.circle")
                        
                    }.sheet(isPresented: $showEditBioView, content: {EditBioView()})
                        
-                   
+                   */
                    
                }
                 

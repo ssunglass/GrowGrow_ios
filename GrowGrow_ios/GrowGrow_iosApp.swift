@@ -27,7 +27,7 @@ struct GrowGrow_iosApp: App {
 
 class Appdelegate: NSObject, UIApplicationDelegate {
     
-     var dynamicLink: DynamicLink?
+    
     
     
    
@@ -40,21 +40,14 @@ class Appdelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options:
-                     [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if DynamicLinks.dynamicLinks().shouldHandleDynamicLink(fromCustomSchemeURL: url) {
-            
-            let isDynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)
-            
-            dynamicLink = isDynamicLink
-        
-        }
+    
+   
         
       
       
      
-      return false
-    }
+  
+   
     
     
     

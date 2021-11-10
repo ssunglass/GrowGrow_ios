@@ -26,7 +26,7 @@ class BioService {
         
         guard let dict = try?bio.asDictionary() else {return}
         
-        bioRef.updateData(dict){
+        bioRef.setData(dict){
             (error) in
             
             if error != nil {

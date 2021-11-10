@@ -90,15 +90,17 @@ struct EditBioTextView: View {
                 Text("완료")
                  .font(.custom(appleGothicBold, size: 24))
                  .foregroundColor(Color.white)
-                 .frame(maxWidth: 100, maxHeight: 35)
-                 .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "#646464")))
-                 .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(hex: "#646464"), lineWidth: 1)
                 
-                )
                 
-            }.padding(.top,10)
+            }
+            .frame(maxWidth: 100, maxHeight: 35)
+            .background(RoundedRectangle(cornerRadius: 20).fill(Color(hex: "#646464")))
+            .overlay(
+                   RoundedRectangle(cornerRadius: 20)
+                       .stroke(Color(hex: "#646464"), lineWidth: 1)
+           
+           )
+            .padding(.top,10)
             
             Spacer()
             
