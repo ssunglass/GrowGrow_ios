@@ -29,6 +29,7 @@ struct ProfileView: View {
     @State var nativeAlert = false
     @State var keyword = ""
     @State private var isBookActive = false
+    @State private var isPreviewActive = false
     // @State var keywords: [[Keyword]] = []
     let db = Firestore.firestore()
     
@@ -285,6 +286,18 @@ struct ProfileView: View {
                             isBookActive.toggle()
                         }
                     
+                    Spacer()
+                    
+                    Image(systemName: "square.and.arrow.up")
+                        .resizable()
+                        .frame(width:23, height: 25)
+                        .onTapGesture {
+                            isPreviewActive.toggle()
+                           
+                        }
+                        .padding(.trailing,15)
+                        
+                    
                
                     
                     
@@ -294,6 +307,9 @@ struct ProfileView: View {
                     
                     NavigationLink(destination: SavedUserListView(),isActive: $isBookActive){
                     
+                        
+                    }.hidden()
+                    NavigationLink(destination: PdfPreviewView(), isActive: $isPreviewActive){
                         
                     }.hidden()
                     
@@ -343,6 +359,7 @@ struct ProfileView: View {
                        .font(.custom(appleGothicMed, size: 18))
                        .foregroundColor(Color.black)
                        .tracking(-1.5)
+                       .padding([.trailing])
                 
             
         
@@ -409,9 +426,12 @@ struct ProfileView: View {
                         
                     }
                     
+                    
                 }
                 
-            }.onAppear(){
+            }
+                    
+                    .onAppear(){
                 self.viewModel.getKeywords(uid: Auth.auth().currentUser!.uid)
                 
               

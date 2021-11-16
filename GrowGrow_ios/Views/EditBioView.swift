@@ -66,7 +66,7 @@ struct EditBioView: View {
             BioView(date: bio.date, description: bio.description)
                 
                 
-                .modifier(CenterModifier())
+                //.modifier(CenterModifier())
                 .swipeActions{
                     
                     Button(role: .destructive, action: {
@@ -119,12 +119,15 @@ struct EditBioView_Previews: PreviewProvider {
         EditBioView()
     }
 }
-struct CenterModifier: ViewModifier{
-    func body(content: Content) -> some View {
+
+/* struct CenterModifier: ViewModifier{
+    func centerBody(content: Content) -> some View {
         HStack{
             Spacer()
             content
             Spacer()
         }
     }
-}
+} */
+
+

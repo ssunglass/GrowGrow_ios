@@ -10,7 +10,8 @@ import WaterfallGrid
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
-    @ObservedObject private var viewModel = SessionStore()
+   // @ObservedObject private var viewModel = SessionStore()
+    @StateObject private var viewModel = SessionStore()
     @State private var isDetailViewActive = false
     @State private var tapUserUid: String = ""
     
