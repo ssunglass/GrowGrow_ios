@@ -23,7 +23,7 @@ struct PdfPreviewView: View {
         VStack{
             
             
-            PdfViewUI(data: contentViewModel.pdfData()
+            PdfViewUI(data: contentViewModel.pdfData())
                 
             Button(action: {}, label: {
                 Text("공유")

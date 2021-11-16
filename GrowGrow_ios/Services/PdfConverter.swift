@@ -70,7 +70,7 @@ extension PdfCreator {
         
     }
     
-    private func addBody (body : String) {
+    private func addBody (body : String, bios: [AllBios]) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .justified
         
@@ -80,14 +80,28 @@ extension PdfCreator {
             NSAttributedString.Key.foregroundColor : UIColor.gray
         ]
         
-        let bodyRect = CGRect(x: 20, y: 70,
+        
+        
+        let bodyRect = CGRect(x: 20, y: 230,
                               width: pageRect.width - 40 ,height: pageRect.height - 80)
+        
+        let bioDescriptionRect = CGRect(x: 100, y: 230,
+                              width: pageRect.width - 40 ,height: pageRect.height - 80)
+        
+        
         body.draw(in: bodyRect, withAttributes: attributes)
+        
+        for bio in bios {
+            bio.date.draw(in: bodyRect, withAttributes: attributes)
+            bio.description.draw(in: bioDescriptionRect, withAttributes: attributes)
+        }
+        
+        
     }
 }
 
 extension PdfCreator {
-    func pdfData( fullname : String, depart: String, summary:String, body: String ) -> Data? {
+    func pdfData( fullname : String, depart: String, summary:String, body: String, bios: [AllBios] ) -> Data? {
         if let renderer = self.renderer {
 
             let data = renderer.pdfData  { ctx in
@@ -95,7 +109,7 @@ extension PdfCreator {
                 //ctx.beginPage()
                 addTop(fullname: fullname, depart: depart)
                 addMid(summary: summary)
-                addBody(body: body)
+                addBody(body: body, bios: bios)
                
             }
             return data
@@ -108,8 +122,8 @@ struct Content{
     var fullname : String = "김민국"
     var depart : String = "미술계열, 첨단시각디자인과"
     var summary : String = "글도 쓰고, 프로젝트도 합니다."
-    var body : String = ""
-    
+    var body : String = "Career / Project"
+    var bios = [AllBios]()
 }
 
 class ContentViewModel : ObservableObject {
@@ -143,6 +157,13 @@ class ContentViewModel : ObservableObject {
            content.body = newBody
        }
     }
+    
+    var bios : [AllBios] {
+        get { content.bios }
+       set (newBios){
+           content.bios = newBios
+       }
+    }
 }
 
 extension ContentViewModel {
@@ -151,7 +172,8 @@ extension ContentViewModel {
        return PdfCreator().pdfData(fullname: fullname,
                                    depart: depart,
                                    summary:summary,
-                                   body: body)
+                                   body: body,
+                                   bios: bios)
    }
 
 }

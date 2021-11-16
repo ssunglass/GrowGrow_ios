@@ -16,6 +16,7 @@ struct ProfileView: View {
     
     @EnvironmentObject var session: SessionStore
     @StateObject private var viewModel = SessionStore()
+    @EnvironmentObject private var contentViewModel : ContentViewModel
     
     
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
@@ -293,6 +294,11 @@ struct ProfileView: View {
                         .frame(width:23, height: 25)
                         .onTapGesture {
                             isPreviewActive.toggle()
+                            contentViewModel.fullname = viewModel.fullname
+                            contentViewModel.depart = "\(viewModel.depart), \(viewModel.major) 재학"
+                            contentViewModel.summary = viewModel.summary
+                            
+                            contentViewModel.bios = viewModel.bios
                            
                         }
                         .padding(.trailing,15)
