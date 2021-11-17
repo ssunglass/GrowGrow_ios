@@ -16,6 +16,8 @@ struct PdfPreviewView: View {
     @EnvironmentObject var session: SessionStore
     
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
+    
+    
    
     
     

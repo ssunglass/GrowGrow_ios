@@ -61,11 +61,11 @@ struct EditBioView: View {
            
         
                 
-            
-            
+            HStack{
+            Spacer()
             BioView(date: bio.date, description: bio.description)
-                
-                
+                Spacer()
+            }
                 //.modifier(CenterModifier())
                 .swipeActions{
                     
@@ -128,6 +128,6 @@ struct EditBioView_Previews: PreviewProvider {
             Spacer()
         }
     }
-} */
+}
 
-
+ */

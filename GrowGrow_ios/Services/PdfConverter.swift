@@ -99,14 +99,29 @@ extension PdfCreator {
         
     }
     
-    private func drawLine(_ drawContext: CGContext){
+    private func drawLine(_ drawContext: CGContext, drawY: CGFloat){
         
         drawContext.saveGState()
           // 3
           drawContext.setLineWidth(1.0)
         
-        drawContext.move(to: CGPoint(x: 40, y: 20))
-         drawContext.addLine(to: CGPoint(x: 100, y: 20))
+        drawContext.move(to: CGPoint(x: 40, y: drawY))
+         drawContext.addLine(to: CGPoint(x: 100, y: drawY))
+         drawContext.strokePath()
+         drawContext.restoreGState()
+        
+        
+        
+    }
+    
+    private func drawBoldLine(_ drawContext: CGContext, drawY: CGFloat){
+        
+        drawContext.saveGState()
+          // 3
+          drawContext.setLineWidth(3.0)
+        
+        drawContext.move(to: CGPoint(x: 100, y: drawY))
+         drawContext.addLine(to: CGPoint(x: 140, y: drawY))
          drawContext.strokePath()
          drawContext.restoreGState()
         
@@ -132,7 +147,11 @@ extension PdfCreator {
                 addMid(summary: summary)
                 addBody(body: body, bios: bios)
                 
-                drawLine(context)
+                drawLine(context, drawY: 20)
+                drawBoldLine(context, drawY: 20)
+                
+                drawLine(context, drawY: 300)
+                drawBoldLine(context, drawY: 300)
                 
                
             }
