@@ -98,6 +98,21 @@ extension PdfCreator {
         
         
     }
+    
+    private func drawLine(_ drawContext: CGContext){
+        
+        drawContext.saveGState()
+          // 3
+          drawContext.setLineWidth(1.0)
+        
+        drawContext.move(to: CGPoint(x: 40, y: 20))
+         drawContext.addLine(to: CGPoint(x: 100, y: 20))
+         drawContext.strokePath()
+         drawContext.restoreGState()
+        
+        
+        
+    }
 }
 
 extension PdfCreator {
@@ -107,9 +122,18 @@ extension PdfCreator {
             let data = renderer.pdfData  { ctx in
                 ctx.beginPage()
                 //ctx.beginPage()
+                
+                let context = ctx.cgContext
+                
+                
+                
+                
                 addTop(fullname: fullname, depart: depart)
                 addMid(summary: summary)
                 addBody(body: body, bios: bios)
+                
+                drawLine(context)
+                
                
             }
             return data

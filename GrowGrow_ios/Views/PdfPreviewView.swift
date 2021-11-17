@@ -75,6 +75,8 @@ struct PdfViewUI : UIViewRepresentable {
             pdfView.document = PDFDocument(data: data)
         }
         
+        
+        
         return pdfView
     }
     
