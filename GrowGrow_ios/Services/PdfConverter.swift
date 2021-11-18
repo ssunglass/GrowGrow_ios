@@ -11,6 +11,9 @@ import PDFKit
  class PdfCreator : NSObject {
     private var pageRect : CGRect
     private var renderer : UIGraphicsPDFRenderer?
+     
+     let tableDataItems: [AllBios]
+     let defaultOffset: CGFloat = 20
 
     /**
     W: 8.5 inches * 72 DPI = 612 points
@@ -18,7 +21,7 @@ import PDFKit
     A4 = [W x H] 595 x 842 points
     */
     init(pageRect : CGRect =
-        CGRect(x: 0, y: 0, width: (8.5 * 72.0), height: (11 * 72.0))) {
+         CGRect(x: 0, y: 0, width: (8.5 * 72.0), height: (11 * 72.0)), tableDataItems: [AllBios]) {
        
         let format = UIGraphicsPDFRendererFormat()
         let metaData = [kCGPDFContextTitle: "It's a PDF!",
@@ -28,6 +31,8 @@ import PDFKit
         self.pageRect = pageRect
         self.renderer = UIGraphicsPDFRenderer(bounds: self.pageRect,
                                              format: format)
+        
+        self.tableDataItems = tableDataItems
         super.init()
     }
 }
@@ -128,36 +133,118 @@ extension PdfCreator {
         
         
     }
+    
+    func drawTableContentInnerBordersAndText(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios]) {
+        drawContext.setLineWidth(1.0)
+        drawContext.saveGState()
+
+        let defaultStartY = defaultOffset * 3
+
+        for elementIndex in 0..<tableDataItems.count {
+            let yPosition = CGFloat(elementIndex) * defaultStartY + defaultStartY
+
+            // Draw content's elements texts
+            let textFont = UIFont.systemFont(ofSize: 13.0, weight: .regular)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            paragraphStyle.lineBreakMode = .byWordWrapping
+            let textAttributes = [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.font: textFont
+            ]
+            let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(3)
+            for titleIndex in 0..<2 {
+                var attributedText = NSAttributedString(string: "", attributes: textAttributes)
+                switch titleIndex {
+                case 0: attributedText = NSAttributedString(string: tableDataItems[elementIndex].date, attributes: textAttributes)
+                case 1: attributedText = NSAttributedString(string: tableDataItems[elementIndex].description, attributes: textAttributes)
+               
+                default:
+                    break
+                }
+                let tabX = CGFloat(titleIndex) * tabWidth
+                let textRect = CGRect(x: tabX + defaultOffset,
+                                      y: yPosition + defaultOffset,
+                                      width: tabWidth,
+                                      height: defaultOffset * 3)
+                attributedText.draw(in: textRect)
+            }
+
+            // Draw content's 3 vertical lines
+            for verticalLineIndex in 0..<3 {
+                let tabX = CGFloat(verticalLineIndex) * tabWidth
+                drawContext.move(to: CGPoint(x: tabX + defaultOffset, y: yPosition))
+                drawContext.addLine(to: CGPoint(x: tabX + defaultOffset, y: yPosition + defaultStartY))
+                drawContext.strokePath()
+            }
+
+            // Draw content's element bottom horizontal line
+            drawContext.move(to: CGPoint(x: defaultOffset, y: yPosition + defaultStartY))
+            drawContext.addLine(to: CGPoint(x: pageRect.width - defaultOffset, y: yPosition + defaultStartY))
+            drawContext.strokePath()
+        }
+        drawContext.restoreGState()
+    }
 }
 
 extension PdfCreator {
     func pdfData( fullname : String, depart: String, summary:String, body: String, bios: [AllBios] ) -> Data? {
+        
+        let numberOfElmentsPerPage = calculateNumberofElmentsperPage(with: pageRect)
+        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: numberOfElmentsPerPage)
+        
         if let renderer = self.renderer {
 
             let data = renderer.pdfData  { ctx in
-                ctx.beginPage()
-                //ctx.beginPage()
+              //  ctx.beginPage()
+               
                 
                 let context = ctx.cgContext
                 
                 
-                
+                for tableDataChunk in tableDataChunked {
+                    ctx.beginPage()
                 
                 addTop(fullname: fullname, depart: depart)
-                addMid(summary: summary)
-                addBody(body: body, bios: bios)
                 
                 drawLine(context, drawY: 20)
                 drawBoldLine(context, drawY: 20)
                 
+                addMid(summary: summary)
+                
+                
                 drawLine(context, drawY: 300)
                 drawBoldLine(context, drawY: 300)
+                
+              
+                //addBody(body: body, bios: bios)
+               
+            
+                   
+                    drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk)
+                    
+                }
+              
+                
                 
                
             }
             return data
         }
         return nil
+    }
+    
+    func calculateNumberofElmentsperPage(with pageRect: CGRect) -> Int {
+        
+      
+        
+        let rowHeight = (defaultOffset * 3)
+        let number = Int((pageRect.height - rowHeight) / rowHeight)
+        
+        return number
+        
+        
+        
     }
 }
 
@@ -212,7 +299,7 @@ class ContentViewModel : ObservableObject {
 extension ContentViewModel {
     
     func pdfData() -> Data? {
-       return PdfCreator().pdfData(fullname: fullname,
+       return PdfCreator(tableDataItems: bios).pdfData(fullname: fullname,
                                    depart: depart,
                                    summary:summary,
                                    body: body,
@@ -220,4 +307,34 @@ extension ContentViewModel {
    }
 
 }
+
+ struct PdfBioDataItem {
+    var date : String
+    var description: String
+    
+    init(date: String, description: String) {
+        self.date = date
+        self.description = description
+    }
+    
+    
+    
+}
+
+
+extension Array {
+    func chunkedElements(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+    
+    
+}
+
+
+
+  
+
+    
 
