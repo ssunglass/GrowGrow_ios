@@ -251,7 +251,7 @@ struct SearchView: View {
                        
             
             Button(action:{
-                if keyword == "" {
+               /* if keyword == "" {
                     
                     showingAlert.toggle()
                     print("no")
@@ -263,6 +263,8 @@ struct SearchView: View {
                     
                 }
               
+            */
+                searchIsActive.toggle()
             }){
                 
                 HStack{
@@ -284,12 +286,12 @@ struct SearchView: View {
             )
             
             .padding()
-                .alert(isPresented: $showingAlert){
+                /*.alert(isPresented: $showingAlert){
                     Alert(title: Text("커커"), message: Text("검색어를 입력해주세요"), dismissButton: .default(Text("확인")) {
 
                         
                     })
-                }
+                } */
                 
                 
                 Spacer()

@@ -133,23 +133,49 @@ class SessionStore: ObservableObject {
         
         @State var query: Query
         
-        if depart.isEmpty && region == "" {
+        
+        
+        
+        
+        if keyword.isEmpty && depart.isEmpty && region == "" {
             
-          query = db.collection("Users").whereField("keywords_search", arrayContains: keyword)
+          query = db.collection("Users")
             
-        } else if !depart.isEmpty && region == "" {
+        } else if keyword.isEmpty && !depart.isEmpty && region == "" {
             
             query =  db.collection("Users")
-                .whereField("keywords_search", arrayContains: keyword)
+                     .whereField("depart", in: depart)
+            
+        } else if keyword.isEmpty && depart.isEmpty && region != "" {
+            
+            query =  db.collection("Users")
+                       .whereField("region", isEqualTo: region)
+            
+        } else if keyword.isEmpty && !depart.isEmpty && region != "" {
+            
+            query =  db.collection("Users")
+                .whereField("region", isEqualTo: region)
                 .whereField("depart", in: depart)
             
-        } else if depart.isEmpty && region != "" {
+        }  else if !keyword.isEmpty && depart.isEmpty && region != "" {
             
             query =  db.collection("Users")
                 .whereField("keywords_search", arrayContains: keyword)
                 .whereField("region", isEqualTo: region)
             
-        } else {
+        }  else if !keyword.isEmpty && !depart.isEmpty && region == "" {
+            
+            query =  db.collection("Users")
+                .whereField("keywords_search", arrayContains: keyword)
+                .whereField("depart", in: depart)
+            
+        } else if !keyword.isEmpty && depart.isEmpty && region == "" {
+            
+            query =  db.collection("Users")
+                .whereField("username", isEqualTo: keyword)
+            
+            
+        }  else {
             
             query =  db.collection("Users")
                 .whereField("keywords_search", arrayContains: keyword)
@@ -158,7 +184,7 @@ class SessionStore: ObservableObject {
     
         }
         
-        print(query)
+       
         
         query.addSnapshotListener{ (querySnapshot, error ) in
             guard let documents = querySnapshot?.documents else {return}

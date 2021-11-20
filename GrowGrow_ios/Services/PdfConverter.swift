@@ -14,6 +14,8 @@ import PDFKit
      
      let tableDataItems: [AllBios]
      let defaultOffset: CGFloat = 20
+     let defaultXValue: CGFloat = 62
+     @State var firstOffset: CGFloat = 300
 
     /**
     W: 8.5 inches * 72 DPI = 612 points
@@ -24,8 +26,8 @@ import PDFKit
          CGRect(x: 0, y: 0, width: (8.5 * 72.0), height: (11 * 72.0)), tableDataItems: [AllBios]) {
        
         let format = UIGraphicsPDFRendererFormat()
-        let metaData = [kCGPDFContextTitle: "It's a PDF!",
-            kCGPDFContextAuthor: "TechChee"]
+        let metaData = [kCGPDFContextTitle: "커리어 프로필",
+            kCGPDFContextAuthor: "커커"]
 
         format.documentInfo = metaData as [String: Any]
         self.pageRect = pageRect
@@ -38,44 +40,70 @@ import PDFKit
 }
 
 extension PdfCreator {
-    private func addTop (fullname  : String, depart: String ){
-        let textRect = CGRect(x: 60, y: 60,
+    private func addTop (fullname  : String, depart: String, drawContext: CGContext ){
+        let textRect = CGRect(x: defaultXValue, y: 64,
                          width: pageRect.width - 40 ,height: 40)
-        let departRect = CGRect(x: 60, y: textRect.height + 50, width: pageRect.width - 40, height: 16)
+        let departRect = CGRect(x: defaultXValue, y: textRect.maxY + 15, width: pageRect.width - 40, height: 20)
         
         
         let nameAttributes = [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 36),
+            NSAttributedString.Key.foregroundColor :  UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            
+           // NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)
         
         ]
         
         let departAttributes = [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 18),
+            NSAttributedString.Key.foregroundColor: UIColor(red: 0.654, green: 0.654, blue: 0.654, alpha: 1),
+            NSAttributedString.Key.kern: -1.8
         
-        ]
+        ] as [NSAttributedString.Key : Any]
         
-        fullname.draw(in: textRect,withAttributes: nameAttributes)
-        depart.draw(in: departRect, withAttributes: departAttributes)
+        fullname.draw(in: textRect,withAttributes: nameAttributes as [NSAttributedString.Key : Any])
+        depart.draw(in: departRect, withAttributes: departAttributes as [NSAttributedString.Key : Any])
+        
+        drawLine(drawContext, drawY: departRect.maxY + 30, drawX: 300)
+        drawBoldLine(drawContext, drawY: departRect.maxY + 30, drawX: 300, spacing: 40)
+        
+       
     }
     
-    private func addMid(summary: String){
+    private func addMid(summary: String, drawContext: CGContext){
       
-         let summaryRect = CGRect(x:60, y: 180, width: pageRect.width - 40, height: 40)
+         let summaryRect = CGRect(x: defaultXValue, y: 185, width: pageRect.width - 40, height: 50)
+        
+        let titleRect = CGRect(x: defaultXValue, y: 280, width:  pageRect.width - 40, height: 35)
+        let title: String = "Career / Project"
         
         
-        let attributes = [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)
+        let summaryAttributes = [
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 16),
+            NSAttributedString.Key.foregroundColor :  UIColor(red: 0, green: 0, blue: 0, alpha: 1),
+            NSAttributedString.Key.kern: -1.6
         
-        ]
+        ] as [NSAttributedString.Key : Any]
 
         
+        let titleAttributes = [
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 24),
+            NSAttributedString.Key.foregroundColor : UIColor(red: 0, green: 0, blue: 0, alpha: 1),
+            NSAttributedString.Key.kern: -1.2
+        
+        ] as [NSAttributedString.Key : Any]
+        
        
-        summary.draw(in: summaryRect, withAttributes: attributes)
+        summary.draw(in: summaryRect, withAttributes: summaryAttributes)
+        title.draw(in: titleRect, withAttributes: titleAttributes)
+        
+        drawLine(drawContext, drawY: summaryRect.maxY + 30, drawX: 450)
+        drawBoldLine(drawContext, drawY: summaryRect.maxY + 30, drawX: 450, spacing: 40)
        
         
     }
     
-    private func addBody (body : String, bios: [AllBios]) {
+   /* private func addBody (body : String, bios: [AllBios]) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .justified
         
@@ -102,16 +130,17 @@ extension PdfCreator {
         }
         
         
-    }
+    } */
     
-    private func drawLine(_ drawContext: CGContext, drawY: CGFloat){
+    private func drawLine(_ drawContext: CGContext, drawY: CGFloat, drawX: CGFloat){
         
         drawContext.saveGState()
           // 3
           drawContext.setLineWidth(1.0)
         
-        drawContext.move(to: CGPoint(x: 40, y: drawY))
-         drawContext.addLine(to: CGPoint(x: 100, y: drawY))
+        drawContext.move(to: CGPoint(x: defaultXValue, y: drawY))
+         drawContext.addLine(to: CGPoint(x: defaultXValue + drawX, y: drawY))
+        drawContext.setFillColor(red: 0.796, green: 0.796, blue: 0.796, alpha: 1)
          drawContext.strokePath()
          drawContext.restoreGState()
         
@@ -119,14 +148,15 @@ extension PdfCreator {
         
     }
     
-    private func drawBoldLine(_ drawContext: CGContext, drawY: CGFloat){
+    private func drawBoldLine(_ drawContext: CGContext, drawY: CGFloat, drawX: CGFloat, spacing: CGFloat){
         
         drawContext.saveGState()
           // 3
           drawContext.setLineWidth(3.0)
         
-        drawContext.move(to: CGPoint(x: 100, y: drawY))
-         drawContext.addLine(to: CGPoint(x: 140, y: drawY))
+        drawContext.move(to: CGPoint(x: defaultXValue + drawX , y: drawY))
+         drawContext.addLine(to: CGPoint(x: defaultXValue + drawX + spacing, y: drawY))
+        drawContext.setFillColor(red: 0.204, green: 0.204, blue: 0.204, alpha: 1)
          drawContext.strokePath()
          drawContext.restoreGState()
         
@@ -134,7 +164,7 @@ extension PdfCreator {
         
     }
     
-    func drawTableContentInnerBordersAndText(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios]) {
+    func drawTableContentInnerBordersAndText(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios], perPageOffset: CGFloat) {
         drawContext.setLineWidth(1.0)
         drawContext.saveGState()
 
@@ -164,24 +194,24 @@ extension PdfCreator {
                 }
                 let tabX = CGFloat(titleIndex) * tabWidth
                 let textRect = CGRect(x: tabX + defaultOffset,
-                                      y: yPosition + defaultOffset,
+                                      y: yPosition + perPageOffset,
                                       width: tabWidth,
                                       height: defaultOffset * 3)
                 attributedText.draw(in: textRect)
             }
 
             // Draw content's 3 vertical lines
-            for verticalLineIndex in 0..<3 {
+          /*  for verticalLineIndex in 0..<3 {
                 let tabX = CGFloat(verticalLineIndex) * tabWidth
                 drawContext.move(to: CGPoint(x: tabX + defaultOffset, y: yPosition))
                 drawContext.addLine(to: CGPoint(x: tabX + defaultOffset, y: yPosition + defaultStartY))
                 drawContext.strokePath()
-            }
+            } */
 
             // Draw content's element bottom horizontal line
-            drawContext.move(to: CGPoint(x: defaultOffset, y: yPosition + defaultStartY))
-            drawContext.addLine(to: CGPoint(x: pageRect.width - defaultOffset, y: yPosition + defaultStartY))
-            drawContext.strokePath()
+           // drawContext.move(to: CGPoint(x: defaultOffset, y: yPosition + defaultStartY))
+           // drawContext.addLine(to: CGPoint(x: pageRect.width - defaultOffset, y: yPosition + defaultStartY))
+           // drawContext.strokePath()
         }
         drawContext.restoreGState()
     }
@@ -200,28 +230,54 @@ extension PdfCreator {
                
                 
                 let context = ctx.cgContext
+                var pageNumber: Int = 1
                 
                 
                 for tableDataChunk in tableDataChunked {
-                    ctx.beginPage()
-                
-                addTop(fullname: fullname, depart: depart)
-                
-                drawLine(context, drawY: 20)
-                drawBoldLine(context, drawY: 20)
-                
-                addMid(summary: summary)
-                
-                
-                drawLine(context, drawY: 300)
-                drawBoldLine(context, drawY: 300)
+                   
+                    
+                   
+                    if pageNumber == 1 {
+                        
+                        ctx.beginPage()
+                        
+                    
+                            
+                        addTop(fullname: fullname, depart: depart, drawContext: context)
+                        
+                       // drawLine(context, drawY: 20)
+                       // drawBoldLine(context, drawY: 20)
+                        
+                        addMid(summary: summary, drawContext: context)
+                        
+                        
+                      //  drawLine(context, drawY: 300, drawX: <#T##CGFloat#>)
+                      //  drawBoldLine(context, drawY: 300)
+                        
+                        drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: 300)
+                        
+                        
+                    } else {
+                        ctx.beginPage()
+                        
+                        drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset)
+                        
+                        
+                        
+                    }
                 
               
                 //addBody(body: body, bios: bios)
                
             
                    
-                    drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk)
+                   
+                   
+                    pageNumber = pageNumber + 1
+                    
+                 
+                    
+                 
                     
                 }
               
