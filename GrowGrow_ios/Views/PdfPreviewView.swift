@@ -15,6 +15,8 @@ struct PdfPreviewView: View {
     @StateObject private var viewModel = SessionStore()
     @EnvironmentObject var session: SessionStore
     
+    @State private var showShareSheet: Bool = false
+    
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     
     
@@ -27,7 +29,11 @@ struct PdfPreviewView: View {
             
             PdfViewUI(data: contentViewModel.pdfData())
                 
-            Button(action: {}, label: {
+            Button(action: {
+                
+                self.showShareSheet.toggle()
+                
+            }, label: {
                 Text("공유")
                     .foregroundColor(.white)
                     .font(.custom(appleGothicBold, size: 24))
@@ -47,7 +53,13 @@ struct PdfPreviewView: View {
         }
         .navigationTitle("나의 커리어")
         .navigationBarTitleDisplayMode(.inline)
-       
+        .sheet(isPresented: $showShareSheet, content: {
+            if let data = contentViewModel.pdfData() {
+                
+                ShareView(activityItems: [data])
+            }
+            
+        })
     }
 }
 
@@ -90,6 +102,27 @@ struct PdfViewUI : UIViewRepresentable {
     
     
     
+    
+    
+}
+
+
+struct ShareView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]? = nil
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareView>) ->
+    UIActivityViewController {
+        
+        return UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: applicationActivities)
+   
+    }
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareView>) {
+        
+    }
     
     
 }

@@ -144,6 +144,8 @@ extension PdfCreator {
          drawContext.strokePath()
          drawContext.restoreGState()
         
+       
+        
         
         
     }
@@ -164,30 +166,66 @@ extension PdfCreator {
         
     }
     
-    func drawTableContentInnerBordersAndText(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios], perPageOffset: CGFloat) {
+    private func drawCircle(_ drawContext: CGContext, drawY: CGFloat, drawX: CGFloat){
+        
+        drawContext.saveGState()
+        drawContext.setLineWidth(2)
+        
+        drawContext.setFillColor(red: 0.387, green: 0.387, blue: 0.387, alpha: 1)
+        drawContext.addEllipse(in: CGRect(x: drawX, y: drawY, width: 5, height: 5))
+        drawContext.drawPath(using: .fillStroke)
+        drawContext.restoreGState()
+        
+    }
+    
+    func drawBios(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios], perPageOffset: CGFloat, isLast: Bool) {
         drawContext.setLineWidth(1.0)
         drawContext.saveGState()
 
-        let defaultStartY = defaultOffset * 3
+        let defaultStartY = defaultOffset * 5
 
         for elementIndex in 0..<tableDataItems.count {
+            
+           
+            
             let yPosition = CGFloat(elementIndex) * defaultStartY + defaultStartY
 
             // Draw content's elements texts
             let textFont = UIFont.systemFont(ofSize: 13.0, weight: .regular)
+            
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
             paragraphStyle.lineBreakMode = .byWordWrapping
-            let textAttributes = [
+            
+            let descriptStyle = NSMutableParagraphStyle()
+            descriptStyle.alignment = .left
+            descriptStyle.lineBreakMode = .byWordWrapping
+            descriptStyle.lineSpacing = 5
+            
+            
+            let dateAttributes = [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                NSAttributedString.Key.font: textFont
-            ]
+                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 24),
+                NSAttributedString.Key.foregroundColor :  UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                
+            ] as [NSAttributedString.Key : Any]
+            
+            let descriptiontAttributes = [
+                NSAttributedString.Key.paragraphStyle: descriptStyle,
+                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Regular", size: 11),
+                NSAttributedString.Key.kern: -0.55
+                
+            ] as [NSAttributedString.Key : Any]
+            
+            
+            
             let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(3)
+            
             for titleIndex in 0..<2 {
-                var attributedText = NSAttributedString(string: "", attributes: textAttributes)
+                var attributedText = NSAttributedString(string: "", attributes: dateAttributes)
                 switch titleIndex {
-                case 0: attributedText = NSAttributedString(string: tableDataItems[elementIndex].date, attributes: textAttributes)
-                case 1: attributedText = NSAttributedString(string: tableDataItems[elementIndex].description, attributes: textAttributes)
+                case 0: attributedText = NSAttributedString(string: tableDataItems[elementIndex].date, attributes: dateAttributes)
+                case 1: attributedText = NSAttributedString(string: tableDataItems[elementIndex].description, attributes: descriptiontAttributes)
                
                 default:
                     break
@@ -196,17 +234,28 @@ extension PdfCreator {
                 let textRect = CGRect(x: tabX + defaultOffset,
                                       y: yPosition + perPageOffset,
                                       width: tabWidth,
-                                      height: defaultOffset * 3)
+                                      height: defaultOffset * 5)
                 attributedText.draw(in: textRect)
             }
 
             // Draw content's 3 vertical lines
-          /*  for verticalLineIndex in 0..<3 {
-                let tabX = CGFloat(verticalLineIndex) * tabWidth
-                drawContext.move(to: CGPoint(x: tabX + defaultOffset, y: yPosition))
-                drawContext.addLine(to: CGPoint(x: tabX + defaultOffset, y: yPosition + defaultStartY))
-                drawContext.strokePath()
-            } */
+            //for verticalLineIndex in 0..<3 {
+                let tabX = CGFloat(1) * tabWidth
+                drawContext.setLineWidth(1)
+                drawContext.move(to: CGPoint(x: tabX + defaultOffset - 35, y: yPosition + perPageOffset ))
+                drawContext.addLine(to: CGPoint(x: tabX + defaultOffset - 35, y: yPosition + perPageOffset + defaultOffset * 5 ))
+           
+               drawContext.strokePath()
+            //}
+            
+            if(elementIndex == tableDataItems.count - 1 && isLast == true) {
+                
+                drawCircle(drawContext, drawY: yPosition + defaultStartY + 15, drawX: tabX + defaultOffset - 37.5)
+                
+                
+            }
+            
+           
 
             // Draw content's element bottom horizontal line
            // drawContext.move(to: CGPoint(x: defaultOffset, y: yPosition + defaultStartY))
@@ -244,30 +293,48 @@ extension PdfCreator {
                     
                             
                         addTop(fullname: fullname, depart: depart, drawContext: context)
-                        
-                       // drawLine(context, drawY: 20)
-                       // drawBoldLine(context, drawY: 20)
+                 
                         
                         addMid(summary: summary, drawContext: context)
                         
                         
-                      //  drawLine(context, drawY: 300, drawX: <#T##CGFloat#>)
-                      //  drawBoldLine(context, drawY: 300)
                         
-                        drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: 300)
+                        drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: 300, isLast: false)
                         
                         
                     } else {
                         ctx.beginPage()
                         
-                        drawTableContentInnerBordersAndText(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset)
+                        
+                        if pageNumber == tableDataChunked.endIndex {
+                            
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset, isLast: true)
+                            
+                            
+                            
+                        } else {
+                            
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset, isLast: false)
+                            
+                            
+                        }
+                        
+                        
+                    /*    drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset, isLast: true)
+                        
+                       
+                        
+                        print(pageNumber)
+                        print(tableDataChunked.endIndex)
+                        */
+                      
                         
                         
                         
                     }
                 
               
-                //addBody(body: body, bios: bios)
+               
                
             
                    
@@ -294,8 +361,9 @@ extension PdfCreator {
         
       
         
-        let rowHeight = (defaultOffset * 3)
-        let number = Int((pageRect.height - rowHeight) / rowHeight)
+        let rowHeight = (defaultOffset * 5.5)
+        let belowHeight = (defaultOffset * 1)
+        let number = Int((pageRect.height - rowHeight - belowHeight) / rowHeight)
         
         return number
         
