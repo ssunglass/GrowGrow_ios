@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WaterfallGrid
+import FirebaseAuth
 
 struct HomeView: View {
     @EnvironmentObject var session: SessionStore
@@ -34,6 +35,8 @@ struct HomeView: View {
         HomeCardView(fullname: viewModel.fullname,
                      username: "@\(viewModel.username)")
             .padding(.bottom)
+           
+           
             
             
         
@@ -220,7 +223,7 @@ struct HomeView: View {
             
         } */
     }.onAppear(){
-        self.viewModel.getUserDoc(uid: self.session.session!.uid)
+        self.viewModel.getUserDoc(uid: Auth.auth().currentUser!.uid)
         
       
         

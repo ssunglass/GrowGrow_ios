@@ -23,6 +23,8 @@
 		542E67D9273AC2D200F8C8F8 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 542E67D8273AC2D200F8C8F8 /* WaterfallGrid */; };
 		542E67DE2743648800F8C8F8 /* PdfPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542E67DD2743648800F8C8F8 /* PdfPreviewView.swift */; };
 		542E67E027438D3000F8C8F8 /* PdfConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542E67DF27438D3000F8C8F8 /* PdfConverter.swift */; };
+		542E67E2274A2CDE00F8C8F8 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542E67E1274A2CDE00F8C8F8 /* SettingView.swift */; };
+		542E67E4274A344000F8C8F8 /* PersonalInfoWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542E67E3274A344000F8C8F8 /* PersonalInfoWebView.swift */; };
 		54802E012722F9ED0008D2FF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54802E002722F9ED0008D2FF /* CardView.swift */; };
 		5482C8A4272696AD00540DB7 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5482C8A3272696AD00540DB7 /* EditProfileView.swift */; };
 		548841252726DF0A0072BAF7 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548841242726DF0A0072BAF7 /* Modal.swift */; };
@@ -62,6 +64,8 @@
 		542E67DA273B916F00F8C8F8 /* GrowGrow_ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GrowGrow_ios.entitlements; sourceTree = "<group>"; };
 		542E67DD2743648800F8C8F8 /* PdfPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfPreviewView.swift; sourceTree = "<group>"; };
 		542E67DF27438D3000F8C8F8 /* PdfConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfConverter.swift; sourceTree = "<group>"; };
+		542E67E1274A2CDE00F8C8F8 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		542E67E3274A344000F8C8F8 /* PersonalInfoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoWebView.swift; sourceTree = "<group>"; };
 		54802E002722F9ED0008D2FF /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5482C8A3272696AD00540DB7 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		548841242726DF0A0072BAF7 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				54949932273126BE0085819F /* SearchedView.swift */,
 				54949934273561E40085819F /* SavedUserListView.swift */,
 				542E67DD2743648800F8C8F8 /* PdfPreviewView.swift */,
+				542E67E1274A2CDE00F8C8F8 /* SettingView.swift */,
+				542E67E3274A344000F8C8F8 /* PersonalInfoWebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5421ACBE2721636700F12168 /* SignInView.swift in Sources */,
+				542E67E4274A344000F8C8F8 /* PersonalInfoWebView.swift in Sources */,
 				54A2EF8F272284F600051DCB /* ProfileView.swift in Sources */,
 				5482C8A4272696AD00540DB7 /* EditProfileView.swift in Sources */,
 				5494992D272D6A770085819F /* EditBioView.swift in Sources */,
@@ -374,6 +381,7 @@
 				54994623272A68BE001C83E4 /* BioService.swift in Sources */,
 				5421AC9327213E2600F12168 /* GrowGrow_iosApp.swift in Sources */,
 				5494992F272E32B60085819F /* UserDetailView.swift in Sources */,
+				542E67E2274A2CDE00F8C8F8 /* SettingView.swift in Sources */,
 				54949935273561E40085819F /* SavedUserListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,7 +30,8 @@ struct ProfileView: View {
     @State var nativeAlert = false
     @State var keyword = ""
     @State private var isBookActive = false
-    @State private var isPreviewActive = false
+    @State private var isPdfPreviewActive = false
+    @State private var isSettingActive = false
     // @State var keywords: [[Keyword]] = []
     let db = Firestore.firestore()
     
@@ -289,11 +290,11 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "square.and.arrow.up")
+                    Image(systemName: "link")
                         .resizable()
-                        .frame(width:23, height: 25)
+                        .frame(width:23, height: 20)
                         .onTapGesture {
-                            isPreviewActive.toggle()
+                            isPdfPreviewActive.toggle()
                             contentViewModel.fullname = viewModel.fullname
                             contentViewModel.depart = "\(viewModel.depart), \(viewModel.major) 재학"
                             contentViewModel.summary = viewModel.summary
@@ -301,7 +302,19 @@ struct ProfileView: View {
                             contentViewModel.bios = viewModel.bios
                            
                         }
+                        .padding(.trailing, 5)
+                    
+                    Image(systemName: "slider.horizontal.3")
+                        .resizable()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            
+                            isSettingActive.toggle()
+                            
+                        }
                         .padding(.trailing,15)
+                    
+                    
                         
                     
                
@@ -315,7 +328,12 @@ struct ProfileView: View {
                     
                         
                     }.hidden()
-                    NavigationLink(destination: PdfPreviewView(), isActive: $isPreviewActive){
+                    
+                    NavigationLink(destination: PdfPreviewView(), isActive: $isPdfPreviewActive){
+                        
+                    }.hidden()
+                    
+                    NavigationLink(destination: SettingView(), isActive: $isSettingActive){
                         
                     }.hidden()
                     
@@ -504,7 +522,7 @@ struct ProfileView: View {
                          
                      }
                  }.onAppear(){
-                     self.viewModel.getBios(uid: Auth.auth().currentUser!.uid)
+                     self.viewModel.getBios(uid: Auth.auth().currentUser!.uid )
                  }
                 
                 

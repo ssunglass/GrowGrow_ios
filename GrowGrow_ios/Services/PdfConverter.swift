@@ -234,7 +234,7 @@ extension PdfCreator {
                 let textRect = CGRect(x: tabX + defaultOffset,
                                       y: yPosition + perPageOffset,
                                       width: tabWidth,
-                                      height: defaultOffset * 5)
+                                      height: defaultOffset * 6)
                 attributedText.draw(in: textRect)
             }
 
@@ -270,7 +270,11 @@ extension PdfCreator {
     func pdfData( fullname : String, depart: String, summary:String, body: String, bios: [AllBios] ) -> Data? {
         
         let numberOfElmentsPerPage = calculateNumberofElmentsperPage(with: pageRect)
-        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: numberOfElmentsPerPage)
+        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 4)
+        
+        
+        //tableDataChunked의 첫번째 elements와 그이외의 elements들로 나누어서 pdf생성
+        print(tableDataChunked[0])
         
         if let renderer = self.renderer {
 
@@ -299,7 +303,7 @@ extension PdfCreator {
                         
                         
                         
-                        drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: 300, isLast: false)
+                        drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: 240, isLast: false)
                         
                         
                     } else {
@@ -361,7 +365,7 @@ extension PdfCreator {
         
       
         
-        let rowHeight = (defaultOffset * 5.5)
+        let rowHeight = (defaultOffset * 6)
         let belowHeight = (defaultOffset * 1)
         let number = Int((pageRect.height - rowHeight - belowHeight) / rowHeight)
         
