@@ -54,7 +54,7 @@ struct SearchedView: View {
         }
         .listStyle(PlainListStyle())
         .onAppear(){
-            self.viewModel.getSearchedUser(keyword: inputKeyword, depart: inputDeparts, region: inputRegions ?? "")
+            self.viewModel.getSearchedUserAdvanced(keyword: inputKeyword, depart: inputDeparts, region: inputRegions ?? "")
             
          
             

@@ -127,6 +127,886 @@ class SessionStore: ObservableObject {
     }
     
     
+    func getSearchedUserAdvanced(keyword:String, depart:[String], region:String) {
+        
+        if keyword.isEmpty && depart.isEmpty && region == "" {
+            
+         db.collection("Users")
+                .addSnapshotListener{ (querySnapshot, error ) in
+                    guard let documents = querySnapshot?.documents else {return}
+                    
+                    print(querySnapshot?.count as Any)
+                    
+                    self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                        let data = queryDocumentSnapshot.data()
+                        let fullname = data["fullname"] as? String ?? ""
+                        let username = data["username"] as? String ?? ""
+                        let depart = data["depart"] as? String ?? ""
+                        let major = data["major"] as? String ?? ""
+                        let summary = data["summary"] as? String ?? ""
+                        let uid = data["uid"] as? String ?? ""
+                        let region = data["region"] as? String ?? ""
+                        let departIcon = data["departIcon"] as? String ?? ""
+                    
+                        
+                        
+                        return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+            
+        } else if keyword.isEmpty && !depart.isEmpty && region == "" {
+            
+           db.collection("Users")
+                     .whereField("depart", in: depart)
+                     .addSnapshotListener{ (querySnapshot, error ) in
+                         guard let documents = querySnapshot?.documents else {return}
+                         
+                         print(querySnapshot?.count as Any)
+                         
+                         self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                             let data = queryDocumentSnapshot.data()
+                             let fullname = data["fullname"] as? String ?? ""
+                             let username = data["username"] as? String ?? ""
+                             let depart = data["depart"] as? String ?? ""
+                             let major = data["major"] as? String ?? ""
+                             let summary = data["summary"] as? String ?? ""
+                             let uid = data["uid"] as? String ?? ""
+                             let region = data["region"] as? String ?? ""
+                             let departIcon = data["departIcon"] as? String ?? ""
+                         
+                             
+                             
+                             return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                             
+                         }
+                         
+                         
+                         
+                         
+                     }
+            
+        } else if keyword.isEmpty && depart.isEmpty && region != "" {
+            
+             db.collection("Users")
+                       .whereField("region", isEqualTo: region)
+                       .addSnapshotListener{ (querySnapshot, error ) in
+                           guard let documents = querySnapshot?.documents else {return}
+                           
+                          
+                           
+                           self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                               let data = queryDocumentSnapshot.data()
+                               let fullname = data["fullname"] as? String ?? ""
+                               let username = data["username"] as? String ?? ""
+                               let depart = data["depart"] as? String ?? ""
+                               let major = data["major"] as? String ?? ""
+                               let summary = data["summary"] as? String ?? ""
+                               let uid = data["uid"] as? String ?? ""
+                               let region = data["region"] as? String ?? ""
+                               let departIcon = data["departIcon"] as? String ?? ""
+                           
+                               
+                               
+                               return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                               
+                           }
+                           
+                           
+                           
+                           
+                       }
+            
+        } else if keyword.isEmpty && !depart.isEmpty && region != "" {
+            
+            db.collection("Users")
+                .whereField("region", isEqualTo: region)
+                .whereField("depart", in: depart)
+                .addSnapshotListener{ (querySnapshot, error ) in
+                    guard let documents = querySnapshot?.documents else {return}
+                    
+            
+                    self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                        let data = queryDocumentSnapshot.data()
+                        let fullname = data["fullname"] as? String ?? ""
+                        let username = data["username"] as? String ?? ""
+                        let depart = data["depart"] as? String ?? ""
+                        let major = data["major"] as? String ?? ""
+                        let summary = data["summary"] as? String ?? ""
+                        let uid = data["uid"] as? String ?? ""
+                        let region = data["region"] as? String ?? ""
+                        let departIcon = data["departIcon"] as? String ?? ""
+                    
+                        
+                        
+                        return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+            
+        } else if !keyword.isEmpty && depart.isEmpty && region != "" {
+            
+            db.collection("Users")
+               .whereField("keywords_search", arrayContains: keyword)
+               .whereField("region", isEqualTo: region)
+               .addSnapshotListener{ (querySnapshot, error ) in
+                
+                   if querySnapshot!.count != 0 {
+                       
+                       guard let documents = querySnapshot?.documents else {return}
+                       
+               
+                       self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                           let data = queryDocumentSnapshot.data()
+                           let fullname = data["fullname"] as? String ?? ""
+                           let username = data["username"] as? String ?? ""
+                           let depart = data["depart"] as? String ?? ""
+                           let major = data["major"] as? String ?? ""
+                           let summary = data["summary"] as? String ?? ""
+                           let uid = data["uid"] as? String ?? ""
+                           let region = data["region"] as? String ?? ""
+                           let departIcon = data["departIcon"] as? String ?? ""
+                       
+                           
+                           
+                           return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                           
+                       }
+                       
+                       
+                       
+                       
+                       
+                       
+                   } else {
+                       
+                       self.db.collection("Users")
+                          .whereField("username", isEqualTo: keyword)
+                          .whereField("region", isEqualTo: region)
+                          .addSnapshotListener{ (querySnapshot, error) in
+                              
+                              if querySnapshot!.count != 0 {
+                                  
+                                  guard let documents = querySnapshot?.documents else {return}
+                                  
+                          
+                                  self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                      let data = queryDocumentSnapshot.data()
+                                      let fullname = data["fullname"] as? String ?? ""
+                                      let username = data["username"] as? String ?? ""
+                                      let depart = data["depart"] as? String ?? ""
+                                      let major = data["major"] as? String ?? ""
+                                      let summary = data["summary"] as? String ?? ""
+                                      let uid = data["uid"] as? String ?? ""
+                                      let region = data["region"] as? String ?? ""
+                                      let departIcon = data["departIcon"] as? String ?? ""
+                                  
+                                      
+                                      
+                                      return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                      
+                                  }
+                                  
+                                  
+                              } else {
+                                  
+                                  self.db.collection("Users")
+                                      .whereField("fullname", isEqualTo: keyword)
+                                      .whereField("region", isEqualTo: region)
+                                      .addSnapshotListener{ (querySnapshot, error ) in
+                                          
+                                          if querySnapshot!.count != 0 {
+                                              
+                                              guard let documents = querySnapshot?.documents else {return}
+                                              
+                                      
+                                              self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                  let data = queryDocumentSnapshot.data()
+                                                  let fullname = data["fullname"] as? String ?? ""
+                                                  let username = data["username"] as? String ?? ""
+                                                  let depart = data["depart"] as? String ?? ""
+                                                  let major = data["major"] as? String ?? ""
+                                                  let summary = data["summary"] as? String ?? ""
+                                                  let uid = data["uid"] as? String ?? ""
+                                                  let region = data["region"] as? String ?? ""
+                                                  let departIcon = data["departIcon"] as? String ?? ""
+                                              
+                                                  
+                                                  
+                                                  return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                  
+                                              }
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                          } else {
+                                              
+                                              self.db.collection("Users")
+                                                  .whereField("major", isEqualTo: keyword)
+                                                  .whereField("region", isEqualTo: region)
+                                                  .addSnapshotListener{ (querySnapshot, error ) in
+                                                      
+                                                      if querySnapshot!.count != 0 {
+                                                          
+                                                          guard let documents = querySnapshot?.documents else {return}
+                                                          
+                                                  
+                                                          self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                              let data = queryDocumentSnapshot.data()
+                                                              let fullname = data["fullname"] as? String ?? ""
+                                                              let username = data["username"] as? String ?? ""
+                                                              let depart = data["depart"] as? String ?? ""
+                                                              let major = data["major"] as? String ?? ""
+                                                              let summary = data["summary"] as? String ?? ""
+                                                              let uid = data["uid"] as? String ?? ""
+                                                              let region = data["region"] as? String ?? ""
+                                                              let departIcon = data["departIcon"] as? String ?? ""
+                                                          
+                                                              
+                                                              
+                                                              return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                              
+                                                          }
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                      } else {
+                                                          
+                                                          
+                                                      }
+                                                      
+                                                      
+                                                      
+                                                  }
+                                              
+                                              
+                                              
+                                          }
+                                          
+                                          
+                                          
+                                          
+                                          
+                                      }
+                                  
+                                  
+                              }
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                          }
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                   }
+                   
+                   
+                   
+                   
+               }
+            
+            
+            
+            
+            
+        } else if !keyword.isEmpty && !depart.isEmpty && region == "" {
+            
+            
+                
+                db.collection("Users")
+                   .whereField("keywords_search", arrayContains: keyword)
+                   .whereField("depart", in: depart)
+                   .addSnapshotListener{ (querySnapshot, error ) in
+                    
+                       if querySnapshot!.count != 0 {
+                           
+                           guard let documents = querySnapshot?.documents else {return}
+                           
+                   
+                           self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                               let data = queryDocumentSnapshot.data()
+                               let fullname = data["fullname"] as? String ?? ""
+                               let username = data["username"] as? String ?? ""
+                               let depart = data["depart"] as? String ?? ""
+                               let major = data["major"] as? String ?? ""
+                               let summary = data["summary"] as? String ?? ""
+                               let uid = data["uid"] as? String ?? ""
+                               let region = data["region"] as? String ?? ""
+                               let departIcon = data["departIcon"] as? String ?? ""
+                           
+                               
+                               
+                               return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                               
+                           }
+                           
+                           
+                           
+                           
+                           
+                           
+                       } else {
+                           
+                           self.db.collection("Users")
+                              .whereField("username", isEqualTo: keyword)
+                              .whereField("depart", in: depart)
+                              .addSnapshotListener{ (querySnapshot, error) in
+                                  
+                                  if querySnapshot!.count != 0 {
+                                      
+                                      guard let documents = querySnapshot?.documents else {return}
+                                      
+                              
+                                      self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                          let data = queryDocumentSnapshot.data()
+                                          let fullname = data["fullname"] as? String ?? ""
+                                          let username = data["username"] as? String ?? ""
+                                          let depart = data["depart"] as? String ?? ""
+                                          let major = data["major"] as? String ?? ""
+                                          let summary = data["summary"] as? String ?? ""
+                                          let uid = data["uid"] as? String ?? ""
+                                          let region = data["region"] as? String ?? ""
+                                          let departIcon = data["departIcon"] as? String ?? ""
+                                      
+                                          
+                                          
+                                          return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                          
+                                      }
+                                      
+                                      
+                                  } else {
+                                      
+                                      self.db.collection("Users")
+                                          .whereField("fullname", isEqualTo: keyword)
+                                          .whereField("depart", in: depart)
+                                          .addSnapshotListener{ (querySnapshot, error ) in
+                                              
+                                              if querySnapshot!.count != 0 {
+                                                  
+                                                  guard let documents = querySnapshot?.documents else {return}
+                                                  
+                                          
+                                                  self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                      let data = queryDocumentSnapshot.data()
+                                                      let fullname = data["fullname"] as? String ?? ""
+                                                      let username = data["username"] as? String ?? ""
+                                                      let depart = data["depart"] as? String ?? ""
+                                                      let major = data["major"] as? String ?? ""
+                                                      let summary = data["summary"] as? String ?? ""
+                                                      let uid = data["uid"] as? String ?? ""
+                                                      let region = data["region"] as? String ?? ""
+                                                      let departIcon = data["departIcon"] as? String ?? ""
+                                                  
+                                                      
+                                                      
+                                                      return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                      
+                                                  }
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                              } else {
+                                                  
+                                                  self.db.collection("Users")
+                                                      .whereField("major", isEqualTo: keyword)
+                                                      .whereField("depart", in: depart)
+                                                      .addSnapshotListener{ (querySnapshot, error ) in
+                                                          
+                                                          if querySnapshot!.count != 0 {
+                                                              
+                                                              guard let documents = querySnapshot?.documents else {return}
+                                                              
+                                                      
+                                                              self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                  let data = queryDocumentSnapshot.data()
+                                                                  let fullname = data["fullname"] as? String ?? ""
+                                                                  let username = data["username"] as? String ?? ""
+                                                                  let depart = data["depart"] as? String ?? ""
+                                                                  let major = data["major"] as? String ?? ""
+                                                                  let summary = data["summary"] as? String ?? ""
+                                                                  let uid = data["uid"] as? String ?? ""
+                                                                  let region = data["region"] as? String ?? ""
+                                                                  let departIcon = data["departIcon"] as? String ?? ""
+                                                              
+                                                                  
+                                                                  
+                                                                  return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                  
+                                                              }
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                          } else {
+                                                              
+                                                              
+                                                          }
+                                                          
+                                                          
+                                                          
+                                                      }
+                                                  
+                                                  
+                                                  
+                                              }
+                                              
+                                              
+                                              
+                                              
+                                              
+                                          }
+                                      
+                                      
+                                  }
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                              }
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                       }
+                       
+                       
+                       
+                       
+                   }
+                
+                
+                
+                
+                
+            
+            
+            
+            
+        } else if !keyword.isEmpty && depart.isEmpty && region == "" {
+            
+            
+                
+                db.collection("Users")
+                   .whereField("keywords_search", arrayContains: keyword)
+                   .addSnapshotListener{ (querySnapshot, error ) in
+                    
+                       if querySnapshot!.count != 0 {
+                           
+                           guard let documents = querySnapshot?.documents else {return}
+                           
+                   
+                           self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                               let data = queryDocumentSnapshot.data()
+                               let fullname = data["fullname"] as? String ?? ""
+                               let username = data["username"] as? String ?? ""
+                               let depart = data["depart"] as? String ?? ""
+                               let major = data["major"] as? String ?? ""
+                               let summary = data["summary"] as? String ?? ""
+                               let uid = data["uid"] as? String ?? ""
+                               let region = data["region"] as? String ?? ""
+                               let departIcon = data["departIcon"] as? String ?? ""
+                           
+                               
+                               
+                               return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                               
+                           }
+                           
+                           
+                           
+                           
+                           
+                           
+                       } else {
+                           
+                           self.db.collection("Users")
+                              .whereField("username", isEqualTo: keyword)
+                              .addSnapshotListener{ (querySnapshot, error) in
+                                  
+                                  if querySnapshot!.count != 0 {
+                                      
+                                      guard let documents = querySnapshot?.documents else {return}
+                                      
+                              
+                                      self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                          let data = queryDocumentSnapshot.data()
+                                          let fullname = data["fullname"] as? String ?? ""
+                                          let username = data["username"] as? String ?? ""
+                                          let depart = data["depart"] as? String ?? ""
+                                          let major = data["major"] as? String ?? ""
+                                          let summary = data["summary"] as? String ?? ""
+                                          let uid = data["uid"] as? String ?? ""
+                                          let region = data["region"] as? String ?? ""
+                                          let departIcon = data["departIcon"] as? String ?? ""
+                                      
+                                          
+                                          
+                                          return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                          
+                                      }
+                                      
+                                      
+                                  } else {
+                                      
+                                      self.db.collection("Users")
+                                          .whereField("fullname", isEqualTo: keyword)
+                                          .addSnapshotListener{ (querySnapshot, error ) in
+                                              
+                                              if querySnapshot!.count != 0 {
+                                                  
+                                                  guard let documents = querySnapshot?.documents else {return}
+                                                  
+                                          
+                                                  self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                      let data = queryDocumentSnapshot.data()
+                                                      let fullname = data["fullname"] as? String ?? ""
+                                                      let username = data["username"] as? String ?? ""
+                                                      let depart = data["depart"] as? String ?? ""
+                                                      let major = data["major"] as? String ?? ""
+                                                      let summary = data["summary"] as? String ?? ""
+                                                      let uid = data["uid"] as? String ?? ""
+                                                      let region = data["region"] as? String ?? ""
+                                                      let departIcon = data["departIcon"] as? String ?? ""
+                                                  
+                                                      
+                                                      
+                                                      return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                      
+                                                  }
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                              } else {
+                                                  
+                                                  self.db.collection("Users")
+                                                      .whereField("major", isEqualTo: keyword)
+                                                      .addSnapshotListener{ (querySnapshot, error ) in
+                                                          
+                                                          if querySnapshot!.count != 0 {
+                                                              
+                                                              guard let documents = querySnapshot?.documents else {return}
+                                                              
+                                                      
+                                                              self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                  let data = queryDocumentSnapshot.data()
+                                                                  let fullname = data["fullname"] as? String ?? ""
+                                                                  let username = data["username"] as? String ?? ""
+                                                                  let depart = data["depart"] as? String ?? ""
+                                                                  let major = data["major"] as? String ?? ""
+                                                                  let summary = data["summary"] as? String ?? ""
+                                                                  let uid = data["uid"] as? String ?? ""
+                                                                  let region = data["region"] as? String ?? ""
+                                                                  let departIcon = data["departIcon"] as? String ?? ""
+                                                              
+                                                                  
+                                                                  
+                                                                  return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                  
+                                                              }
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                          } else {
+                                                              
+                                                              
+                                                          }
+                                                          
+                                                          
+                                                          
+                                                      }
+                                                  
+                                                  
+                                                  
+                                              }
+                                              
+                                              
+                                              
+                                              
+                                              
+                                          }
+                                      
+                                      
+                                  }
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                              }
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                       }
+                       
+                       
+                       
+                       
+                   }
+                
+                
+                
+                
+                
+            
+            
+            
+            
+            
+        } else {
+            
+            
+                
+                db.collection("Users")
+                   .whereField("keywords_search", arrayContains: keyword)
+                   .whereField("depart", in: depart)
+                   .whereField("region", isEqualTo: region)
+                   .addSnapshotListener{ (querySnapshot, error ) in
+                    
+                       if querySnapshot!.count != 0 {
+                           
+                           guard let documents = querySnapshot?.documents else {return}
+                           
+                   
+                           self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                               let data = queryDocumentSnapshot.data()
+                               let fullname = data["fullname"] as? String ?? ""
+                               let username = data["username"] as? String ?? ""
+                               let depart = data["depart"] as? String ?? ""
+                               let major = data["major"] as? String ?? ""
+                               let summary = data["summary"] as? String ?? ""
+                               let uid = data["uid"] as? String ?? ""
+                               let region = data["region"] as? String ?? ""
+                               let departIcon = data["departIcon"] as? String ?? ""
+                           
+                               
+                               
+                               return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                               
+                           }
+                           
+                           
+                           
+                           
+                           
+                           
+                       } else {
+                           
+                           self.db.collection("Users")
+                              .whereField("username", isEqualTo: keyword)
+                              .whereField("depart", in: depart)
+                              .whereField("region", isEqualTo: region)
+                              .addSnapshotListener{ (querySnapshot, error) in
+                                  
+                                  if querySnapshot!.count != 0 {
+                                      
+                                      guard let documents = querySnapshot?.documents else {return}
+                                      
+                              
+                                      self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                          let data = queryDocumentSnapshot.data()
+                                          let fullname = data["fullname"] as? String ?? ""
+                                          let username = data["username"] as? String ?? ""
+                                          let depart = data["depart"] as? String ?? ""
+                                          let major = data["major"] as? String ?? ""
+                                          let summary = data["summary"] as? String ?? ""
+                                          let uid = data["uid"] as? String ?? ""
+                                          let region = data["region"] as? String ?? ""
+                                          let departIcon = data["departIcon"] as? String ?? ""
+                                      
+                                          
+                                          
+                                          return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                          
+                                      }
+                                      
+                                      
+                                  } else {
+                                      
+                                      self.db.collection("Users")
+                                          .whereField("fullname", isEqualTo: keyword)
+                                          .whereField("depart", in: depart)
+                                          .whereField("region", isEqualTo: region)
+                                          .addSnapshotListener{ (querySnapshot, error ) in
+                                              
+                                              if querySnapshot!.count != 0 {
+                                                  
+                                                  guard let documents = querySnapshot?.documents else {return}
+                                                  
+                                          
+                                                  self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                      let data = queryDocumentSnapshot.data()
+                                                      let fullname = data["fullname"] as? String ?? ""
+                                                      let username = data["username"] as? String ?? ""
+                                                      let depart = data["depart"] as? String ?? ""
+                                                      let major = data["major"] as? String ?? ""
+                                                      let summary = data["summary"] as? String ?? ""
+                                                      let uid = data["uid"] as? String ?? ""
+                                                      let region = data["region"] as? String ?? ""
+                                                      let departIcon = data["departIcon"] as? String ?? ""
+                                                  
+                                                      
+                                                      
+                                                      return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                      
+                                                  }
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                              } else {
+                                                  
+                                                  self.db.collection("Users")
+                                                      .whereField("major", isEqualTo: keyword)
+                                                      .whereField("depart", in: depart)
+                                                      .whereField("region", isEqualTo: region)
+                                                      .addSnapshotListener{ (querySnapshot, error ) in
+                                                          
+                                                          if querySnapshot!.count != 0 {
+                                                              
+                                                              guard let documents = querySnapshot?.documents else {return}
+                                                              
+                                                      
+                                                              self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                  let data = queryDocumentSnapshot.data()
+                                                                  let fullname = data["fullname"] as? String ?? ""
+                                                                  let username = data["username"] as? String ?? ""
+                                                                  let depart = data["depart"] as? String ?? ""
+                                                                  let major = data["major"] as? String ?? ""
+                                                                  let summary = data["summary"] as? String ?? ""
+                                                                  let uid = data["uid"] as? String ?? ""
+                                                                  let region = data["region"] as? String ?? ""
+                                                                  let departIcon = data["departIcon"] as? String ?? ""
+                                                              
+                                                                  
+                                                                  
+                                                                  return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                  
+                                                              }
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                          } else {
+                                                              
+                                                              
+                                                          }
+                                                          
+                                                          
+                                                          
+                                                      }
+                                                  
+                                                  
+                                                  
+                                              }
+                                              
+                                              
+                                              
+                                              
+                                              
+                                          }
+                                      
+                                      
+                                  }
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                              }
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                       }
+                       
+                       
+                       
+                       
+                   }
+                
+                
+                
+                
+                
+            
+            
+        }
+        
+        
+    }
+    
+    
     
     
     func getSearchedUser(keyword:String, depart:[String], region:String){
@@ -172,7 +1052,7 @@ class SessionStore: ObservableObject {
         } else if !keyword.isEmpty && depart.isEmpty && region == "" {
             
             query =  db.collection("Users")
-                .whereField("username", isEqualTo: keyword)
+                .whereField("keywords_search", arrayContains: keyword)
             
             
         }  else {
@@ -188,6 +1068,8 @@ class SessionStore: ObservableObject {
         
         query.addSnapshotListener{ (querySnapshot, error ) in
             guard let documents = querySnapshot?.documents else {return}
+            
+           
             
             self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
                 let data = queryDocumentSnapshot.data()
