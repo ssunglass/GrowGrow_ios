@@ -42,8 +42,12 @@ struct SettingView: View {
                     
                     Button(action: {
                         
-                        self.presentationMode.wrappedValue.dismiss()
-                        self.session.logout()
+                        DispatchQueue.main.async {
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.session.logout()
+                        }
+                        
+                        
                     }){
                         
                         Text("로그아웃")

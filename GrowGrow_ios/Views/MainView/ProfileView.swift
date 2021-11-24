@@ -309,7 +309,13 @@ struct ProfileView: View {
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             
-                            isSettingActive.toggle()
+                         isSettingActive.toggle()
+                            
+                          /*  DispatchQueue.main.async {
+                               // session.unbind()
+                                session.logout()
+                               
+                            } */
                             
                         }
                         .padding(.trailing,15)
@@ -456,7 +462,7 @@ struct ProfileView: View {
             }
                     
                     .onAppear(){
-                self.viewModel.getKeywords(uid: Auth.auth().currentUser!.uid)
+                        self.viewModel.getKeywords(uid: Auth.auth().currentUser?.uid ?? "uid")
                 
               
             }
@@ -522,7 +528,7 @@ struct ProfileView: View {
                          
                      }
                  }.onAppear(){
-                     self.viewModel.getBios(uid: Auth.auth().currentUser!.uid )
+                     self.viewModel.getBios(uid: Auth.auth().currentUser?.uid ?? "uid" )
                  }
                 
                 

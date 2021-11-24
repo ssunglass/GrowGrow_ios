@@ -1164,6 +1164,9 @@ class SessionStore: ObservableObject {
     
     func getUserDoc(uid:String){
         
+       
+            
+        
         db.collection("Users").document(uid)
             .addSnapshotListener{ (documentSnapshot, error) in
                 
@@ -1184,6 +1187,7 @@ class SessionStore: ObservableObject {
                 self.region = data["region"] as? String ?? ""
             
         }
+        
         
     }
     

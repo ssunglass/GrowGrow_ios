@@ -223,7 +223,7 @@ struct HomeView: View {
             
         } */
     }.onAppear(){
-        self.viewModel.getUserDoc(uid: Auth.auth().currentUser!.uid)
+        self.viewModel.getUserDoc(uid: Auth.auth().currentUser?.uid ?? "uid")
         
       
         
