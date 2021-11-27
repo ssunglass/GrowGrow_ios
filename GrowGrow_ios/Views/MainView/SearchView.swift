@@ -297,7 +297,7 @@ struct SearchView: View {
                 Spacer()
             
             
-            NavigationLink(destination: SearchedView(inputKeyword: keyword, inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
+                NavigationLink(destination: SearchedView(inputKeyword: keyword.lowercased(), inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
                 
                 
                 

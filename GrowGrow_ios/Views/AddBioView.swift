@@ -36,7 +36,7 @@ struct AddBioView: View {
         return numberFormatter.string(for: selectedYear) ?? selectedYear.description
     }
    
-   func addBio(){
+  /* func addBio(){
        
        if !bioText.isEmpty {
            
@@ -53,7 +53,7 @@ struct AddBioView: View {
            
        }
         
-    }
+    } */
     
   
 
@@ -164,19 +164,37 @@ struct BioTextAddView: View {
     
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var session: SessionStore
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     @State private var bioText = ""
     var selectedYear: String
-    
+    let db = Firestore.firestore()
     
     func addBio(){
         
         if !bioText.isEmpty {
             
+            let bioRef = db.collection("Users").document(self.session.session!.uid)
+            
+           
+          
+            
          
          BioService.saveBio(date: selectedYear, description: bioText, onSuccess: {
              (bio) in
+      
+             let inputString = bioText.lowercased()
+      let trimmed = String(inputString.filter {!"\n\t\r".contains($0)})
+      
+      let words = trimmed.components(separatedBy: " ")
+      
+
+      for word in words {
+          bioRef.updateData([
+              "bios_search" : FieldValue.arrayUnion([word])
+          ])
+      }
          }){
              (errorMessage) in
              print("Error \(errorMessage)")
