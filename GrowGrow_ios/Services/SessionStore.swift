@@ -380,11 +380,36 @@ class SessionStore: ObservableObject {
                                                           }
                                                           
                                                           
-                                                          
-                                                          
-                                                          
-                                                          
                                                       } else {
+                                                          
+                                                          self.db.collection("Users")
+                                                              .whereField("bios_search", arrayContains: keyword)
+                                                              .whereField("region", isEqualTo: region)
+                                                              .addSnapshotListener{ (querySnapshot, error ) in
+                                                                  
+                                                                  
+                                                                  guard let documents = querySnapshot?.documents else {return}
+                                                                  
+                                                          
+                                                                  self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                      let data = queryDocumentSnapshot.data()
+                                                                      let fullname = data["fullname"] as? String ?? ""
+                                                                      let username = data["username"] as? String ?? ""
+                                                                      let depart = data["depart"] as? String ?? ""
+                                                                      let major = data["major"] as? String ?? ""
+                                                                      let summary = data["summary"] as? String ?? ""
+                                                                      let uid = data["uid"] as? String ?? ""
+                                                                      let region = data["region"] as? String ?? ""
+                                                                      let departIcon = data["departIcon"] as? String ?? ""
+                                                                  
+                                                                      
+                                                                      
+                                                                      return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                      
+                                                                  }
+                                                                  
+                                                                  
+                                                              }
                                                           
                                                           
                                                       }
@@ -571,6 +596,33 @@ class SessionStore: ObservableObject {
                                                               
                                                           } else {
                                                               
+                                                              self.db.collection("Users")
+                                                                  .whereField("bios_search", arrayContains: keyword)
+                                                                  .whereField("depart", in: depart)
+                                                                  .addSnapshotListener{ (querySnapshot, error ) in
+                                                                      
+                                                                      
+                                                                      guard let documents = querySnapshot?.documents else {return}
+                                                                      
+                                                                      self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                          let data = queryDocumentSnapshot.data()
+                                                                          let fullname = data["fullname"] as? String ?? ""
+                                                                          let username = data["username"] as? String ?? ""
+                                                                          let depart = data["depart"] as? String ?? ""
+                                                                          let major = data["major"] as? String ?? ""
+                                                                          let summary = data["summary"] as? String ?? ""
+                                                                          let uid = data["uid"] as? String ?? ""
+                                                                          let region = data["region"] as? String ?? ""
+                                                                          let departIcon = data["departIcon"] as? String ?? ""
+                                                                      
+                                                                          
+                                                                          
+                                                                          return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                          
+                                                                      }
+                                                                  }
+                                                              
+                                                              
                                                               
                                                           }
                                                           
@@ -755,6 +807,34 @@ class SessionStore: ObservableObject {
                                                               
                                                               
                                                           } else {
+                                                              
+                                                              self.db.collection("Users")
+                                                                  .whereField("bios_search", isEqualTo: keyword)
+                                                                  .addSnapshotListener{ (querySnapshot, error ) in
+                                                                      
+                                                                      guard let documents = querySnapshot?.documents else {return}
+                                                                      
+                                                              
+                                                                      self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                          let data = queryDocumentSnapshot.data()
+                                                                          let fullname = data["fullname"] as? String ?? ""
+                                                                          let username = data["username"] as? String ?? ""
+                                                                          let depart = data["depart"] as? String ?? ""
+                                                                          let major = data["major"] as? String ?? ""
+                                                                          let summary = data["summary"] as? String ?? ""
+                                                                          let uid = data["uid"] as? String ?? ""
+                                                                          let region = data["region"] as? String ?? ""
+                                                                          let departIcon = data["departIcon"] as? String ?? ""
+                                                                      
+                                                                          
+                                                                          
+                                                                          return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                          
+                                                                      }
+                                                                      
+                                                                      
+                                                                      
+                                                                  }
                                                               
                                                               
                                                           }
@@ -949,6 +1029,35 @@ class SessionStore: ObservableObject {
                                                               
                                                               
                                                           } else {
+                                                              
+                                                              self.db.collection("Users")
+                                                                 .whereField("bios_search", arrayContains: keyword)
+                                                                 .whereField("depart", in: depart)
+                                                                 .whereField("region", isEqualTo: region)
+                                                                 .addSnapshotListener{ (querySnapshot, error ) in
+                                                                     
+                                                                     guard let documents = querySnapshot?.documents else {return}
+                                                                     
+                                                             
+                                                                     self.searchedUsers = documents.map { (queryDocumentSnapshot) -> AllUsers in
+                                                                         let data = queryDocumentSnapshot.data()
+                                                                         let fullname = data["fullname"] as? String ?? ""
+                                                                         let username = data["username"] as? String ?? ""
+                                                                         let depart = data["depart"] as? String ?? ""
+                                                                         let major = data["major"] as? String ?? ""
+                                                                         let summary = data["summary"] as? String ?? ""
+                                                                         let uid = data["uid"] as? String ?? ""
+                                                                         let region = data["region"] as? String ?? ""
+                                                                         let departIcon = data["departIcon"] as? String ?? ""
+                                                                     
+                                                                         
+                                                                         
+                                                                         return AllUsers(fullname: fullname, username: username, uid: uid ,summary: summary, depart: depart, major: major,region: region, departIcon: departIcon)
+                                                                         
+                                                                     }
+                                                                     
+                                                                     
+                                                                 }
                                                               
                                                               
                                                           }
