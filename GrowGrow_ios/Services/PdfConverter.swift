@@ -132,6 +132,24 @@ extension PdfCreator {
         
     } */
     
+    private func addSign(){
+        
+        let growText : String = "POWERD BY GROWGROW"
+        
+        let growRect = CGRect(x: pageRect.width - 130, y: 15, width:  150, height: 25)
+        
+        
+        let growAttributes = [
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Regular", size: 11),
+            NSAttributedString.Key.foregroundColor : UIColor(red: 0.367, green: 0.367, blue: 0.367, alpha: 1),
+            NSAttributedString.Key.kern: -0.55
+        
+        ] as [NSAttributedString.Key : Any]
+        
+        growText.draw(in: growRect, withAttributes: growAttributes)
+        
+    }
+    
     private func drawLine(_ drawContext: CGContext, drawY: CGFloat, drawX: CGFloat){
         
         drawContext.saveGState()
@@ -295,7 +313,7 @@ extension PdfCreator {
                         ctx.beginPage()
                         
                     
-                            
+                        addSign()
                         addTop(fullname: fullname, depart: depart, drawContext: context)
                  
                         
@@ -309,8 +327,10 @@ extension PdfCreator {
                     } else {
                         ctx.beginPage()
                         
+                        addSign()
                         
                         if pageNumber == tableDataChunked.endIndex {
+                            
                             
                             drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunk, perPageOffset: defaultOffset, isLast: true)
                             
@@ -377,9 +397,9 @@ extension PdfCreator {
 }
 
 struct Content{
-    var fullname : String = "김민국"
-    var depart : String = "미술계열, 첨단시각디자인과"
-    var summary : String = "글도 쓰고, 프로젝트도 합니다."
+    var fullname : String = ""
+    var depart : String = ""
+    var summary : String = ""
     var body : String = "Career / Project"
     var bios = [AllBios]()
 }
