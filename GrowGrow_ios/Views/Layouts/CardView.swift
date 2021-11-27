@@ -41,11 +41,11 @@ struct HomeCardView: View {
                         Spacer()
                         
                         
-                    Text("내 커리어 바로가기")
+                    /*Text("내 커리어 바로가기")
                         .font(.custom(appleGothicSemiBold, size: 18))
                         .foregroundColor(Color(hex: "#818181"))
                         //.padding(.top,10)
-                       
+                       */
                       
                     }
                     

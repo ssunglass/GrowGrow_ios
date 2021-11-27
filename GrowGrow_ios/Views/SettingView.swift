@@ -24,6 +24,23 @@ struct SettingView: View {
                 Section(content: {
                     
                     NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://locally.co.kr")){
+                        Text("지원페이지")
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }, header: {
+                    
+                   
+                    
+                })
+                
+                Section(content: {
+                    
+                    NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://locally.co.kr")){
                         Text("개인정보처리방침")
                         
                         
