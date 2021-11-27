@@ -22,8 +22,10 @@ struct EditBioView: View {
     
     func deleteBio(date: String){
         
-    
-        db.collection("Users").document(self.session.session!.uid)
+        let bioRef = db.collection("Users").document(self.session.session!.uid)
+      
+       
+        bioRef
             .collection("Bios")
             .document(date)
             .delete(){error in
@@ -33,8 +35,45 @@ struct EditBioView: View {
                     
                 } else {
                     
+                    bioRef.updateData([
+                        "bios_search" : FieldValue.delete()
+                    ]){ err in
+                        if let err = err {
+                            print("Error updating document: \(err)")
+                        } else {
+                            
+                            print("Document successfully updated")
+                            
+                            for bio in self.viewModel.bios {
+                                
+                                let inputString = bio.description
+                             let trimmed = String(inputString.filter {!"\n\t\r".contains($0)})
+                         
+                              let words = trimmed.components(separatedBy: " ")
+                                
+                                for word in words {
+                                    bioRef.updateData([
+                                        "bios_search" : FieldValue.arrayUnion([word])
+                                    ])
+                                }
+                                
+                                
+                                
+                                
+                            }
+                            
+                            
+                            
+                            
+                        }
+                        
+                    }
                     
-                   // self.viewModel.getBios(uid: self.session.session!.uid)
+                    
+                    
+                    
+                    
+                  
                     
                 }
                 
