@@ -12,10 +12,14 @@ import FirebaseFirestore
 
 struct EditBioTextView: View {
     
+    @StateObject private var viewModel = SessionStore()
+    @EnvironmentObject var session: SessionStore
+    
     @State private var editBioText = ""
     @Environment(\.presentationMode) var presentationMode
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
+    let db = Firestore.firestore()
     
     
     var date: String
@@ -35,9 +39,9 @@ struct EditBioTextView: View {
     
     func updateData(){
         
-        Firestore.firestore()
-            .collection("Users")
-            .document(Auth.auth().currentUser!.uid)
+        let bioRef = db.collection("Users").document(self.session.session!.uid)
+        
+        bioRef
             .collection("Bios")
             .document(date)
             .updateData([
@@ -47,8 +51,45 @@ struct EditBioTextView: View {
                     print("Error updating document: \(err)")
                       } else {
                           print("Document successfully updated")
+                          
+                          bioRef.updateData([
+                              "bios_search" : FieldValue.delete()
+                          ]){ err in
+                              if let err = err {
+                                  print("Error updating document: \(err)")
+                              } else {
+                                  
+                                  print("Document successfully updated")
+                                  
+                                  for bio in self.viewModel.bios {
+                                      
+                                      let inputString = bio.description
+                                   let trimmed = String(inputString.filter {!"\n\t\r".contains($0)})
+                               
+                                    let words = trimmed.components(separatedBy: " ")
+                                      
+                                      for word in words {
+                                          bioRef.updateData([
+                                              "bios_search" : FieldValue.arrayUnion([word])
+                                          ])
+                                      }
+                                      
+                                      
+                                      
+                                      
+                                  }
+                                  
+                                  
+                                  
+                                  
+                              }
+                              
+                          }
+                          
                       }
             }
+        
+        
         
         
         
@@ -104,6 +145,11 @@ struct EditBioTextView: View {
             
             Spacer()
             
+            
+            
+        }
+        .onAppear(){
+            self.viewModel.getBios(uid: self.session.session!.uid)
             
             
         }
