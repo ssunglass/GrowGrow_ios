@@ -184,7 +184,7 @@ struct BioTextAddView: View {
          BioService.saveBio(date: selectedYear, description: bioText, onSuccess: {
              (bio) in
       
-             let inputString = bioText.lowercased()
+      let inputString = bioText.lowercased()
       let trimmed = String(inputString.filter {!"\n\t\r".contains($0)})
       
       let words = trimmed.components(separatedBy: " ")

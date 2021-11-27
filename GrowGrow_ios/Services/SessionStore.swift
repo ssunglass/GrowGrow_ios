@@ -809,7 +809,7 @@ class SessionStore: ObservableObject {
                                                           } else {
                                                               
                                                               self.db.collection("Users")
-                                                                  .whereField("bios_search", isEqualTo: keyword)
+                                                                  .whereField("bios_search", arrayContains: keyword)
                                                                   .addSnapshotListener{ (querySnapshot, error ) in
                                                                       
                                                                       guard let documents = querySnapshot?.documents else {return}
