@@ -11,6 +11,7 @@ import FirebaseAuth
 struct ContentView: View {
     
     @EnvironmentObject var session: SessionStore
+    @State private var isLoading = false
     
     
     func listen(){
@@ -19,7 +20,65 @@ struct ContentView: View {
     
     var body: some View {
         
-        Group{
+        
+        ZStack {
+            
+            Group{
+                
+                if isLoading {
+                    
+                    
+                    LoadingView()
+                    
+                    
+                    
+                }
+                    
+             if(session.session != nil) {
+                    
+                            
+                           MainTabContainer()
+                            
+                      
+                        
+                        
+                    } else {
+                        
+                        SignInView()
+                    }
+                    
+                    
+                    
+                    
+                    
+                
+                
+                
+                
+                
+                
+            }
+            
+          
+            
+            
+            
+            
+            
+            
+        }.onAppear(perform: {
+            isLoading = true
+            
+            DispatchQueue.main.async {
+            listen()
+               // isLoading = false
+                
+            }
+           
+            
+            
+        })
+       /* Group{
             
             if(session.session != nil) {
             
@@ -34,9 +93,17 @@ struct ContentView: View {
                 SignInView()
             }
             
-        }.onAppear(perform: { DispatchQueue.main.async {
+         
+            
+        
+            
+        }.onAppear(perform: {
+            
+        
+            DispatchQueue.main.async {
             listen()
-        }})
+               
+        }}) */
         
     }
     
@@ -46,4 +113,28 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
+
+
+struct LoadingView: View {
+    
+    var body: some View {
+        
+        ZStack{
+            
+            Color.gray
+                .ignoresSafeArea()
+                .opacity(1)
+            
+        ProgressView()
+            .progressViewStyle(CircularProgressViewStyle(tint: .black))
+            .scaleEffect(3)
+        
+        }
+        
+        
+        
+        
+    }
+    
 }
