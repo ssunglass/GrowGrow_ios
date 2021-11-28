@@ -290,9 +290,42 @@ extension PdfCreator {
         let numberOfElmentsPerPage = calculateNumberofElmentsperPage(with: pageRect)
         let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 4)
         
+       // var othertableDatachunked: [[AllBios]] = [[AllBios]]()
+        var secondTableDataItems: [AllBios] = [AllBios]()
+       
         
+       
         //tableDataChunked의 첫번째 elements와 그이외의 elements들로 나누어서 pdf생성
-        print(tableDataChunked[0])
+        var index: Int = 0
+        
+        for table in tableDataChunked {
+            
+            if index == 0 {
+                
+                
+            } else {
+                
+                
+                for item in table {
+                    
+                    secondTableDataItems.append(item)
+                    
+                    
+                }
+            
+                
+            }
+            
+            index = index + 1
+            
+            
+            
+        }
+        
+        let secondTableDataChunked: [[AllBios]] = secondTableDataItems.chunkedElements(into: numberOfElmentsPerPage)
+       
+        
+        
         
         if let renderer = self.renderer {
 
@@ -303,8 +336,47 @@ extension PdfCreator {
                 let context = ctx.cgContext
                 var pageNumber: Int = 1
                 
+                ctx.beginPage()
                 
-                for tableDataChunk in tableDataChunked {
+                addSign()
+                addTop(fullname: fullname, depart: depart, drawContext: context)
+         
+                
+                addMid(summary: summary, drawContext: context)
+                
+                
+                
+                drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunked[0], perPageOffset: 240, isLast: false)
+                
+                if !secondTableDataChunked.isEmpty {
+                    
+                    for chunk in secondTableDataChunked {
+                        ctx.beginPage()
+                        addSign()
+                        
+                        if pageNumber == secondTableDataChunked.endIndex {
+                            
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: true)
+                            
+                        } else {
+                            
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: false)
+                        }
+                           
+                        
+                    
+                        
+                        
+                        pageNumber = pageNumber + 1
+                        
+                        
+                    }
+                    
+                    
+                }
+                
+                
+           /*     for tableDataChunk in tableDataChunked {
                    
                     
                    
@@ -370,7 +442,7 @@ extension PdfCreator {
                     
                  
                     
-                }
+                } */
               
                 
                 
