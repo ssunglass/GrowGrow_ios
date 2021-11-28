@@ -245,6 +245,7 @@ struct ProfileView: View {
                     
                     Image(systemName: "person.crop.circle.badge.questionmark.fill")
                         .resizable()
+                        .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             showEditProfileView.toggle()
@@ -265,6 +266,7 @@ struct ProfileView: View {
                     
                     Image(systemName: "plus.rectangle.on.rectangle")
                         .resizable()
+                        .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             alertView()
@@ -283,6 +285,7 @@ struct ProfileView: View {
                     
                     Image(systemName: "bookmark.square.fill")
                         .resizable()
+                        .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             isBookActive.toggle()
@@ -292,6 +295,7 @@ struct ProfileView: View {
                     
                     Image(systemName: "link")
                         .resizable()
+                        .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             isPdfPreviewActive.toggle()
@@ -306,6 +310,7 @@ struct ProfileView: View {
                     
                     Image(systemName: "slider.horizontal.3")
                         .resizable()
+                        .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             

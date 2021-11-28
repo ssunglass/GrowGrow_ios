@@ -11,8 +11,9 @@ import FirebaseAuth
 struct ContentView: View {
     
     @EnvironmentObject var session: SessionStore
+    @ObservedObject var networkManager = NetworkManager()
     @State private var isLoading = false
-    
+    let appleGothicMed : String = "Apple SD Gothic Neo Medium"
     
     func listen(){
         session.listen()
@@ -23,41 +24,68 @@ struct ContentView: View {
         
         ZStack {
             
-            Group{
+            if networkManager.isConnected {
                 
-                if isLoading {
+            
+                
+                Group{
+                    
+                    if isLoading {
+                        
+                        
+                        LoadingView()
+                        
+                        
+                        
+                    }
+                        
+                 if(session.session != nil) {
+                        
+                                
+                               MainTabContainer()
+                                
+                          
+                            
+                            
+                        } else {
+                            
+                            SignInView()
+                        }
+                        
+                        
+                        
+                        
+                        
                     
                     
-                    LoadingView()
+                    
                     
                     
                     
                 }
-                    
-             if(session.session != nil) {
-                    
-                            
-                           MainTabContainer()
-                            
-                      
-                        
-                        
-                    } else {
-                        
-                        SignInView()
-                    }
-                    
-                    
-                    
-                    
-                    
                 
+            
                 
+            } else {
                 
-                
+                VStack{
+                    Image(systemName: "wifi.slash")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.black)
+                        .frame(width: 150, height: 150)
+                    
+                    Text("WIFI가 연결되지 않았습니다")
+                        .font(.custom(appleGothicMed, size: 20))
+                        .foregroundColor(.black)
+                        .padding()
+                    
+                }
                 
                 
             }
+            
+         
             
           
             

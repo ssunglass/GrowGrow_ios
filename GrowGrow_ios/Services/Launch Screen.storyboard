@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-7" translatesAutoresizingMaskIntoConstraints="NO" id="MQ2-Gq-9Qr">
-                                <rect key="frame" x="53" y="259.5" width="308.5" height="277"/>
+                                <rect key="frame" x="59.5" y="260.5" width="295.5" height="275.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16L-E2-pDV">
-                                        <rect key="frame" x="26" y="0.0" width="256" height="256"/>
+                                        <rect key="frame" x="19.5" y="0.0" width="256" height="256"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -31,9 +31,9 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대학생을 위한 커리어 플랫폼, 커커" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aq-2W-3Sz">
-                                        <rect key="frame" x="0.0" y="249" width="308.5" height="28"/>
+                                        <rect key="frame" x="0.0" y="249" width="295.5" height="26.5"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="22"/>
                                         <color key="textColor" systemColor="systemBackgroundColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
