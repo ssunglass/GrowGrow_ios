@@ -226,7 +226,7 @@ struct ProfileView: View {
             VStack(alignment: .leading){
       
             
-            Group {
+          /*  Group {
                 
                 HStack{
                     
@@ -292,6 +292,7 @@ struct ProfileView: View {
                         }
                     
                     Spacer()
+                   
                     
                     Image(systemName: "link")
                         .resizable()
@@ -306,7 +307,7 @@ struct ProfileView: View {
                             contentViewModel.bios = viewModel.bios
                            
                         }
-                        .padding(.trailing, 5)
+                        //.padding(.leading, 15)
                     
                     Image(systemName: "slider.horizontal.3")
                         .resizable()
@@ -323,10 +324,10 @@ struct ProfileView: View {
                             } */
                             
                         }
-                        .padding(.trailing,15)
+                       // .padding(.trailing,15)
                     
                     
-                        
+                      
                     
                
                     
@@ -356,8 +357,135 @@ struct ProfileView: View {
                 
                 
                 
-            }.padding([.bottom])
+            }.padding([.bottom]) */
             
+                HStack(){
+                 
+                    VStack(alignment: .leading){
+                        
+                        Text(viewModel.fullname)
+                            .font(.custom(appleGothicBold, size: 36))
+                            .foregroundColor(Color.black)
+                        
+                       
+                        
+                        Text("@\(viewModel.username)")
+                            .font(.custom(appleGothicLight, size: 14))
+                            .foregroundColor(Color.black)
+                        
+                        
+                    }
+                    
+                   
+                    
+                    
+                    
+                    Image(systemName: "person.crop.circle.badge.questionmark.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            showEditProfileView.toggle()
+                        }
+                        .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                    
+          
+                  
+                    
+                    Image(systemName: "plus.rectangle.on.rectangle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            alertView()
+                        }
+                
+                    
+                    /*Button(action:{
+                        alertView()
+                    }){
+                        Image(systemName: "plus.rectangle.on.rectangle")
+                            .resizable()
+                            .frame(width:23, height: 20)
+                            
+                        
+                    }*/
+                    
+                    Image(systemName: "bookmark.square.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            isBookActive.toggle()
+                        }
+                        
+                    
+                    
+                    NavigationLink(destination: SavedUserListView(),isActive: $isBookActive){
+                    
+                        
+                    }.hidden()
+                    
+                    NavigationLink(destination: PdfPreviewView(), isActive: $isPdfPreviewActive){
+                        
+                    }.hidden()
+                    
+                    NavigationLink(destination: SettingView(), isActive: $isSettingActive){
+                        
+                    }.hidden()
+                    
+                    
+                   
+                    
+                    
+                    Image(systemName: "link")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            isPdfPreviewActive.toggle()
+                            contentViewModel.fullname = viewModel.fullname
+                            contentViewModel.depart = "\(viewModel.depart), \(viewModel.major) 재학"
+                            contentViewModel.summary = viewModel.summary
+                            
+                            contentViewModel.bios = viewModel.bios
+                           
+                        }
+                        //.padding(.leading, 15)
+                    
+                    Image(systemName: "slider.horizontal.3")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:23, height: 20)
+                        .onTapGesture {
+                            
+                         isSettingActive.toggle()
+                            
+                          /*  DispatchQueue.main.async {
+                               // session.unbind()
+                                session.logout()
+                               
+                            } */
+                            
+                        }
+                       // .padding(.trailing,15)
+                    
+                    
+                      
+                    
+               
+                    
+                    
+                 
+                    
+                    
+               
+                    
+                    
+                  
+                    
+                    
+                }
       
                 ScrollView(.vertical){
            

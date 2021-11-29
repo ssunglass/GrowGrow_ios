@@ -134,7 +134,7 @@ extension PdfCreator {
     
     private func addSign(){
         
-        let growText : String = "POWERD BY GROWGROW"
+        let growText : String = "POWERED BY GROWGROW"
         
         let growRect = CGRect(x: pageRect.width - 130, y: 15, width:  150, height: 25)
         
@@ -252,7 +252,7 @@ extension PdfCreator {
                 let textRect = CGRect(x: tabX + defaultOffset,
                                       y: yPosition + perPageOffset,
                                       width: tabWidth,
-                                      height: defaultOffset * 6)
+                                      height: defaultOffset * 10)
                 attributedText.draw(in: textRect)
             }
 
@@ -288,7 +288,7 @@ extension PdfCreator {
     func pdfData( fullname : String, depart: String, summary:String, body: String, bios: [AllBios] ) -> Data? {
         
         let numberOfElmentsPerPage = calculateNumberofElmentsperPage(with: pageRect)
-        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 4)
+        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 3)
         
        // var othertableDatachunked: [[AllBios]] = [[AllBios]]()
         var secondTableDataItems: [AllBios] = [AllBios]()
