@@ -67,10 +67,16 @@ struct SearchView: View {
             
                 HStack{
                     
-                   TextField("삼성전기 샘이랑을 검색해보세요",text: $keyword)
+                   TextField("이름,학과,키워드 등을 검색해보세요!",text: $keyword)
                         .padding(.leading, 20)
-                        .font(.custom(appleGothicSemiBold, size: 20))
+                        .font(.custom(appleGothicSemiBold, size: 18))
                         .foregroundColor(Color(hex: "#818181"))
+                        .onSubmit {
+                            
+                            searchIsActive.toggle()
+                            
+                            
+                        }
                     
                     
                     Image(systemName: "magnifyingglass")
@@ -251,19 +257,7 @@ struct SearchView: View {
                        
             
             Button(action:{
-               /* if keyword == "" {
-                    
-                    showingAlert.toggle()
-                    print("no")
-                    
-                    
-                } else {
-                    
-                searchIsActive.toggle()
-                    
-                }
-              
-            */
+           
                 searchIsActive.toggle()
             }){
                 
