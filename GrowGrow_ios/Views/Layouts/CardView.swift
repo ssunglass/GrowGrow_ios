@@ -108,7 +108,7 @@ struct UserCardView: View {
                             
                         
                         Text("@\(username)")
-                            .font(.custom(appleGothicLight, size: 10))
+                            .font(.custom(appleGothicLight, size: 11))
                             .foregroundColor(randomTextBase)
                             .kerning(-0.5)
                         

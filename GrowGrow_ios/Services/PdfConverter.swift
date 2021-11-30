@@ -344,9 +344,11 @@ extension PdfCreator {
                 
                 addMid(summary: summary, drawContext: context)
                 
-                
+                if !tableDataChunked.isEmpty {
                 
                 drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunked[0], perPageOffset: 240, isLast: false)
+                    
+                }
                 
                 if !secondTableDataChunked.isEmpty {
                     

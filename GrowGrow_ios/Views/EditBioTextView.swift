@@ -99,7 +99,7 @@ struct EditBioTextView: View {
     var body: some View {
         VStack(alignment:.center){
             
-            Text("이력 업데이트")
+            Text("커리어 업데이트")
                 .font(.custom(appleGothicSemiBold, size: 25))
                 .foregroundColor(Color.black)
                 .padding()
@@ -115,9 +115,9 @@ struct EditBioTextView: View {
                 .frame(maxHeight: 180, alignment: .center)
                 .font(.custom(appleGothicSemiBold, size: 17))
                 .foregroundColor(Color.black)
-                .cornerRadius(15)
+                .cornerRadius(5)
                 .overlay(
-                         RoundedRectangle(cornerRadius: 15)
+                         RoundedRectangle(cornerRadius: 5)
                              .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
                          )
                /* .background(RoundedRectangle(cornerRadius: 15)

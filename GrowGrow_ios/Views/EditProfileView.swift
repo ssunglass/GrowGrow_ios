@@ -304,6 +304,7 @@ struct EditProfileView: View {
                             .font(.custom(appleGothicBold, size: 15))
                         
                     }
+                 
                     
                     VStack{
                         HStack(spacing: 2.5){
@@ -413,39 +414,29 @@ struct EditProfileView: View {
             .navigationBarItems(leading:
                 HStack {
                 
-                Label("cancel", systemImage: "xmark")
-                    .onTapGesture {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                    .labelStyle(IconOnlyLabelStyle())
-                    .padding()
+                Button(action: {presentationMode.wrappedValue.dismiss()}) {
+                    
+                    Label("cancel", systemImage: "xmark")
+                        .labelStyle(IconOnlyLabelStyle())
+                        
+                }.padding()
                 
-                 /*   Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "xmark")
-                    }.padding() */
-
+            
 
                 }, trailing:
                     HStack {
                 
-                Label("check", systemImage: "checkmark")
-                    .onTapGesture {
-                        updateUser()
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                    .labelStyle(IconOnlyLabelStyle())
-                    .padding()
+                Button(action: {
+                    updateUser()
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Label("check", systemImage: "checkmark")
+                        .labelStyle(IconOnlyLabelStyle())
+                       
+                    
+                } .padding()
                 
-                       /* Button(action: {
-                            
-                            updateUser()
-                            presentationMode.wrappedValue.dismiss()
-                        
-                        }) {
-                            Image(systemName: "checkmark")
-                        }.padding() */
+          
                     }
             )
         }

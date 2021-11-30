@@ -146,7 +146,7 @@ struct EditBioView: View {
              
     }.listStyle(PlainListStyle())
             
-    .navigationTitle("이력 리스트")
+    .navigationTitle("커리어 리스트")
    
         }
         

@@ -392,46 +392,60 @@ struct ProfileView: View {
                    
                     
                     
-                    
-                    Image(systemName: "person.crop.rectangle.stack")
+                    Button(action: {showEditProfileView.toggle()} ){
+                        Image(systemName: "person.crop.rectangle.stack")
+                             .resizable()
+                             .scaledToFit()
+                             .frame(width:23, height: 20)
+                        
+                        
+                    }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                   /* Image(systemName: "person.crop.rectangle.stack")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             showEditProfileView.toggle()
                         }
-                        .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
+                        .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)}) */
                     
           
-                  
+                    Button(action: { alertView()}) {
+                        
+                        Image(systemName: "rectangle.badge.plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:23, height: 20)
+                            .padding(.top,5)
+                        
+                        
+                    }
                     
-                    Image(systemName: "rectangle.badge.plus")
+                  /*  Image(systemName: "rectangle.badge.plus")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
                         .padding(.top,5)
                         .onTapGesture {
                             alertView()
-                        }
+                        } */
                 
                     
-                    /*Button(action:{
-                        alertView()
-                    }){
-                        Image(systemName: "plus.rectangle.on.rectangle")
+                    Button(action: { isBookActive.toggle()} ) {
+                        Image(systemName: "bookmark")
                             .resizable()
+                            .scaledToFit()
                             .frame(width:23, height: 20)
-                            
                         
-                    }*/
+                    }
                     
-                    Image(systemName: "bookmark")
+                   /* Image(systemName: "bookmark")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
                         .onTapGesture {
                             isBookActive.toggle()
-                        }
+                        } */
                         
                     Spacer()
                     
@@ -451,51 +465,31 @@ struct ProfileView: View {
                     
                     
                    
+                    Button(action: {
+                        isPdfPreviewActive.toggle()
+                        contentViewModel.fullname = viewModel.fullname
+                        contentViewModel.depart = "\(viewModel.depart), \(viewModel.major) 재학"
+                        contentViewModel.summary = viewModel.summary
+                        
+                        contentViewModel.bios = viewModel.bios
+                    }){
+                        Image(systemName: "link")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:23, height: 20)
+                        
+                    }.padding(.trailing,3)
                     
-                    
-                    Image(systemName: "link")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:23, height: 20)
-                        .onTapGesture {
-                            isPdfPreviewActive.toggle()
-                            contentViewModel.fullname = viewModel.fullname
-                            contentViewModel.depart = "\(viewModel.depart), \(viewModel.major) 재학"
-                            contentViewModel.summary = viewModel.summary
-                            
-                            contentViewModel.bios = viewModel.bios
-                           
-                        }
-                        //.padding(.leading, 15)
-                    
-                    Image(systemName: "slider.horizontal.3")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:23, height: 20)
-                        .onTapGesture {
-                            
-                         isSettingActive.toggle()
-                            
-                          /*  DispatchQueue.main.async {
-                               // session.unbind()
-                                session.logout()
-                               
-                            } */
-                            
-                        }
-                        .padding(.trailing,15)
-                    
-                    
-                      
+                    Button(action: {   isSettingActive.toggle()}){
+                        Image(systemName: "slider.horizontal.3")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:23, height: 20)
+                        
+                    }.padding(.trailing,15)
                     
                
-                    
-                    
-                 
-                    
-                    
-               
-                    
+
                     
                   
                     
