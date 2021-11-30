@@ -45,7 +45,7 @@ struct EditBioTextView: View {
             .collection("Bios")
             .document(date)
             .updateData([
-                "description" : editBioText
+                "description" : editBioText.trimmingCharacters(in: .whitespacesAndNewlines)
             ]){ err in
                 if let err = err {
                     print("Error updating document: \(err)")

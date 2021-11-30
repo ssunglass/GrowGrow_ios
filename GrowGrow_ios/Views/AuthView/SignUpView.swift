@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum SignUpField{
+    case field1
+    case field2
+    case field3
+    case field4
+    
+}
+
 struct SignUpView: View {
     @State private var fullname: String = ""
     @State private var username: String = ""
@@ -18,6 +26,12 @@ struct SignUpView: View {
     @State private var error:String = ""
     @State private var sendEmail = false
     
+    @State var field1 = ""
+    @State var field2 = ""
+    @State var field3 = ""
+    @State var field4 = ""
+    
+    @FocusState var activeState : SignUpField?
     
     func signUp(){
         if let error = errorCheck(){
@@ -26,7 +40,7 @@ struct SignUpView: View {
             return
         }
         
-        AuthService.signUp(fullname: fullname, username: username, email: email, password: password, onSuccess: {
+        AuthService.signUp(fullname: fullname.trimmingCharacters(in: .whitespacesAndNewlines), username: username.trimmingCharacters(in: .whitespacesAndNewlines), email: email.trimmingCharacters(in: .whitespacesAndNewlines), password: password, onSuccess: {
             (user) in
             
            
@@ -65,6 +79,7 @@ struct SignUpView: View {
     
     var body: some View {
         
+       
         VStack(alignment: .leading){
             
             ZStack(alignment: .topLeading){
@@ -82,9 +97,27 @@ struct SignUpView: View {
            // Spacer()
             
             FormField(value: $fullname, placeholder: "fullname")
+                .focused($activeState, equals: .field1)
+                .submitLabel(.continue)
+                .onSubmit {
+                    activeState = .field2
+                }
             FormField(value: $username,  placeholder: "username")
+                .focused($activeState, equals: .field2)
+                .submitLabel(.continue)
+                .onSubmit {
+                    activeState = .field3
+                }
             FormField(value: $email, placeholder: "이메일")
+                .focused($activeState, equals: .field3)
+                .submitLabel(.continue)
+                .onSubmit {
+                    activeState = .field4
+                }
             FormField(value: $password,  placeholder: "비밀번호를 6자 이상 입력해주세요", isSecure: true)
+                .focused($activeState, equals: .field4)
+               
+               
             SecureInputView("비밀번호 재확인", text: $confirmpassword)
             ButtonView(title:"회원가입",background: Color.black, foreground: .white, border: .black){
                 
@@ -121,7 +154,8 @@ struct SignUpView: View {
             
         }
         .padding()
-            
+       
+        
         
     }
 }

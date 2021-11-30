@@ -71,6 +71,7 @@ struct SearchView: View {
                         .padding(.leading, 20)
                         .font(.custom(appleGothicSemiBold, size: 18))
                         .foregroundColor(Color(hex: "#818181"))
+                        .submitLabel(.search)
                         .onSubmit {
                             
                             searchIsActive.toggle()
@@ -292,7 +293,7 @@ struct SearchView: View {
                 Spacer()
             
             
-                NavigationLink(destination: SearchedView(inputKeyword: keyword.lowercased(), inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
+                NavigationLink(destination: SearchedView(inputKeyword: keyword.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), inputDeparts: selectionsDepart, inputRegions: selectedRegion), isActive: $searchIsActive){
                 
                 
                 

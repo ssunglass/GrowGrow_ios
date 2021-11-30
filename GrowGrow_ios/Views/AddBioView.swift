@@ -181,7 +181,7 @@ struct BioTextAddView: View {
           
             
          
-         BioService.saveBio(date: selectedYear, description: bioText, onSuccess: {
+            BioService.saveBio(date: selectedYear, description: bioText.trimmingCharacters(in: .whitespacesAndNewlines), onSuccess: {
              (bio) in
       
       let inputString = bioText.lowercased()

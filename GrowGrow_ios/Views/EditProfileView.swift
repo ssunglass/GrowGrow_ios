@@ -159,7 +159,7 @@ struct EditProfileView: View {
             db.collection("Users").document(self.session.session!.uid).updateData([
                 //"fullname" : fullname,
                 //"username" : username,
-                "summary" : summary,
+                "summary" : summary.trimmingCharacters(in: .whitespacesAndNewlines),
                 "region" : regions[selectedRegion],
                 "depart" : departs[selectedDepart],
                 "major" : viewModel.contents[selectedMajor].mClass,

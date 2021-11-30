@@ -196,11 +196,11 @@ extension PdfCreator {
         
     }
     
-    func drawBios(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios], perPageOffset: CGFloat, isLast: Bool) {
+    func drawBios(drawContext: CGContext, pageRect: CGRect, tableDataItems: [AllBios], perPageOffset: CGFloat, isLast: Bool, isFirstPage: Bool) {
         drawContext.setLineWidth(1.0)
         drawContext.saveGState()
 
-        let defaultStartY = defaultOffset * 5
+        let defaultStartY = defaultOffset * 8
 
         for elementIndex in 0..<tableDataItems.count {
             
@@ -218,7 +218,8 @@ extension PdfCreator {
             let descriptStyle = NSMutableParagraphStyle()
             descriptStyle.alignment = .left
             descriptStyle.lineBreakMode = .byWordWrapping
-            descriptStyle.lineSpacing = 5
+            descriptStyle.lineSpacing = 0
+            
             
             
             let dateAttributes = [
@@ -230,7 +231,7 @@ extension PdfCreator {
             
             let descriptiontAttributes = [
                 NSAttributedString.Key.paragraphStyle: descriptStyle,
-                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Regular", size: 11),
+                NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 10),
                 NSAttributedString.Key.kern: -0.55
                 
             ] as [NSAttributedString.Key : Any]
@@ -252,7 +253,7 @@ extension PdfCreator {
                 let textRect = CGRect(x: tabX + defaultOffset,
                                       y: yPosition + perPageOffset,
                                       width: tabWidth,
-                                      height: defaultOffset * 10)
+                                      height: defaultOffset * 8)
                 attributedText.draw(in: textRect)
             }
 
@@ -261,16 +262,22 @@ extension PdfCreator {
                 let tabX = CGFloat(1) * tabWidth
                 drawContext.setLineWidth(1)
                 drawContext.move(to: CGPoint(x: tabX + defaultOffset - 35, y: yPosition + perPageOffset ))
-                drawContext.addLine(to: CGPoint(x: tabX + defaultOffset - 35, y: yPosition + perPageOffset + defaultOffset * 5 ))
+                drawContext.addLine(to: CGPoint(x: tabX + defaultOffset - 35, y: yPosition + perPageOffset + defaultOffset * 8 ))
            
                drawContext.strokePath()
             //}
             
-            if(elementIndex == tableDataItems.count - 1 && isLast == true) {
+            if( elementIndex == tableDataItems.count - 1 &&  isLast == true) {
                 
+                
+                if !isFirstPage {
                 drawCircle(drawContext, drawY: yPosition + defaultStartY + 15, drawX: tabX + defaultOffset - 37.5)
                 
-                
+                } else {
+                    
+                    drawCircle(drawContext, drawY: yPosition + defaultStartY + 180, drawX: tabX + defaultOffset - 37.5)
+                    
+                }
             }
             
            
@@ -288,7 +295,7 @@ extension PdfCreator {
     func pdfData( fullname : String, depart: String, summary:String, body: String, bios: [AllBios] ) -> Data? {
         
         let numberOfElmentsPerPage = calculateNumberofElmentsperPage(with: pageRect)
-        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 3)
+        let tableDataChunked: [[AllBios]] = tableDataItems.chunkedElements(into: 2)
         
        // var othertableDatachunked: [[AllBios]] = [[AllBios]]()
         var secondTableDataItems: [AllBios] = [AllBios]()
@@ -345,8 +352,16 @@ extension PdfCreator {
                 addMid(summary: summary, drawContext: context)
                 
                 if !tableDataChunked.isEmpty {
+                    
+                    if tableDataChunked.count < 2 {
                 
-                drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunked[0], perPageOffset: 240, isLast: false)
+                drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunked[0], perPageOffset: 180, isLast: true, isFirstPage: true)
+                        
+                    } else {
+                        
+                        drawBios(drawContext: context, pageRect: pageRect, tableDataItems: tableDataChunked[0], perPageOffset: 180, isLast: false, isFirstPage: false)
+                        
+                    }
                     
                 }
                 
@@ -358,11 +373,11 @@ extension PdfCreator {
                         
                         if pageNumber == secondTableDataChunked.endIndex {
                             
-                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: true)
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: true, isFirstPage: false)
                             
                         } else {
                             
-                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: false)
+                            drawBios(drawContext: context, pageRect: pageRect, tableDataItems: chunk, perPageOffset: defaultOffset, isLast: false, isFirstPage: false)
                         }
                            
                         
@@ -459,7 +474,7 @@ extension PdfCreator {
         
       
         
-        let rowHeight = (defaultOffset * 6)
+        let rowHeight = (defaultOffset * 8)
         let belowHeight = (defaultOffset * 1)
         let number = Int((pageRect.height - rowHeight - belowHeight) / rowHeight)
         

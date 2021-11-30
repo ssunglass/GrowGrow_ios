@@ -76,7 +76,7 @@ struct ProfileView: View {
                 "keywords" : FieldValue.arrayUnion([keyword])
             ])
             
-            var inputString = keyword.lowercased()
+            var inputString = keyword.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
             
             
             let trimmed = String(inputString.filter {!" \n\t\r".contains($0)})
@@ -470,13 +470,7 @@ struct ProfileView: View {
                         
                     }
                     
-                   /* Image(systemName: "bookmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:23, height: 20)
-                        .onTapGesture {
-                            isBookActive.toggle()
-                        } */
+                
                         
                     Spacer()
                     

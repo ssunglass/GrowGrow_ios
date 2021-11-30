@@ -107,7 +107,7 @@ struct ContentView: View {
             listen()
             
        
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                 
             
                 isLoading = false

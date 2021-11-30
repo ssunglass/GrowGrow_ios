@@ -11,6 +11,12 @@ import FirebaseDynamicLinks
 import FirebaseFirestore
 
 
+enum SignInField{
+    case field1
+    case field2
+   
+    
+}
 
 struct SignInView: View {
     
@@ -22,10 +28,11 @@ struct SignInView: View {
     @State private var error:String = ""
     @State private var showingRegister = false
     
-  
+    @State var field1 = ""
+    @State var field2 = ""
     
     
-    
+    @FocusState var activeState : SignInField?
    
     
     func errorCheck() -> String? {
@@ -81,7 +88,14 @@ struct SignInView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 5){
             FormField(value: $email, placeholder: "이메일")
+                .focused($activeState, equals: .field1)
+                .submitLabel(.continue)
+                .onSubmit {
+                    activeState = .field2
+                }
             FormField(value: $password, placeholder: "비밀번호", isSecure: true)
+                .focused($activeState, equals: .field2)
+              
            
             ButtonView(title: "로그인",
                        background: Color(hex: "#646464"),
@@ -117,6 +131,7 @@ struct SignInView: View {
             
             
         }.padding()
+            .padding(.bottom, 50)
     }
 }
 
