@@ -97,9 +97,18 @@ struct UserDetailView: View {
                     
                     VStack(alignment: .leading){
                         
+                        HStack{
                         Text(viewModel.fullname)
                             .font(.custom(appleGothicBold, size: 36))
                             .foregroundColor(Color.black)
+                            
+                            if viewModel.isVerified {
+                                
+                                Image(systemName: "checkmark.seal.fill")
+                                    .foregroundColor(Color.yellow)
+                                
+                            }
+                        }
                         Text("@\(viewModel.username)")
                             .font(.custom(appleGothicLight, size: 14))
                             .foregroundColor(Color.black)
@@ -112,6 +121,7 @@ struct UserDetailView: View {
                     }){
                         Image(systemName: "bookmark.fill")
                             .resizable()
+                            .scaledToFit()
                             .foregroundColor( isSaved ? Color.yellow : Color.gray)
                             .frame(width: 20, height: 20)
                         

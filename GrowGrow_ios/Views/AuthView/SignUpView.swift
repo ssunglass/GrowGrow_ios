@@ -84,9 +84,9 @@ struct SignUpView: View {
             FormField(value: $fullname, placeholder: "fullname")
             FormField(value: $username,  placeholder: "username")
             FormField(value: $email, placeholder: "이메일")
-            FormField(value: $password,  placeholder: "비밀번호", isSecure: true)
+            FormField(value: $password,  placeholder: "비밀번호를 6자 이상 입력해주세요", isSecure: true)
             SecureInputView("비밀번호 재확인", text: $confirmpassword)
-            ButtonView(title:"이메일 인증",background: Color.black, foreground: .white, border: .black){
+            ButtonView(title:"회원가입",background: Color.black, foreground: .white, border: .black){
                 
                 signUp()
                 

@@ -29,6 +29,7 @@ class SessionStore: ObservableObject {
     @Published var summary: String = ""
     @Published var region: String = ""
     @Published var uid: String = ""
+    @Published var isVerified: Bool = false
     
     
     private let db = Firestore.firestore()
@@ -1118,7 +1119,7 @@ class SessionStore: ObservableObject {
     
     
     
-    func getSearchedUser(keyword:String, depart:[String], region:String){
+   /* func getSearchedUser(keyword:String, depart:[String], region:String){
         
         @State var query: Query
         
@@ -1190,6 +1191,7 @@ class SessionStore: ObservableObject {
                 let uid = data["uid"] as? String ?? ""
                 let region = data["region"] as? String ?? ""
                 let departIcon = data["departIcon"] as? String ?? ""
+              
             
                 
                 
@@ -1207,7 +1209,7 @@ class SessionStore: ObservableObject {
         
         
         
-    }
+    } */
     
     func saveUser(saveUid:String){
         
@@ -1231,8 +1233,9 @@ class SessionStore: ObservableObject {
                 let savedSummary = data["summary"] as? String ?? ""
                 let savedRegion = data["region"] as? String ?? ""
                 let departIcon = data["departIcon"] as? String ?? ""
+                let isVerified = data["isVerified"] as? Bool ?? false
                 
-                let savedUser = User.init(fullname: savedFullname, username: savedUsername ,uid: saveUid, summary: savedSummary, depart: savedDepart, major: savedMajor, region: savedRegion, departIcon: departIcon)
+                let savedUser = User.init(fullname: savedFullname, username: savedUsername ,uid: saveUid, summary: savedSummary, depart: savedDepart, major: savedMajor, region: savedRegion, departIcon: departIcon, isVerified: isVerified)
                 
                 
                 guard let dict = try?savedUser.asDictionary() else {return}
@@ -1294,6 +1297,8 @@ class SessionStore: ObservableObject {
                 self.major = data["major"] as? String ?? ""
                 self.summary = data["summary"] as? String ?? ""
                 self.region = data["region"] as? String ?? ""
+                self.isVerified = data["isVerified"] as? Bool ?? false
+                
             
         }
         

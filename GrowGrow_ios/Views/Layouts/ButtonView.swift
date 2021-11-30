@@ -36,14 +36,15 @@ struct ButtonView: View {
         Button(action: handler, label: {
             Text(title)
                 .frame(maxWidth: .infinity, maxHeight: 40)
+                .background(RoundedRectangle(cornerRadius: 15).fill(background))
+                .foregroundColor(foreground)
+                .font(.custom(appleGothicBold, size: 24))
+                .cornerRadius(cornerRadius)
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(border, lineWidth: 1.5))
+                .padding(.vertical,5)
         })
-            .background(RoundedRectangle(cornerRadius: 15).fill(background))
-            .foregroundColor(foreground)
-            .font(.custom(appleGothicBold, size: 24))
-            .cornerRadius(cornerRadius)
-            .overlay(RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(border, lineWidth: 1.5))
-            .padding(.vertical,5)
+            
     }
     
 }

@@ -18,6 +18,7 @@ struct User: Encodable, Decodable{
     var major:String
     var region:String
     var departIcon: String
+    var isVerified: Bool
 }
 
 struct AllUsers: Identifiable{

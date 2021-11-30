@@ -363,12 +363,22 @@ struct ProfileView: View {
                  
                     VStack(alignment: .leading, spacing: 5){
                         
+                        HStack{
+                        
                         Text(viewModel.fullname)
                             .font(.custom(appleGothicBold, size: 40))
                             .foregroundColor(Color.black)
                             .fixedSize()
+                            
+                            if viewModel.isVerified {
+                                
+                                Image(systemName: "checkmark.seal.fill")
+                                    .foregroundColor(Color.yellow)
+                                
+                                
+                            }
                         
-                       
+                        }
                         
                         Text("@\(viewModel.username)")
                             .font(.custom(appleGothicLight, size: 15))

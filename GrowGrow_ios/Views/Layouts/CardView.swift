@@ -76,6 +76,7 @@ struct UserCardView: View {
         var depart: String
         var major: String
         var summary: String
+        
     
     let appleGothicBold: String = "Apple SD Gothic Neo Bold"
     let appleGothicLight: String = "Apple SD Gothic Neo Light"
