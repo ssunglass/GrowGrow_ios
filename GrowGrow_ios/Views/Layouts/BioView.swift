@@ -37,6 +37,7 @@ struct BioView: View {
                 
             
             Text(description)
+                .kerning(-0.6)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.custom(appleGothicRegular, size: 15))
                 .foregroundColor(Color.black)

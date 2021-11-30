@@ -38,6 +38,14 @@ struct SearchedView: View {
                             .font(.custom(appleGothicSemiBold, size: 18))
                             .foregroundColor(Color.black)
                         
+                        Text("\(user.depart), \(user.major)")
+                            .font(.custom(appleGothicSemiBold, size: 16))
+                            .foregroundColor(Color(hex: "#A7A7A7"))
+                        
+                      /*  Text(user.major)
+                            .font(.custom(appleGothicSemiBold, size: 15))
+                            .foregroundColor(Color(hex: "#A7A7A7")) */
+                        
                     }
                   
                     

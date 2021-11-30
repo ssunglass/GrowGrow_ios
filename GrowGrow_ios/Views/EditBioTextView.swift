@@ -111,16 +111,17 @@ struct EditBioTextView: View {
                 .padding(.bottom,5)
             
             TextEditor(text: $editBioText)
+                .padding()
                 .frame(maxHeight: 180, alignment: .center)
-                .font(.custom(appleGothicSemiBold, size: 20))
+                .font(.custom(appleGothicSemiBold, size: 17))
                 .foregroundColor(Color.black)
                 .cornerRadius(15)
                 .overlay(
                          RoundedRectangle(cornerRadius: 15)
                              .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
                          )
-                .background(RoundedRectangle(cornerRadius: 15)
-                             .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))
+               /* .background(RoundedRectangle(cornerRadius: 15)
+                             .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4)) */
                 .padding(.horizontal,10)
             
             Button(action:{

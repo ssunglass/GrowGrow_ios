@@ -15,7 +15,9 @@ struct MainTabContainer: View {
                 
                 HomeView()
                     .tabItem{
-                        Image(systemName: "house")
+                        Image(systemName: "house.fill")
+                        Text("NOW")
+                          
                     
                     }
                 
@@ -23,6 +25,8 @@ struct MainTabContainer: View {
         SearchView()
             .tabItem{
                 Image(systemName: "magnifyingglass")
+                    Text("SEARCH")
+                    .kerning(-0.5)
             }
         
             
@@ -43,13 +47,15 @@ struct MainTabContainer: View {
             
             ProfileView()
                 .tabItem{
-                    Image(systemName: "person")
+                    Image(systemName: "bolt.horizontal.fill")
+                    Text("PROFILE")
+                        .kerning(-0.5)
                 }
             
             
             
         }.accentColor(.black)
-            .edgesIgnoringSafeArea(.top)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 

@@ -213,83 +213,6 @@ struct EditProfileView: View {
         
         NavigationView {
             
-           
-            
-          /*  Form{
-                
-                
-                Section(header: Text("한줄요약")){
-                    
-                    
-                
-            
-              //  FormField(value: $fullname, icon: "person.fill", placeholder: "fullname")
-              //  FormField(value: $username, icon: "person.fill", placeholder: "username")
-                TextEditor(text: $summary)
-                      .frame(maxHeight: 150, alignment: .center)
-                      .font(.custom(appleGothicSemiBold, size: 15))
-                      .foregroundColor(Color.black)
-                      .cornerRadius(15)
-                      .overlay(
-                               RoundedRectangle(cornerRadius: 15)
-                                   .stroke(Color(hex: "#ADADAD"), lineWidth: 1.5)
-                               )
-                      
-                
-            
-                    
-                }
-                
-                Section{
-                    Toggle("Agree to change",isOn: $agreedToChange)
-                   
-                }
-                
-                               
-                Section(header: Text("현재 나의 지역 \(sessionViewModel.region)")) {
-                                    Picker("선택된 지역", selection: $selectedRegion) {
-                                        //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
-                                        ForEach(0 ..< regions.count) {
-                                            Text("\(self.regions[$0])")
-                                        }
-                                    }.disabled(agreedToChange == false)
-                                }
-                
-                Section(header: Text("현재 나의 계열 \(sessionViewModel.depart)")) {
-                    Picker("선택된 계열", selection: $selectedDepart) {
-                        //0..< = 딕셔너리의 [10]부터 tipPercentage보다 작은값
-                        ForEach(0 ..< departs.count) {
-                            Text("\(self.departs[$0])")
-                            
-                        }
-                    }.disabled(agreedToChange == false)
-                }
-                
-                Section(header: Text("현재 나의 전공 \(sessionViewModel.major)")) {
-                    Picker("선택된 전공", selection: $selectedMajor) {
-                     ForEach(0 ..< viewModel.contents.count, id: \.self) {
-                             Text(self.viewModel.contents[$0].mClass)
-                            
-                        }
-                    }
-                    .disabled(agreedToChange == false)
-                    .onAppear{
-                        urlControl()
-                        viewModel.getJson(urlString: urlString)
-                            
-                    }
-                    
-                }
-               
-               
-                
-                
-                
-                
-            
-            }.onAppear(){
-                self.sessionViewModel.getUserDoc(uid: self.session.session!.uid)
-            } */
             
             VStack(){
                 
@@ -300,29 +223,32 @@ struct EditProfileView: View {
                 Text("한줄요약")
                     .foregroundColor(Color.black)
                     .font(.custom(appleGothicBold, size: 18))
+                    .padding(.leading, 20)
                 
                 TextEditor(text: $summary)
+                      .padding()
                       .frame(maxHeight: 150, alignment: .center)
                       .font(.custom(appleGothicSemiBold, size: 15))
                       .foregroundColor(Color.black)
-                      .cornerRadius(15)
+                      .cornerRadius(5)
                       .overlay(
-                               RoundedRectangle(cornerRadius: 15)
+                               RoundedRectangle(cornerRadius: 5)
                                    .stroke(Color(hex: "#ADADAD"), lineWidth: 1)
                                )
-                      .background(RoundedRectangle(cornerRadius: 15)
-                                   .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))
+                      /*.background(RoundedRectangle(cornerRadius: 5)
+                                   .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.10), radius: 4, x: 0, y: 4))*/
+                      .padding([.horizontal])
                     
                 }
                 
-                HStack(alignment:.center,spacing: 25){
+                HStack(alignment:.center,spacing: 50){
                     
                     VStack{
                         HStack(spacing: 2.5){
                             
                             Image(systemName: "globe.asia.australia")
                             
-                        Text("나의 지역")
+                        Text("지역")
                                 .foregroundColor(Color(hex:"#646464"))
                                 .font(.custom(appleGothicBold, size: 18))
                             
@@ -354,7 +280,7 @@ struct EditProfileView: View {
                     VStack{
                         HStack(spacing: 2.5){
                             Image(systemName: "books.vertical")
-                        Text("나의 계열")
+                        Text("계열")
                                 .foregroundColor(Color(hex:"#646464"))
                                 .font(.custom(appleGothicBold, size: 18))
                         }
@@ -382,7 +308,7 @@ struct EditProfileView: View {
                     VStack{
                         HStack(spacing: 2.5){
                             Image(systemName: "book.closed")
-                        Text("나의 전공")
+                        Text("전공")
                                 .foregroundColor(Color(hex:"#646464"))
                                 .font(.custom(appleGothicBold, size: 18))
                         

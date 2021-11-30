@@ -110,7 +110,7 @@ struct UserDetailView: View {
                         saveUser()
                         
                     }){
-                        Image(systemName: "bookmark.square.fill")
+                        Image(systemName: "bookmark.fill")
                             .resizable()
                             .foregroundColor( isSaved ? Color.yellow : Color.gray)
                             .frame(width: 20, height: 20)

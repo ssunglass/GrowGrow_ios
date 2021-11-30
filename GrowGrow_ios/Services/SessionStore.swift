@@ -1327,7 +1327,7 @@ class SessionStore: ObservableObject {
                     label.text = keyword
                     label.sizeToFit()
                     
-                    let labelWidth = label.frame.size.width + 43
+                    let labelWidth = label.frame.size.width + 53
                     
                     if (width + labelWidth + 55 ) < UIScreen.main.bounds.width {
                         width += labelWidth

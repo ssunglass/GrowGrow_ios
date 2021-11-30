@@ -82,15 +82,16 @@ struct UserCardView: View {
     let appleGothicSemiBold: String = "Apple SD Gothic Neo SemiBold"
     let appleGothicMed : String = "Apple SD Gothic Neo Medium"
     
-    let colors = [Color(hex: "#F3F3F3"),
-                  Color(hex: "#ADADAD"),
-                  Color(hex: "#AF3D3D"),
-                  Color(hex: "#2A3646")]
+    let colors = [Color(hex: "#f8f9fa"),
+                  Color(hex: "#f1f3f5"),
+                  Color(hex: "#e9ecef"),
+                  Color(hex: "#dee2e6"),
+                  Color(hex: "#212529"),]
     
     
-   @State var random: Color = Color(hex: "#F3F3F3")
+   @State var random: Color = Color(hex: "#f8f9fa")
     @State var randomTextBase: Color = Color.black
-    @State var randomTextSub: Color = Color(hex: "#A7A7A7")
+    @State var randomTextSub: Color = Color.black
     
     
     
@@ -102,10 +103,13 @@ struct UserCardView: View {
                         Text(fullname)
                             .font(.custom(appleGothicBold, size: 21))
                             .foregroundColor(randomTextBase)
+                            .kerning(-0.5)
+                            
                         
                         Text("@\(username)")
                             .font(.custom(appleGothicLight, size: 10))
                             .foregroundColor(randomTextBase)
+                            .kerning(-0.5)
                         
                         Divider()
                             .padding(.trailing,20)
@@ -116,9 +120,11 @@ struct UserCardView: View {
                         Text(depart)
                             .font(.custom(appleGothicBold, size: 13))
                             .foregroundColor(randomTextSub)
+                            .kerning(-0.5)
                         Text(major)
                             .font(.custom(appleGothicBold, size: 13))
                             .foregroundColor(randomTextSub)
+                            .kerning(-0.5)
                             
                         }
                         
@@ -128,6 +134,7 @@ struct UserCardView: View {
                         Text(summary)
                             .font(.custom(appleGothicMed, size: 13))
                             .foregroundColor(randomTextBase)
+                            .kerning(-0.5)
                             .multilineTextAlignment(.leading)
                         
                         }
@@ -153,9 +160,10 @@ struct UserCardView: View {
                 random = colors.randomElement()!
                 
                 
-                if random == Color(hex: "#ADADAD") {
+                if random == Color(hex: "#212529") {
                     
-                    randomTextBase = Color.green
+                    randomTextBase = Color.white
+                    randomTextSub = Color.white
                     
                 }
                 

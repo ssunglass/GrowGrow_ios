@@ -23,7 +23,7 @@ struct SettingView: View {
                 
                 Section(content: {
                     
-                    NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://locally.co.kr")){
+                    NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://minguk.notion.site/minguk/CS-Center-1fe5f43156b84d4ea14d85bb39e8b919")){
                         Text("지원페이지")
                         
                         
@@ -40,7 +40,7 @@ struct SettingView: View {
                 
                 Section(content: {
                     
-                    NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://locally.co.kr")){
+                    NavigationLink(destination: PersonalInfoWebView(urlToLoad: "https://minguk.notion.site/f1f6f8a1328840a189721964dfb92069")){
                         Text("개인정보처리방침")
                         
                         

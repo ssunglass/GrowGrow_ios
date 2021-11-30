@@ -275,17 +275,18 @@ struct SearchView: View {
                         .foregroundColor(Color.white)
                     
                 }
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(RoundedRectangle(cornerRadius: 15).fill(Color.black))
+                .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.black, lineWidth: 1.5)
+                
+                )
+                
+                .padding()
                
             }
-            .frame(maxWidth: .infinity, maxHeight: 50)
-            .background(RoundedRectangle(cornerRadius: 15).fill(Color.black))
-            .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(Color.black, lineWidth: 1.5)
-            
-            )
-            
-            .padding()
+         
                 /*.alert(isPresented: $showingAlert){
                     Alert(title: Text("커커"), message: Text("검색어를 입력해주세요"), dismissButton: .default(Text("확인")) {
 

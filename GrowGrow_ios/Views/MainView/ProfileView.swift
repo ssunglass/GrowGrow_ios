@@ -361,17 +361,20 @@ struct ProfileView: View {
             
                 HStack(){
                  
-                    VStack(alignment: .leading){
+                    VStack(alignment: .leading, spacing: 5){
                         
                         Text(viewModel.fullname)
-                            .font(.custom(appleGothicBold, size: 36))
+                            .font(.custom(appleGothicBold, size: 40))
                             .foregroundColor(Color.black)
+                            .fixedSize()
                         
                        
                         
                         Text("@\(viewModel.username)")
-                            .font(.custom(appleGothicLight, size: 14))
+                            .font(.custom(appleGothicLight, size: 15))
                             .foregroundColor(Color.black)
+                            .kerning(-0.5)
+                            .fixedSize()
                         
                         
                     }
@@ -380,7 +383,7 @@ struct ProfileView: View {
                     
                     
                     
-                    Image(systemName: "person.crop.circle.badge.questionmark.fill")
+                    Image(systemName: "person.crop.rectangle.stack")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
@@ -392,10 +395,11 @@ struct ProfileView: View {
           
                   
                     
-                    Image(systemName: "plus.rectangle.on.rectangle")
+                    Image(systemName: "rectangle.badge.plus")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
+                        .padding(.top,5)
                         .onTapGesture {
                             alertView()
                         }
@@ -411,7 +415,7 @@ struct ProfileView: View {
                         
                     }*/
                     
-                    Image(systemName: "bookmark.square.fill")
+                    Image(systemName: "bookmark")
                         .resizable()
                         .scaledToFit()
                         .frame(width:23, height: 20)
@@ -419,6 +423,7 @@ struct ProfileView: View {
                             isBookActive.toggle()
                         }
                         
+                    Spacer()
                     
                     
                     NavigationLink(destination: SavedUserListView(),isActive: $isBookActive){
@@ -468,7 +473,7 @@ struct ProfileView: View {
                             } */
                             
                         }
-                       // .padding(.trailing,15)
+                        .padding(.trailing,15)
                     
                     
                       
@@ -501,9 +506,11 @@ struct ProfileView: View {
                 
             HStack{
             Text("\(viewModel.depart)계열")
+                    .kerning(-1)
                     .font(.custom(appleGothicBold, size: 18))
                     .foregroundColor(Color(hex: "#A7A7A7"))
             Text(viewModel.major)
+                    .kerning(-1)
                     .font(.custom(appleGothicBold, size: 18))
                     .foregroundColor(Color(hex: "#A7A7A7"))
             
@@ -606,9 +613,9 @@ struct ProfileView: View {
                    .frame(width: 35,height: 6)
                    .background(Color.black)
                     
-               HStack{
+                        HStack(spacing: 15){
                    
-                  Label("plus",systemImage: "folder.badge.plus")
+                  Label("plus",systemImage: "note.text.badge.plus")
                        .labelStyle(IconOnlyLabelStyle())
                        .onTapGesture {
                            showAddView.toggle()
@@ -624,7 +631,7 @@ struct ProfileView: View {
                        .foregroundColor(Color.black)
                        .tracking(-1.5)
                    
-                 Label("edit", systemImage: "pencil.circle")
+                 Label("edit", systemImage: "pencil")
                        .labelStyle(IconOnlyLabelStyle())
                        .onTapGesture {
                            showEditBioView.toggle()
@@ -676,7 +683,8 @@ struct ProfileView: View {
             
         }
         .padding(.leading,20)
-        .padding([.trailing,.top,.bottom])
+        .padding(.top,25)
+        .padding([.trailing,.bottom])
         .navigationBarHidden(true)
         .navigationTitle("프로필")
         }
@@ -838,14 +846,15 @@ struct ChipView: View {
     var body: some View{
         
         
-        HStack(alignment: .center, spacing: 5){
+        HStack(alignment: .center, spacing: 6){
         
         Text(chipText)
-            
+            .kerning(-1)
             .fixedSize()
             .font(.custom(appleGothicMed, size: 16))
             //.background(Color.gray)
             .lineLimit(1)
+            
             .foregroundColor(randomTextBase)
             //.clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
             
@@ -860,7 +869,8 @@ struct ChipView: View {
         .padding(.top, 2)
         .padding(.bottom,1.5 )
         .background(random)
-         .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
+        .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 3, x: 0, y: 3)
          .onAppear(){
         
              random = colors.randomElement()!

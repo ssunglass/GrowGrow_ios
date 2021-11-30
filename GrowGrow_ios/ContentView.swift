@@ -16,7 +16,10 @@ struct ContentView: View {
     let appleGothicMed : String = "Apple SD Gothic Neo Medium"
     
     func listen(){
+        
         session.listen()
+      
+        
     }
     
     var body: some View {
@@ -38,6 +41,7 @@ struct ContentView: View {
                         
                         
                     }
+                    
                         
                  if(session.session != nil) {
                         
@@ -49,7 +53,10 @@ struct ContentView: View {
                             
                         } else {
                             
+                            
                             SignInView()
+                        
+                        
                         }
                         
                         
@@ -95,43 +102,26 @@ struct ContentView: View {
             
             
         }.onAppear(perform: {
-            isLoading = true
             
-            DispatchQueue.main.async {
+            isLoading = true
             listen()
-               // isLoading = false
+            
+       
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                
+            
+                isLoading = false
+                
+               
                 
             }
+          
+        
            
             
             
         })
-       /* Group{
-            
-            if(session.session != nil) {
-            
-                    
-                   MainTabContainer()
-                    
-              
-                
-                
-            } else {
-                
-                SignInView()
-            }
-            
-         
-            
-        
-            
-        }.onAppear(perform: {
-            
-        
-            DispatchQueue.main.async {
-            listen()
-               
-        }}) */
+    
         
     }
     
