@@ -27,11 +27,13 @@ struct ProfileView: View {
     @State private var showEditProfileView = false
     @State private var showAddView = false
     @State private var showEditBioView = false
+    @State private var showingAlert = false
     @State var nativeAlert = false
     @State var keyword = ""
     @State private var isBookActive = false
     @State private var isPdfPreviewActive = false
     @State private var isSettingActive = false
+    @State private var keywordCount : Int = 0
     // @State var keywords: [[Keyword]] = []
     let db = Firestore.firestore()
     
@@ -48,7 +50,28 @@ struct ProfileView: View {
         
         let keywordRef = db.collection("Users").document(self.session.session!.uid)
         
-        if !keyword.isEmpty {
+        keywordRef.addSnapshotListener { (documentSnapshot, error) in
+            
+            guard let document = documentSnapshot else {
+              print("Error fetching document: \(error!)")
+              return
+            }
+            guard let data = document.data() else {
+              print("Document data was empty.")
+              return
+            }
+            
+            let keywords = data["keywords"] as? [String] ?? [""]
+            
+            self.keywordCount = keywords.count
+            
+        }
+        
+        
+        
+    
+        
+        if !keyword.isEmpty && keywordCount < 10 {
             keywordRef.updateData([
                 "keywords" : FieldValue.arrayUnion([keyword])
             ])
@@ -87,6 +110,12 @@ struct ProfileView: View {
                 inputString = inputString.replacingOccurrences(of: "\(word) ", with: "")
                 
             }
+            
+            
+        } else {
+            
+            
+            print("Can't add keyword anymore")
             
             
         }
@@ -400,17 +429,21 @@ struct ProfileView: View {
                         
                         
                     }.sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)})
-                   /* Image(systemName: "person.crop.rectangle.stack")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:23, height: 20)
-                        .onTapGesture {
-                            showEditProfileView.toggle()
-                        }
-                        .sheet(isPresented: $showEditProfileView, content: {EditProfileView(initfullname: viewModel.fullname, initusername: viewModel.username, initsummary: viewModel.summary)}) */
+                  
                     
           
-                    Button(action: { alertView()}) {
+                    Button(action: {
+                        
+                        if keywordCount < 10 {
+                        
+                        alertView()
+                            
+                        } else {
+                            
+                            showingAlert.toggle()
+                            
+                        }
+                        }) {
                         
                         Image(systemName: "rectangle.badge.plus")
                             .resizable()
@@ -419,16 +452,14 @@ struct ProfileView: View {
                             .padding(.top,5)
                         
                         
+                    }.alert(isPresented: $showingAlert){
+                        Alert(title: Text("커커"), message: Text("키워드를 더이상 입력할 수 없습니다."), dismissButton: .default(Text("확인")) {
+
+                            
+                        })
                     }
                     
-                  /*  Image(systemName: "rectangle.badge.plus")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:23, height: 20)
-                        .padding(.top,5)
-                        .onTapGesture {
-                            alertView()
-                        } */
+                
                 
                     
                     Button(action: { isBookActive.toggle()} ) {
