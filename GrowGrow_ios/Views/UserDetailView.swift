@@ -95,11 +95,11 @@ struct UserDetailView: View {
                 
                 HStack{
                     
-                    VStack(alignment: .leading){
+                    VStack(alignment: .leading, spacing: 5){
                         
                         HStack{
                         Text(viewModel.fullname)
-                            .font(.custom(appleGothicBold, size: 36))
+                            .font(.custom(appleGothicBold, size: 40))
                             .foregroundColor(Color.black)
                             
                             if viewModel.isVerified {
@@ -110,8 +110,9 @@ struct UserDetailView: View {
                             }
                         }
                         Text("@\(viewModel.username)")
-                            .font(.custom(appleGothicLight, size: 14))
+                            .font(.custom(appleGothicLight, size: 15))
                             .foregroundColor(Color.black)
+                            .kerning(-0.5)
                     }
                     
                     if !isCurrentUser {Button(action: {
@@ -148,9 +149,11 @@ struct UserDetailView: View {
                  
              HStack{
              Text("\(viewModel.depart)계열")
+                     .kerning(-1)
                      .font(.custom(appleGothicBold, size: 18))
                      .foregroundColor(Color(hex: "#A7A7A7"))
              Text(viewModel.major)
+                     .kerning(-1)
                      .font(.custom(appleGothicBold, size: 18))
                      .foregroundColor(Color(hex: "#A7A7A7"))
              
@@ -302,6 +305,7 @@ struct detailChipView: View {
         .padding(.bottom,1.5 )
         .background(random)
          .clipShape(RoundedRectangle(cornerRadius: 20.0, style: .continuous))
+         .shadow(color: Color(red:0, green: 0, blue: 0, opacity: 0.15), radius: 3, x: 0, y: 3)
          .onAppear(){
         
              random = colors.randomElement()!
