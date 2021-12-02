@@ -57,7 +57,7 @@ struct SignInView: View {
         AuthService.signIn(email: email.trimmingCharacters(in: .whitespacesAndNewlines), password: password.trimmingCharacters(in: .whitespacesAndNewlines), onSuccess: {
             (user) in
             
-            if Auth.auth().currentUser!.isEmailVerified {
+           /* if Auth.auth().currentUser!.isEmailVerified {
                 
                 
             } else {
@@ -66,7 +66,7 @@ struct SignInView: View {
                 self.showingAlert = true
                 
                 
-            }
+            } */
             
             
             
