@@ -54,7 +54,7 @@ struct SignInView: View {
             return
         }
         
-        AuthService.signIn(email: email, password: password, onSuccess: {
+        AuthService.signIn(email: email.trimmingCharacters(in: .whitespacesAndNewlines), password: password.trimmingCharacters(in: .whitespacesAndNewlines), onSuccess: {
             (user) in
             
             if Auth.auth().currentUser!.isEmailVerified {

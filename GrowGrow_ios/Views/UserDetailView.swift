@@ -68,14 +68,25 @@ struct UserDetailView: View {
             .collection("SavedUsers")
             .document(uid).getDocument {(document, error) in
                 
-                if document!.exists {
+               /* if document.exists {
                     
                     self.isSaved = true
                     
                     
                     
                 }
+                */
                 
+                guard let getDocument = document else {
+                  print("Error fetching document: \(error!)")
+                  return
+                }
+                
+                if getDocument.exists {
+                    
+                    self.isSaved = true
+                    
+                }
                 
                 
             }

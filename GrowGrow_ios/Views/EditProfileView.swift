@@ -90,36 +90,7 @@ struct EditProfileView: View {
         
     }
     
-    /*(func HI(){
-        if savedUser.depart == "인문" {
-            
-            imageName = "brain.head.profile"
-            
-            
-            
-        } else if savedUser.depart == "사회"{
-            
-            imageName = "figure.stand.line.dotted.figure.stand"
-            
-        } else if savedUser.depart == "공학"{
-            
-            imageName = "link.icloud"
-        } else if savedUser.depart == "자연"{
-            
-            imageName = "tortoise"
-        } else if savedUser.depart == "교육"{
-            
-            imageName = "graduationcap"
-        } else if savedUser.depart == "의약"{
-            
-            imageName = "cross.case"
-        } else if savedUser.depart == "예체능"{
-            
-            imageName = "airpodsmax"
-            
-        }
-    }
-     */
+   
     func updateUser(){
         let db = Firestore.firestore()
         
@@ -179,9 +150,7 @@ struct EditProfileView: View {
         } else {
             
             db.collection("Users").document(self.session.session!.uid).updateData([
-               // "fullname" : fullname,
-               // "username" : username,
-                "summary" : summary,
+                "summary" : summary.trimmingCharacters(in: .whitespacesAndNewlines),
         
             
             
