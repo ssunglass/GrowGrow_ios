@@ -70,6 +70,7 @@
 		542E67E3274A344000F8C8F8 /* PersonalInfoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoWebView.swift; sourceTree = "<group>"; };
 		542E67E52751FF4B00F8C8F8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5468D903275373010090BE32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		54748C342759E79200823A45 /* GrowGrow_iosRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GrowGrow_iosRelease.entitlements; sourceTree = "<group>"; };
 		54802E002722F9ED0008D2FF /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5482C8A3272696AD00540DB7 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		548841242726DF0A0072BAF7 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 		5421AC9127213E2600F12168 /* GrowGrow_ios */ = {
 			isa = PBXGroup;
 			children = (
+				54748C342759E79200823A45 /* GrowGrow_iosRelease.entitlements */,
 				542E67DA273B916F00F8C8F8 /* GrowGrow_ios.entitlements */,
 				542E67D6273A9BC500F8C8F8 /* GrowGrow-ios-Info.plist */,
 				54A2EF902722850600051DCB /* Services */,
@@ -521,9 +523,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = GrowGrow_ios/GrowGrow_ios.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"GrowGrow_ios/Preview Content\"";
 				DEVELOPMENT_TEAM = 33AG3GZ9ZS;
 				ENABLE_PREVIEWS = YES;
@@ -541,9 +543,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stationLab.GrowGrow-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stationLab.GrowGrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = distribution_growgrow;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -557,10 +559,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = GrowGrow_ios/GrowGrow_ios.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = GrowGrow_ios/GrowGrow_iosRelease.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"GrowGrow_ios/Preview Content\"";
 				DEVELOPMENT_TEAM = 33AG3GZ9ZS;
 				ENABLE_PREVIEWS = YES;
@@ -578,9 +580,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stationLab.GrowGrow-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stationLab.GrowGrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = distribution_growgrow;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
